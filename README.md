@@ -202,11 +202,11 @@ fbaA4ReportHandler(data /* PrintJob */, {} as any, (error, result) => {
 
 | method                                                    | description | import |
 |-----------------------------------------------------------|-------------|--------|
-| `RedAgate.createElement(type: ComponentFactory<P>, props: P | null | undefined,...children: RedAgateNode[]):RedAgateElement<P>` | Create a element. This function is called from JSX compiled code. | `import * as RedAgate from 'red-agate/modules/red-agate'` |
-| `RedAgate.renderAsHtml(element: RedAgateNode):Promise<string>` | Render elements to string. | `import * as RedAgate from 'red-agate/modules/red-agate'` |
-| `RedAgate.render(element: RedAgateNode, container: HTMLElement,callback?: (html: string | null, error: any | null) => void):void` | Render elements and apply to DOM. | `import * as RedAgate from 'red-agate/modules/red-agate'` |
-| `RedAgate.renderOnAwsLambda(element: RedAgateNode,callback: (error: any | null, result: any | null) => void):void` | Render elements to string. Return result via AWS lambda callback. | `import * as RedAgate from 'red-agate/modules/red-agate'` |
-| `RedAgate.renderOnExpress(element: RedAgateNode, req: any, res: any):void` | Render elements to string. Return result via Express web server callback. | `import * as RedAgate from 'red-agate/modules/red-agate'` |
+| `RedAgate.createElement(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`type: ComponentFactory<P>,`<br>&nbsp;&nbsp;&nbsp;&nbsp;`props: P or null or undefined,`<br>&nbsp;&nbsp;&nbsp;&nbsp;`...children: RedAgateNode[]`<br>`): RedAgateElement<P>` | Create a element. This function is called from JSX compiled code. | `import * as RedAgate from 'red-agate/modules/red-agate'` |
+| `RedAgate.renderAsHtml(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`element: RedAgateNode`<br>`): Promise<string>` | Render elements to string. | `import * as RedAgate from 'red-agate/modules/red-agate'` |
+| `RedAgate.render(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`element: RedAgateNode,`<br>&nbsp;&nbsp;&nbsp;&nbsp;`container: HTMLElement,`<br>&nbsp;&nbsp;&nbsp;&nbsp;`callback?: (html: string or null, error: any or null) => void`<br>`): void` | Render elements and apply to DOM. | `import * as RedAgate from 'red-agate/modules/red-agate'` |
+| `RedAgate.renderOnAwsLambda(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`element: RedAgateNode,`<br>&nbsp;&nbsp;&nbsp;&nbsp;`callback: (error: any or null, result: any or null) => void`<br>`): void` | Render elements to string. Return result via AWS lambda callback. | `import * as RedAgate from 'red-agate/modules/red-agate'` |
+| `RedAgate.renderOnExpress(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`element: RedAgateNode,`<br>&nbsp;&nbsp;&nbsp;&nbsp;`req: any,`<br>&nbsp;&nbsp;&nbsp;&nbsp;`res: any`<br>`): void` | Render elements to string. Return result via Express web server callback. | `import * as RedAgate from 'red-agate/modules/red-agate'` |
 
 
 ## Configurations for building application
