@@ -8,6 +8,7 @@ You can start easily because we are using JSX and semantics similar to React.
 * Easily to bundle resources (images, stylesheets, fonts, scripts, ...) .  
   `RedAgate.renderAsHtml()` API and component lifecycle `defer()` method return promise objects.  
   You can use standard tags (Image, Style, Font, SingleFont, Script, Asset) to bundle them.
+
 * Many standard tags (e.g. If, Repeat, ForEach, Template, Html5, Svg, SVG shapes and complex objects, ...) are bundled.
 ----
 
@@ -185,28 +186,32 @@ fbaA4ReportHandler(data /* PrintJob */, {} as any, (error, result) => {
 });
 ```
 
+We provide ES6 module files under `red-agate*/modules/*` path.  
+You can get the benefits of tree shaking when using webpack.  
+Instead, you can also import the whole by simply specifying `red-agate*` as the import path.
+
 ## Component Lifecycle
 
 | order | method                                                             | description |
 |------:|--------------------------------------------------------------------|-------------|
-|     0 | `earlyConstruct(): void`                                           | This method is **marker** and it will be **NEVER** called. If it defined, constructor will called in `createElement()`. Otherwise constructor will called in `render???()` APIs. |
-|     1 | `constructor(props) / lambda(props)`                               | Construct a component. If it is lambda, transform myself and children DOM tree. |
-|     2 | `transform(): RedAgateNode`                                        | Transform myself and children DOM tree. This method is equivalent to `render()` of React method. |
+|     0 | `earlyConstruct(): void`                                           | This method is **marker** and it will be **NEVER** called.<br>If it defined, constructor will called in `createElement()`.<br>Otherwise constructor will called in `render???()` APIs. |
+|     1 | `constructor(props) /`<br>`lambda(props)`                               | Construct a component.<br>If it is lambda, transform myself and children DOM tree. |
+|     2 | `transform(): RedAgateNode`                                        | Transform myself and children DOM tree.<br>This method is equivalent to `render()` of React method. |
 |     3 | `defer(): Promise<any>`                                            | Wait for asynchronous resources. |
-|     4 | `beforeRender(contexts: Map<string, any>): void`                   | Get contexts provided by parent elements. Preparing something for child elements. |
-|     5 | `render(contexts: Map<string, any>, children: string): string`     | Return rendering result as string. |
-|     6 | `afterRender(contexts: Map<string, any>): void`                    | Clean up contexts, graphic states, ... |
+|     4 | `beforeRender(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`contexts: Map<string, any>`<br>`): void`| Get contexts provided by parent elements.<br>Preparing something for child elements. |
+|     5 | `render(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`contexts: Map<string, any>,`<br>&nbsp;&nbsp;&nbsp;&nbsp;`children: string`<br>`): string`| Return rendering result as string. |
+|     6 | `afterRender(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`contexts: Map<string, any>`<br>`): void`| Clean up contexts, graphic states, ... |
 
 
 ## APIs
 
 | method                                                    | description | import |
 |-----------------------------------------------------------|-------------|--------|
-| `RedAgate.createElement(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`type: ComponentFactory<P>,`<br>&nbsp;&nbsp;&nbsp;&nbsp;`props: P or null or undefined,`<br>&nbsp;&nbsp;&nbsp;&nbsp;`...children: RedAgateNode[]`<br>`): RedAgateElement<P>` | Create a element. This function is called from JSX compiled code. | `import * as RedAgate from 'red-agate/modules/red-agate'` |
+| `RedAgate.createElement(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`type: ComponentFactory<P>,`<br>&nbsp;&nbsp;&nbsp;&nbsp;`props: P or null or undefined,`<br>&nbsp;&nbsp;&nbsp;&nbsp;`...children: RedAgateNode[]`<br>`): RedAgateElement<P>` | Create a element.<br>This function is called from JSX compiled code. | `import * as RedAgate from 'red-agate/modules/red-agate'` |
 | `RedAgate.renderAsHtml(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`element: RedAgateNode`<br>`): Promise<string>` | Render elements to string. | `import * as RedAgate from 'red-agate/modules/red-agate'` |
 | `RedAgate.render(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`element: RedAgateNode,`<br>&nbsp;&nbsp;&nbsp;&nbsp;`container: HTMLElement,`<br>&nbsp;&nbsp;&nbsp;&nbsp;`callback?: (html: string or null, error: any or null) => void`<br>`): void` | Render elements and apply to DOM. | `import * as RedAgate from 'red-agate/modules/red-agate'` |
-| `RedAgate.renderOnAwsLambda(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`element: RedAgateNode,`<br>&nbsp;&nbsp;&nbsp;&nbsp;`callback: (error: any or null, result: any or null) => void`<br>`): void` | Render elements to string. Return result via AWS lambda callback. | `import * as RedAgate from 'red-agate/modules/red-agate'` |
-| `RedAgate.renderOnExpress(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`element: RedAgateNode,`<br>&nbsp;&nbsp;&nbsp;&nbsp;`req: any,`<br>&nbsp;&nbsp;&nbsp;&nbsp;`res: any`<br>`): void` | Render elements to string. Return result via Express web server callback. | `import * as RedAgate from 'red-agate/modules/red-agate'` |
+| `RedAgate.renderOnAwsLambda(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`element: RedAgateNode,`<br>&nbsp;&nbsp;&nbsp;&nbsp;`callback: (error: any or null, result: any or null) => void`<br>`): void` | Render elements to string.<br>Return result via AWS lambda callback. | `import * as RedAgate from 'red-agate/modules/red-agate'` |
+| `RedAgate.renderOnExpress(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`element: RedAgateNode,`<br>&nbsp;&nbsp;&nbsp;&nbsp;`req: any,`<br>&nbsp;&nbsp;&nbsp;&nbsp;`res: any`<br>`): void` | Render elements to string.<br>Return result via Express web server callback. | `import * as RedAgate from 'red-agate/modules/red-agate'` |
 
 
 ## Configurations for building application
@@ -219,8 +224,15 @@ or [examples](https://github.com/shellyln/red-agate-example).
 ## FAQ
 * Q: Can I receive element events (e.g. onclick) ?  
   A: No. RedAgate is template engine. Please use React, Vue, Riot, Angular, knockout, ...
-* Q: Can I change DOM via API after render to real DOM.  
+
+* Q: Can I change DOM via API after rendered to real DOM.  
   A: No. Please use React, Vue, Riot, Angular, knockout, ...
+
+* Q: Can I build print preview window by using RedAgate?  
+  A: [paper-css](https://github.com/cognitom/paper-css) may help you to build print previews.
+
+* Q: Can I output rendered result as PDF, PNG, or other formats?  
+  A: You can convert from html to any formats by using other libraries (e.g. [electron-pdf](https://github.com/fraserxu/electron-pdf), [wkhtmltopdf](https://wkhtmltopdf.org/)) .
 
 ## License
 ISC
