@@ -311,7 +311,7 @@ Instead, you will import `red-agate` as `React`, you can let RedAgate and React 
 
 
 
-+ Q: Can I change DOM via API after rendered to real DOM.  
++ Q: Can I change DOM via API after rendered to real DOM?  
 + A: No. Please use React, Vue, Riot, Angular, knockout, ...
 
 

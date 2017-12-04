@@ -1,20 +1,21 @@
 {
   "name": "red-agate",
   "private": false,
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "HTML|XML|SVG template engine using JSX, suitable for report output.",
   "keywords": [
-    "React",
     "svg",
     "template engine",
     "SSR",
     "server side rendering",
     "JSX",
     "TSX",
+    "reporting engine",
     "reporting",
     "html",
     "xml",
-    "RedAgate"
+    "RedAgate",
+    "React"
   ],
   "main": "./bin/index.js",
   "module": "./modules/index.js",
