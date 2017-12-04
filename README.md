@@ -295,16 +295,22 @@ Instead, you will import `red-agate` as `React`, you can let RedAgate and React 
 * A: No. RedAgate is template engine. Please use React, Vue, Riot, Angular, knockout, ...
 
 
-* Q: Can I change DOM via API after rendered to real DOM.  
-* A: No. Please use React, Vue, Riot, Angular, knockout, ...
+
+
++ Q: Can I change DOM via API after rendered to real DOM.  
++ A: No. Please use React, Vue, Riot, Angular, knockout, ...
+
+
 
 
 * Q: Can I build print preview window by using RedAgate?  
 * A: [paper-css](https://github.com/cognitom/paper-css) may help you to build print previews.
 
 
-* Q: Can I output rendered result as PDF, PNG, or other formats?  
-* A: You can convert from html to any formats by using other libraries (e.g. [electron-pdf](https://github.com/fraserxu/electron-pdf), [wkhtmltopdf](https://wkhtmltopdf.org/)) .
+
+
++ Q: Can I output rendered result as PDF, PNG, or other formats?  
++ A: You can convert from html to any formats by using other libraries (e.g. [electron-pdf](https://github.com/fraserxu/electron-pdf), [wkhtmltopdf](https://wkhtmltopdf.org/)) .
 
 
 ## License
