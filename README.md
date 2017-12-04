@@ -194,7 +194,7 @@ Instead, you can also import the whole by simply specifying `red-agate*` as the 
 
 | order | method | description |
 |------:|--------|-------------|
-|     0 | `earlyConstruct(): void` | This method is **marker** and it will be **NEVER** called.<br>If it defined, constructor will called in `createElement()`.<br>Otherwise constructor will called in `render???()` APIs. |
+|     0 | `earlyConstruct(): void` | This method is **marker** and it will be **NEVER** called.<br>If it defined, constructor will be called in `createElement()`.<br>Otherwise constructor will be called in `render???()` APIs. |
 |     1 | `constructor(props) /`<br>`lambda(props)` | Construct a component.<br>If it is lambda, transform myself and children DOM tree. |
 |     2 | `transform(): RedAgateNode` | Transform myself and children DOM tree.<br>This method is equivalent to `render()` of React method. |
 |     3 | `defer(): Promise<any>` | Wait for asynchronous resources. |
@@ -220,6 +220,68 @@ Instead, you can also import the whole by simply specifying `red-agate*` as the 
 | `Query<T>#select<R>(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`fn?: (`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`value: T,`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`index: number,`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`array: T[]`<br>&nbsp;&nbsp;&nbsp;&nbsp;`) => R`<br>`): Array<R or T>` | Map an array. | `import { query } from 'red-agate/modules/red-agate/data'` |
 
 
+## Standard Tags
+
+### `red-agate/modules/red-agate/taglib`
+
+| tag | description |
+|-----|-------------|
+| Repeat | Loop N times. |
+| ForEach | Iterate an array. |
+| If | Conditional branch. |
+| Do | Call a lambda function when `createElement` . |
+| Facet | Grouping child elements.<br>Give a name to group. |
+| Template | Synonym for `Facet` . |
+
+### `red-agate/modules/red-agate/bundler`
+
+| tag | description |
+|-----|-------------|
+| Asset | Fetch a external resource.<br>Fetched resource is referred from other tags. |
+| Image | Fetch a external image resource. |
+| Script | Fetch a external script resource. |
+| Style | Fetch a external stylesheet resource. |
+| Font | Synonym for `Style` . |
+| SingleFont | Fetch a external single font-family font resource. |
+
+### `red-agate/modules/red-agate/html`
+
+| tag | description |
+|-----|-------------|
+| Html4_01_Strict | Output `doctype` declaration and `html` tag. |
+| Html4_01_Transitional | Output `doctype` declaration and `html` tag. |
+| Html4_01_Frameset | Output `doctype` declaration and `html` tag. |
+| Xhtml1_0_Strict | Output `doctype` declaration and `html` tag. |
+| Xhtml1_0_Transitional | Output `doctype` declaration and `html` tag. |
+| Xhtml1_0_Frameset | Output `doctype` declaration and `html` tag. |
+| Html5 | Output `doctype` declaration and `html` tag. |
+| Xml | Output xml declaration. |
+| HtmlImposition | Impose pages in a physical page. |
+
+### `red-agate/modules/red-agate/svg`
+
+| tag | description |
+|-----|-------------|
+| Svg | Output `svg` tag.<br>Children can use a `Canvas` context. |
+| Ambient | Change current graphic state properties. |
+| Arc | Draw an arc. |
+| Canvas | Call a lambda function and draw by using `Canvas` context object. |
+| Circle | Draw a circle. |
+| Curve | Draw bezier curve(s). |
+| GridLine | Draw grid lines for design time. |
+| Group | Group children.<br>Output `g` tag. |
+| Line | Draw line(s). |
+| Path | Group path fragments (e.g. Arc, Circle, Curve, Line, Rect, ...) . |
+| Pie | Draw a pie. |
+| Polygon | Draw a polygon. |
+| Rect | Draw a rectangle. |
+| RoundRect | Draw a rounded rectangle. |
+| SvgAssetFragment | Append raw SVG tags into `defs`. |
+| SvgFragment | Append raw SVG tags. |
+| Text | Draw text line(s). |
+| SvgImposition | Impose pages in a physical page. |
+
+
 ## Configurations for building application
 You should configure `tsconfig` or `.babelrc` for building JSX.  
 Prease see [here](https://www.typescriptlang.org/docs/handbook/jsx.html)
@@ -228,61 +290,21 @@ or [examples](https://github.com/shellyln/red-agate-example).
 Instead, you will import `red-agate` as `React`, you can let RedAgate and React coexist.
 
 ## FAQ
+
 * Q: Can I receive element events (e.g. onclick) ?  
-  A: No. RedAgate is template engine. Please use React, Vue, Riot, Angular, knockout, ...
+* A: No. RedAgate is template engine. Please use React, Vue, Riot, Angular, knockout, ...
+
 
 * Q: Can I change DOM via API after rendered to real DOM.  
-  A: No. Please use React, Vue, Riot, Angular, knockout, ...
+* A: No. Please use React, Vue, Riot, Angular, knockout, ...
+
 
 * Q: Can I build print preview window by using RedAgate?  
-  A: [paper-css](https://github.com/cognitom/paper-css) may help you to build print previews.
+* A: [paper-css](https://github.com/cognitom/paper-css) may help you to build print previews.
+
 
 * Q: Can I output rendered result as PDF, PNG, or other formats?  
-  A: You can convert from html to any formats by using other libraries (e.g. [electron-pdf](https://github.com/fraserxu/electron-pdf), [wkhtmltopdf](https://wkhtmltopdf.org/)) .
-
-## Standard Tags
-
-| tag | description | import |
-|-----|-------------|--------|
-| Repeat |  | `red-agate/modules/red-agate/taglib` |
-| ForEach |  | `red-agate/modules/red-agate/taglib` |
-| If |  | `red-agate/modules/red-agate/taglib` |
-| Do |  | `red-agate/modules/red-agate/taglib` |
-| Facet |  | `red-agate/modules/red-agate/taglib` |
-| Template |  | `red-agate/modules/red-agate/taglib` |
-| Asset |  | `red-agate/modules/red-agate/bundler` |
-| Image |  | `red-agate/modules/red-agate/bundler` |
-| Script |  | `red-agate/modules/red-agate/bundler` |
-| Style |  | `red-agate/modules/red-agate/bundler` |
-| Font |  | `red-agate/modules/red-agate/bundler` |
-| SingleFont |  | `red-agate/modules/red-agate/bundler` |
-| Html4_01_Strict |  | `red-agate/modules/red-agate/html` |
-| Html4_01_Transitional |  | `red-agate/modules/red-agate/html` |
-| Html4_01_Frameset |  | `red-agate/modules/red-agate/html` |
-| Xhtml1_0_Strict |  | `red-agate/modules/red-agate/html` |
-| Xhtml1_0_Transitional |  | `red-agate/modules/red-agate/html` |
-| Xhtml1_0_Frameset |  | `red-agate/modules/red-agate/html` |
-| Html5 |  | `red-agate/modules/red-agate/html` |
-| Xml |  | `red-agate/modules/red-agate/html` |
-| HtmlImposition |  | `red-agate/modules/red-agate/html` |
-| Svg |  | `red-agate/modules/red-agate/svg` |
-| Ambient |  | `red-agate/modules/red-agate/svg` |
-| Arc |  | `red-agate/modules/red-agate/svg` |
-| Canvas |  | `red-agate/modules/red-agate/svg` |
-| Circle |  | `red-agate/modules/red-agate/svg` |
-| Curve |  | `red-agate/modules/red-agate/svg` |
-| GridLine |  | `red-agate/modules/red-agate/svg` |
-| Group |  | `red-agate/modules/red-agate/svg` |
-| Line |  | `red-agate/modules/red-agate/svg` |
-| Path |  | `red-agate/modules/red-agate/svg` |
-| Pie |  | `red-agate/modules/red-agate/svg` |
-| Polygon |  | `red-agate/modules/red-agate/svg` |
-| Rect |  | `red-agate/modules/red-agate/svg` |
-| RoundRect |  | `red-agate/modules/red-agate/svg` |
-| SvgAssetFragment |  | `red-agate/modules/red-agate/svg` |
-| SvgFragment |  | `red-agate/modules/red-agate/svg` |
-| Text |  | `red-agate/modules/red-agate/svg` |
-| SvgImposition |  | `red-agate/modules/red-agate/svg` |
+* A: You can convert from html to any formats by using other libraries (e.g. [electron-pdf](https://github.com/fraserxu/electron-pdf), [wkhtmltopdf](https://wkhtmltopdf.org/)) .
 
 
 ## License
