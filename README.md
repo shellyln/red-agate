@@ -4,6 +4,13 @@
 RedAgate is static HTML | XML | SVG renderer.  
 You can start easily because we are using JSX and semantics similar to React.
 
+[![npm](https://img.shields.io/npm/v/red-agate.svg)](https://www.npmjs.com/package/red-agate)
+[![GitHub release](https://img.shields.io/github/release/shellyln/red-agate.svg)](https://github.com/shellyln/red-agate/releases)
+[![Travis](https://img.shields.io/travis/shellyln/red-agate/master.svg)](https://travis-ci.org/shellyln/red-agate)
+[![GitHub forks](https://img.shields.io/github/forks/shellyln/red-agate.svg?style=social&label=Fork)](https://github.com/shellyln/red-agate/fork)
+[![GitHub stars](https://img.shields.io/github/stars/shellyln/red-agate.svg?style=social&label=Star)](https://github.com/shellyln/red-agate)
+
+
 #### Advantages:
 * Easily to bundle resources (images, stylesheets, fonts, scripts, ...) .  
   `RedAgate.renderAsHtml()` API and component lifecycle `defer()` method return promise objects.  
@@ -192,7 +199,7 @@ Instead, you can also import the whole by simply specifying `red-agate*` as the 
 
 ## Component Lifecycle
 
-| order | method | description |
+| call order | method | description |
 |------:|--------|-------------|
 |     0 | `earlyConstruct(): void` | This method is **marker** and it will be **NEVER** called.<br>If it defined, constructor will be called in `createElement()`.<br>Otherwise constructor will be called in `render???()` APIs. |
 |     1 | `constructor(props) /`<br>`lambda(props)` | Construct a component.<br>If it is lambda, transform myself and children DOM tree. |
@@ -205,19 +212,26 @@ Instead, you can also import the whole by simply specifying `red-agate*` as the 
 
 ## APIs
 
-| method | description | import |
-|--------|-------------|--------|
-| `RedAgate.createElement(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`type: ComponentFactory<P>,`<br>&nbsp;&nbsp;&nbsp;&nbsp;`props: P or null or undefined,`<br>&nbsp;&nbsp;&nbsp;&nbsp;`...children: RedAgateNode[]`<br>`): RedAgateElement<P>` | Create a element.<br>This function is called from JSX compiled code. | `import * as RedAgate from 'red-agate/modules/red-agate'` |
-| `RedAgate.renderAsHtml(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`element: RedAgateNode`<br>`): Promise<string>` | Render elements to string. | `import * as RedAgate from 'red-agate/modules/red-agate'` |
-| `RedAgate.render(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`element: RedAgateNode,`<br>&nbsp;&nbsp;&nbsp;&nbsp;`container: HTMLElement,`<br>&nbsp;&nbsp;&nbsp;&nbsp;`callback?: (`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`html: string or null,`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`error: any or null`<br>&nbsp;&nbsp;&nbsp;&nbsp;`) => void`<br>`): void` | Render elements and apply to DOM. | `import * as RedAgate from 'red-agate/modules/red-agate'` |
-| `RedAgate.renderOnAwsLambda(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`element: RedAgateNode,`<br>&nbsp;&nbsp;&nbsp;&nbsp;`callback: (`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`error: any or null,`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`result: any or null`<br>&nbsp;&nbsp;&nbsp;&nbsp;`) => void`<br>`): void` | Render elements to string.<br>Return result via AWS lambda callback. | `import * as RedAgate from 'red-agate/modules/red-agate'` |
-| `RedAgate.renderOnExpress(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`element: RedAgateNode,`<br>&nbsp;&nbsp;&nbsp;&nbsp;`req: any,`<br>&nbsp;&nbsp;&nbsp;&nbsp;`res: any`<br>`): void` | Render elements to string.<br>Return result via Express web server callback. | `import * as RedAgate from 'red-agate/modules/red-agate'` |
-| `query(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`data: T[]`<br>`): Query<T>` | Transform an array. | `import { query } from 'red-agate/modules/red-agate/data'` |
-| `Query<T>#orderBy(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`condition: Array<string or`<br>&nbsp;&nbsp;&nbsp;&nbsp;`string[`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`/* colName: string,`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`('asc' or 'desc') */`<br>&nbsp;&nbsp;&nbsp;&nbsp;`]> or`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`((a: T, b: T) =>`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`number)`<br>`): Query<T>` | Sort an array. | `import { query } from 'red-agate/modules/red-agate/data'` |
-| `Query<T>#groupBy(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`condition: string[`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`/* colName: string */`<br>&nbsp;&nbsp;&nbsp;&nbsp;`] or`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`((a: T, b: T,`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`index: number, array: T[]) =>`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`boolean)`<br>`): Query<T[]>` | Grouping and transform an array. | `import { query } from 'red-agate/modules/red-agate/data'` |
-| `Query<T>#groupEvery(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`n: number or`<br>&nbsp;&nbsp;&nbsp;&nbsp;`{`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`single: number,`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`first?: number,`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`intermediate: number,`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`last?: number`<br>&nbsp;&nbsp;&nbsp;&nbsp;`}`<br>`): Query<T[]>` | Grouping and transform an array. | `import { query } from 'red-agate/modules/red-agate/data'` |
-| `Query<T>#where(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`fn: (`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`value: T,`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`index: number,`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`array: T[]`<br>&nbsp;&nbsp;&nbsp;&nbsp;`) => boolean`<br>`): Query<T>` | Filter an array. | `import { query } from 'red-agate/modules/red-agate/data'` |
-| `Query<T>#select<R>(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`fn?: (`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`value: T,`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`index: number,`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`array: T[]`<br>&nbsp;&nbsp;&nbsp;&nbsp;`) => R`<br>`): Array<R or T>` | Map an array. | `import { query } from 'red-agate/modules/red-agate/data'` |
+### `import * as RedAgate from 'red-agate/modules/red-agate'`
+
+| method | description |
+|--------|-------------|
+| `RedAgate.createElement(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`type: ComponentFactory<P>,`<br>&nbsp;&nbsp;&nbsp;&nbsp;`props: P or null or undefined,`<br>&nbsp;&nbsp;&nbsp;&nbsp;`...children: RedAgateNode[]`<br>`): RedAgateElement<P>` | Create a element.<br>This function is called from JSX compiled code. |
+| `RedAgate.renderAsHtml(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`element: RedAgateNode`<br>`): Promise<string>` | Render elements to string. |
+| `RedAgate.render(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`element: RedAgateNode,`<br>&nbsp;&nbsp;&nbsp;&nbsp;`container: HTMLElement,`<br>&nbsp;&nbsp;&nbsp;&nbsp;`callback?: (`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`html: string or null,`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`error: any or null`<br>&nbsp;&nbsp;&nbsp;&nbsp;`) => void`<br>`): void` | Render elements and apply to DOM. |
+| `RedAgate.renderOnAwsLambda(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`element: RedAgateNode,`<br>&nbsp;&nbsp;&nbsp;&nbsp;`callback: (`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`error: any or null,`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`result: any or null`<br>&nbsp;&nbsp;&nbsp;&nbsp;`) => void`<br>`): void` | Render elements to string.<br>Return result via AWS lambda callback. |
+| `RedAgate.renderOnExpress(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`element: RedAgateNode,`<br>&nbsp;&nbsp;&nbsp;&nbsp;`req: any,`<br>&nbsp;&nbsp;&nbsp;&nbsp;`res: any`<br>`): void` | Render elements to string.<br>Return result via Express web server callback. |
+
+### `import { query } from 'red-agate/modules/red-agate/data'`
+
+| method | description |
+|--------|-------------|
+| `query(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`data: T[]`<br>`): Query<T>` | Transform an array. |
+| `Query<T>#orderBy(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`condition: Array<string or`<br>&nbsp;&nbsp;&nbsp;&nbsp;`string[`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`/* colName: string,`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`('asc' or 'desc') */`<br>&nbsp;&nbsp;&nbsp;&nbsp;`]> or`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`((a: T, b: T) =>`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`number)`<br>`): Query<T>` | Sort an array. |
+| `Query<T>#groupBy(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`condition: string[`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`/* colName: string */`<br>&nbsp;&nbsp;&nbsp;&nbsp;`] or`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`((a: T, b: T,`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`index: number, array: T[]) =>`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`boolean)`<br>`): Query<T[]>` | Grouping and transform an array. |
+| `Query<T>#groupEvery(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`n: number or`<br>&nbsp;&nbsp;&nbsp;&nbsp;`{`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`single: number,`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`first?: number,`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`intermediate: number,`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`last?: number`<br>&nbsp;&nbsp;&nbsp;&nbsp;`}`<br>`): Query<T[]>` | Grouping and transform an array. |
+| `Query<T>#where(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`fn: (`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`value: T,`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`index: number,`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`array: T[]`<br>&nbsp;&nbsp;&nbsp;&nbsp;`) => boolean`<br>`): Query<T>` | Filter an array. |
+| `Query<T>#select<R>(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`fn?: (`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`value: T,`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`index: number,`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`array: T[]`<br>&nbsp;&nbsp;&nbsp;&nbsp;`) => R`<br>`): Array<R or T>` | Map an array. |
 
 
 ## Standard Tags
@@ -314,4 +328,5 @@ Instead, you will import `red-agate` as `React`, you can let RedAgate and React 
 
 
 ## License
-ISC
+[ISC](https://github.com/shellyln/red-agate/blob/master/LICENSE.md)  
+Copyright (c) 2017, Shellyl_N and Authors.
