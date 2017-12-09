@@ -1,7 +1,7 @@
 {
   "name": "red-agate",
   "private": false,
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "HTML|XML|SVG template engine using JSX, suitable for report output.",
   "keywords": [
     "svg",
@@ -26,8 +26,8 @@
     "node": "9.x"
   },
   "dependencies": {
-    "red-agate-util": "^0.0.2",
-    "red-agate-svg-canvas": "^0.0.2"
+    "red-agate-svg-canvas": "0.0.4",
+    "red-agate-util": "0.0.4"
   },
   "devDependencies": {
     "@types/jasmine": "^2.8.2",
