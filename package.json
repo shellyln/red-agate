@@ -26,8 +26,8 @@
     "node": "9.x"
   },
   "dependencies": {
-    "red-agate-svg-canvas": "0.0.4",
-    "red-agate-util": "0.0.4"
+    "red-agate-svg-canvas": "^0.0.4",
+    "red-agate-util": "^0.0.4"
   },
   "devDependencies": {
     "@types/jasmine": "^2.8.2",
