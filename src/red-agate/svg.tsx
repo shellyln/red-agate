@@ -228,27 +228,29 @@ export const gridLinePropsDefault: GridLinePropsNoUndefined = Object.assign({}, 
     bleed: 13
 });
 
-export class GridLine extends Shape<GridLinePropsNoUndefined> {
+export class GridLine extends Shape<GridLineProps> {
     public constructor(props: GridLineProps) {
-        super(Object.assign({}, gridLinePropsDefault, props) as GridLinePropsNoUndefined);
+        super(Object.assign({}, gridLinePropsDefault, props));
     }
 
     public render(contexts: Map<string, any>, children: string) {
+        const props = this.props as GridLinePropsNoUndefined;
+
         const canvas: SvgCanvas = this.getContext(contexts, CONTEXT_SVG_CANVAS);
-        const m1 = Math.ceil(this.props.bleed / this.props.gridSize) * this.props.gridSize;
-        const mX = Math.ceil((this.props.endX - this.props.startX + this.props.bleed) / this.props.gridSize) * this.props.gridSize;
-        const mY = Math.ceil((this.props.endY - this.props.startY + this.props.bleed) / this.props.gridSize) * this.props.gridSize;
+        const m1 = Math.ceil(props.bleed / props.gridSize) * props.gridSize;
+        const mX = Math.ceil((props.endX - props.startX + props.bleed) / props.gridSize) * props.gridSize;
+        const mY = Math.ceil((props.endY - props.startY + props.bleed) / props.gridSize) * props.gridSize;
 
-        for (let dx = this.props.startX - m1; dx <= mX; dx += this.props.gridSize) {
-            canvas.moveTo(this.props.startX + dx, this.props.startY - m1);
-            canvas.lineTo(this.props.startX + dx, this.props.startY + mY);
+        for (let dx = props.startX - m1; dx <= mX; dx += props.gridSize) {
+            canvas.moveTo(props.startX + dx, props.startY - m1);
+            canvas.lineTo(props.startX + dx, props.startY + mY);
         }
-        for (let dy = this.props.startY - m1; dy <= mY; dy += this.props.gridSize) {
-            canvas.moveTo(this.props.startX - m1, this.props.startY + dy);
-            canvas.lineTo(this.props.startX + mX, this.props.startY + dy);
+        for (let dy = props.startY - m1; dy <= mY; dy += props.gridSize) {
+            canvas.moveTo(props.startX - m1, props.startY + dy);
+            canvas.lineTo(props.startX + mX, props.startY + dy);
         }
 
-        canvas.rect(this.props.startX || 0, this.props.startY || 0, this.props.endX - this.props.startX, this.props.endY - this.props.startY);
+        canvas.rect(props.startX || 0, props.startY || 0, props.endX - props.startX, props.endY - props.startY);
         return ``;
     }
 }
