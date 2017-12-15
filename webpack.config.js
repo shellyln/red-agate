@@ -28,13 +28,11 @@ module.exports = function (env) {
                         configFile: 'tsconfig.spec.json'
                     }),
                 ],
-
-                exclude: /node_modules[\/\\](?!(red-agate-.*)|(zone.js)).*$/
+                exclude: /node_modules[\/\\](?!red-agate).*$/
             }, {
                 test: /\.jsx?$/,
                 use: ['babel-loader'],
-
-                exclude: /node_modules[\/\\](?!(red-agate-.*)|(zone.js)).*$/
+                exclude: /node_modules[\/\\](?!red-agate).*$/
             }, {
                 enforce: 'pre',
                 test: /\.[tj]sx?$/,
