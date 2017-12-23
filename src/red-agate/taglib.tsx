@@ -103,10 +103,10 @@ export class Do extends RedAgate.RedAgateComponent<DoProps> {
 
 
 
-export interface FacetProps extends RedAgate.ComponentProps {
+export interface FacetProps extends RedAgate.FragmentProps {
 }
 
-export class Facet extends RedAgate.RedAgatePhantomComponent<FacetProps> {
+export class Facet extends RedAgate.Fragment {
     public constructor(props: FacetProps) {
         super(props);
     }

@@ -514,3 +514,14 @@ export function renderOnExpress(
         res.status(500).send('');
     });
 }
+
+
+
+export interface FragmentProps extends ComponentProps {
+}
+
+export class Fragment extends RedAgatePhantomComponent<FragmentProps> {
+    public constructor(props: FragmentProps) {
+        super(props);
+    }
+}
