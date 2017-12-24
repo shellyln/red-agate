@@ -14,9 +14,14 @@ You can start easily because we are using JSX and semantics similar to React.
 #### Advantages:
 * Easily to bundle resources (images, stylesheets, fonts, scripts, ...) .  
   `RedAgate.renderAsHtml()` API and component lifecycle `defer()` method return promise objects.  
-  You can use standard tags (Image, Style, Font, SingleFont, Script, Asset) to bundle them.
+  You can use standard tags (e.g. Image, Style, Font, SingleFont, Script, Asset) to bundle them.
 
-* Many standard tags (e.g. If, Repeat, ForEach, Template, Html5, Svg, SVG shapes and complex objects, ...) are bundled.
+* Many standard Tag-Libs (e.g. If, Repeat, ForEach, Template, Html5, Svg, SVG shapes,
+  Barcodes (QR Code, Code39, Code128, EAN/UPC, ITF, NW7/Codabar, postal barcode) and complex objects) are bundled.
+
+* Html5 Canvas API is available in the sub tree of the Svg component.
+
+* Running on both server side (Node.js) and modern browsers (Chrome, Firefox, Safari, Edge).
 ----
 
 ## Install
@@ -234,7 +239,7 @@ Instead, you can also import the whole by simply specifying `red-agate*` as the 
 | `Query<T>#select<R>(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`fn?: (`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`value: T,`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`index: number,`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`array: T[]`<br>&nbsp;&nbsp;&nbsp;&nbsp;`) => R`<br>`): Array<R or T>` | Map an array. |
 
 
-## Standard Tags
+## Standard Tag-Libs
 
 ### `red-agate/modules/red-agate/taglib`
 
@@ -294,6 +299,27 @@ Instead, you can also import the whole by simply specifying `red-agate*` as the 
 | SvgFragment | Append raw SVG tags. |
 | Text | Draw text line(s). |
 | SvgImposition | Impose pages in a physical page. |
+
+### `red-agate-barcode/modules/barcode/(Code39|Code128|Ean|Itf|JapanPostal|Nw7|Qr)`
+
+```bash
+$ npm install red-agate-barcode --save
+```
+
+| tag | description |
+|-----|-------------|
+| Code39 | Draw a CODE39 barcode. |
+| Code128 | Draw a CODE128 barcode. (GS1-128 is available) |
+| Ean13 | Draw a EAN-13 (GTIN-13 / JAN-13) barcode. |
+| Ean8 | Draw a EAN-8 (GTIN-8 / JAN-8) barcode. |
+| Ean5 | Draw a EAN-5 (JAN-5) barcode. |
+| Ean2 | Draw a EAN-2 (JAN-2) barcode. |
+| UpcA | Draw a UPC-A (GTIN-12) barcode. |
+| UpcE | Draw a UPC-E barcode. |
+| Itf | Draw a ITF barcode. (GTIN-14 is available) |
+| JapanPostal | Draw a Japan Post Customer barcode. |
+| Nw7 | Draw a NW7 (Codabar) barcode. |
+| Qr | Draw a QR Code (model 2) barcode. |
 
 
 ## Configurations for building application
