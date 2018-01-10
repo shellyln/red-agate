@@ -32,13 +32,26 @@ export type RedAgateFragment = {} | Array<RedAgateChild | any[] | boolean>;
 export type RedAgateNode = RedAgateChild | RedAgateFragment /*| RedAgatePortal*/ | string | number | boolean | null | undefined;
 
 export interface ComponentProps {
+    /** 'id' attribute of the html|xml element. */
     id?: string;
+    /** name of RedAgateNode. */
     ref?: string;
+    /** collection of descendant named 'ref's. */
     refs?: { [refName: string]: RedAgateElement<any> };
-    // key?: RedAgateKey;
+    /** auto numbered unique id of the html|xml element. if 'id' is not present, use this. */
     __nodeId?: number;
+    // key?: RedAgateKey;
+
+    /** 'class' attribute of the html|xml element. */
     styleClass?: object | string;
+    /** synonym of 'styleClass'. 'class' attribute of the html|xml element. */
+    className?: object | string;
+    /** synonym of 'styleClass'. 'class' attribute of the html|xml element. */
+    'class'?: object | string;
+
+    /** 'style' attribute of the html|xml element. */
     style?: object | string;
+
     children?: RedAgateNode | RedAgateNode[];
     dangerouslySetInnerHTML?: {__html: string};
     setInnerText?: {__text: string};
@@ -369,7 +382,7 @@ export function htmlAttributesRenderer(props: any, omitKeys?: Set<string>): {att
 
     for (const key of Object.getOwnPropertyNames(props)) {
         switch (key) {
-            case 'styleClass': case 'class':
+            case 'styleClass': case 'className': case 'class':
                 attrs += ` class="${formatArrayProp(props[key])}"`;
                 break;
 
