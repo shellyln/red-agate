@@ -367,6 +367,9 @@ export function transform(element: RedAgateNode, transformContext?: TransformCon
 }
 
 
+function camelToKebabCase(s: string): string {
+    return s.replace(/([a-z0-9])([A-Z])/g, (match, p1, p2) => `${p1}-${p2.toLowerCase()}`);
+}
 
 export function htmlAttributesRenderer(props: any, omitKeys?: Set<string>): {attrs: string, children: string} {
     let attrs = '';
@@ -391,7 +394,7 @@ export function htmlAttributesRenderer(props: any, omitKeys?: Set<string>): {att
                     typeof props.style === 'string' ? props.style :
                         Object.getOwnPropertyNames(props.style)
                             .filter(x => props.style[x] !== null && props.style[x] !== void 0)
-                            .map(x => `${Escape.html(x)}:${Escape.html(props.style[x])};`)
+                            .map(x => `${Escape.html(camelToKebabCase(x))}:${Escape.html(props.style[x])};`)
                             .join('')}"`;
                 break;
 
