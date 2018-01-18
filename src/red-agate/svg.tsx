@@ -10,6 +10,9 @@ import { SvgCanvas,
          TextAlignValue,
          TextBaselineValue }  from 'red-agate-svg-canvas/modules/drawing/canvas/SvgCanvas';
 import { Rect2D }             from 'red-agate-svg-canvas/modules/drawing/canvas/TransferMatrix2D';
+import { TextEncoding }       from 'red-agate-util/modules/convert/TextEncoding';
+import { FileFetcher }        from 'red-agate-util/modules/io/FileFetcher';
+import { Logger }             from 'red-agate-util/modules/io/Logger';
 import { ShapeBaseProps,
          ShapeProps,
          shapePropsDefault,
@@ -25,15 +28,51 @@ export interface SvgProps extends ShapeBaseProps {
     height: number;
     unit?: string;
     alt?: string;
+    template?: string;
+    templateUrl?: string;
 }
 
 export class Svg extends RedAgate.RedAgatePhantomComponent<SvgProps> {
     public constructor(props: SvgProps) {
         super(props);
+        if (props.template) {
+            this.template = props.template;
+        }
+    }
+
+    private template: string | null = null;
+
+    public defer() {
+        if (this.template !== null) {
+            return Promise.resolve();
+        } else if (this.props.templateUrl === void 0 || this.props.templateUrl === null || this.props.templateUrl === '') {
+            return Promise.resolve();
+        } else {
+            const url = this.props.templateUrl;
+            const promise = new Promise<void>((resolve, reject) => {
+                try {
+                    FileFetcher.fetchLocation(url)
+                    .then((result) => {
+                        this.template = TextEncoding.decodeUtf8(result.data);
+                        resolve();
+                    })
+                    .catch((e) => {
+                        Logger.log("Svg#defer:catch:" + e);
+                        reject(e);
+                    });
+                } catch (e) {
+                    Logger.log("Svg#defer:catch:" + e);
+                    reject(e);
+                }
+            });
+            return promise;
+        }
     }
 
     public beforeRender(contexts: Map<string, any>) {
-        this.setContext(contexts, CONTEXT_SVG_CANVAS, new SvgCanvas());
+        this.setContext(contexts, CONTEXT_SVG_CANVAS,
+            this.template === null ? new SvgCanvas() : new SvgCanvas()
+        );
     }
 
     public render(contexts: Map<string, any>, children: string) {
