@@ -71,7 +71,7 @@ export class Svg extends RedAgate.RedAgatePhantomComponent<SvgProps> {
 
     public beforeRender(contexts: Map<string, any>) {
         this.setContext(contexts, CONTEXT_SVG_CANVAS,
-            this.template === null ? new SvgCanvas() : new SvgCanvas()
+            this.template === null ? new SvgCanvas() : SvgCanvas.fromTemplate(this.template)
         );
     }
 
