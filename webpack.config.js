@@ -17,7 +17,12 @@ module.exports = function (env) {
             libraryTarget: 'commonjs2',
             filename: 'index.spec.js',
             path: path.resolve(__dirname, 'bin.test'),
-            devtoolModuleFilenameTemplate: void 0
+
+            // resolve linked modules sourcemap.
+            devtoolModuleFilenameTemplate: function(info) {
+                var resourcePath = info.resourcePath.replace(/^\.\.\/red-agate/, './../red-agate');
+                return 'webpack:///' + resourcePath;
+            },
         },
         module: {
             rules: [{
@@ -46,6 +51,11 @@ module.exports = function (env) {
         },
         plugins: [],
         resolve: {
+            alias: {
+                "red-agate-util": path.resolve(__dirname, "../red-agate-util/"),
+                "red-agate-svg-canvas": path.resolve(__dirname, "../red-agate-svg-canvas/"),
+                "red-agate-math": path.resolve(__dirname, "../red-agate-math/"),
+            },
             extensions: ['.tsx', '.ts', '.jsx', '.js']
         },
         devtool: 'source-map'
