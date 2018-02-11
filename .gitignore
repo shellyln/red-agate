@@ -58,3 +58,6 @@ build/Release
 
 # NPM files
 .npmrc
+
+# python cache
+/__pycache__/
