@@ -198,6 +198,61 @@ fbaA4ReportHandler(data /* PrintJob */, {} as any, (error, result) => {
 });
 ```
 
+call from another process:
+```tsx
+import * as RedAgate     from 'red-agate/modules/red-agate';
+import { Html5 }         from 'red-agate/modules/red-agate/html';
+
+export let billngReportHandler = (event: any, context, callback) => RedAgate.renderOnAwsLambda(
+<Html5></Html5>, callback);
+
+export let kanbanReportHandler = (event: any, context, callback) => RedAgate.renderOnAwsLambda(
+<Html5></Html5>, callback);
+
+App
+.route('/', (evt, ctx, cb) => cb(null, 'Hello, Node!'))
+.route('/billing', billngReportHandler)
+.route('/kanban', kanbanReportHandler)
+.run({});
+```
+
+```python
+#!/usr/bin/env python
+
+import json
+import os
+import sys
+
+sys.path.append(os.path.dirname(os.path.abspath(__file__)) + '/../red-agate/')
+from redagate_lambda import call, AppInternalServerErrorException
+
+
+if __name__ == '__main__':
+    from flask import Flask, abort
+    app = Flask(__name__)
+
+    @app.errorhandler(AppInternalServerErrorException)
+    def internal_error_handler(e):
+        return 'Internal Server Error', 500
+
+    @app.route('/billing')
+    def run_billing_report():
+        with open('./src/examples/billing.data.json') as f:
+            event = json.loads(f.read())
+            event['eventName'] = '/billing'
+            return call(command=["node", "dist/app.js"], event=event)
+
+    @app.route('/kanban')
+    def run_barcode_test_report():
+        with open('./src/examples/kanban.data.json') as f:
+            event = json.loads(f.read())
+            event['eventName'] = '/kanban'
+            return call(command=["node", "dist/app.js"], event=event)
+
+    port = int(os.environ['PORT']) if os.environ.get('PORT') is not None else None
+    app.run(debug=True, port=port)
+```
+
 We provide ES6 module files under `red-agate*/modules/*` path.  
 You can get the benefits of tree shaking when using webpack.  
 Instead, you can also import the whole by simply specifying `red-agate*` as the import path.
@@ -238,6 +293,12 @@ Instead, you can also import the whole by simply specifying `red-agate*` as the 
 | `Query<T>#where(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`fn: (`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`value: T,`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`index: number,`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`array: T[]`<br>&nbsp;&nbsp;&nbsp;&nbsp;`) => boolean`<br>`): Query<T>` | Filter an array. |
 | `Query<T>#select<R>(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`fn?: (`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`value: T,`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`index: number,`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`array: T[]`<br>&nbsp;&nbsp;&nbsp;&nbsp;`) => R`<br>`): Array<R or T>` | Map an array. |
 
+### `import { App } from 'red-agate/modules/red-agate/app'`
+
+| method | description |
+|--------|-------------|
+| `App.route(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`name: string`<br>&nbsp;&nbsp;&nbsp;&nbsp;`lambda: AwsLambda`<br>`): App` | Add routing to lambda.<br>`name` parameter is used as routing path.<br>When request event is received call the lambda that `name` equals to `event.eventName`. |
+| `App.run(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`context: any`<br>&nbsp;&nbsp;&nbsp;&nbsp;`lambda?: AwsLambda`<br>`): App` | Run routing.<br>event is received from stdin as JSON and send response to stdout.<br>Exit process by calling `exit()` when response is ended. |
 
 ## Standard Tag-Libs
 
@@ -299,6 +360,12 @@ Instead, you can also import the whole by simply specifying `red-agate*` as the 
 | SvgFragment | Append raw SVG tags. |
 | Text | Draw text line(s). |
 | SvgImposition | Impose pages in a physical page. |
+
+### `red-agate/modules/red-agate/printing`
+
+| tag | description |
+|-----|-------------|
+| PrinterMarksProps | Draw printer marks (crop mark, bleed mark, center mark, fold mark). |
 
 ### `red-agate-barcode/modules/barcode/(Code39|Code128|Ean|Itf|JapanPostal|Nw7|Qr)`
 
