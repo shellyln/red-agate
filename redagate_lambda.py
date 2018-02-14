@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import json
 import os
@@ -6,7 +6,7 @@ import subprocess
 import sys
 
 
-class AppInternalServerErrorException(Exception):
+class LambdaInternalErrorException(Exception):
     pass
 
 
@@ -24,8 +24,8 @@ def call(command=None, event=None, timeout=None):
             proc.kill()
             (output, err) = proc.communicate()
         if proc_status != 0:
-            raise AppInternalServerErrorException()
+            raise LambdaInternalErrorException()
         elif err is not None:
-            raise AppInternalServerErrorException()
+            raise LambdaInternalErrorException()
         return output
 
