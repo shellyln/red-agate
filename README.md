@@ -294,8 +294,9 @@ Instead, you can also import the whole by simply specifying `red-agate*` as the 
 
 | method | description |
 |--------|-------------|
+| `App.cli(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`options: string[]`<br>&nbsp;&nbsp;&nbsp;&nbsp;`handler: (opts: Map<string, string>) => void`<br>`): App` | Add CLI routing.<br>If `options[i]` starts with `?` it is a optional parameter.<br>If `options[i]` ends with `*` it is a wildcard. |
 | `App.route(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`name: string`<br>&nbsp;&nbsp;&nbsp;&nbsp;`lambda: AwsLambda`<br>`): App` | Add routing to lambda.<br>`name` parameter is used as routing path.<br>When request event is received call the lambda that `name` equals to `event.eventName`. |
-| `App.run(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`context: any`<br>&nbsp;&nbsp;&nbsp;&nbsp;`lambda?: AwsLambda`<br>`): App` | Run routing.<br>event is received from stdin as JSON and send response to stdout.<br>Exit process by calling `exit()` when response is ended. |
+| `App.run(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`context: any`<br>&nbsp;&nbsp;&nbsp;&nbsp;`lambda?: AwsLambda`<br>`): App` | Run routing.<br>event is received from stdin as JSON and send response to stdout.<br>Exit process by calling `exit()` when response is ended.<br>If `lambda` is specified, ignore `route()` and call `lambda`. |
 
 ## Standard Tag-Libs
 
