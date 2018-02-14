@@ -50,6 +50,11 @@ export class App {
         const optsMap = new Map<string, string>();
         for (let op of options) {
             let matched = false;
+            let isOptional = false;
+            if (op.startsWith('?')) {
+                op = op.substring(1);
+                isOptional = true;
+            }
             for (let arg of process.argv.slice(2)) {
                 if (op.endsWith('*')) {
                     if (arg.startsWith(op.substring(0, op.length - 1))) {
@@ -65,7 +70,7 @@ export class App {
                     }
                 }
             }
-            if (! matched) {
+            if (!isOptional && !matched) {
                 return this;
             }
         }
