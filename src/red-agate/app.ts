@@ -40,6 +40,40 @@ export type AwsLambda = (event: any, context: AwsLambdaContext, callback: (error
 
 export class App {
     private static lambdas = new Map<string, AwsLambda>();
+    private static suppressRun = false;
+
+    public static cli(options: string[], handler: (opts: Map<string, string>) => void) {
+        if (App.suppressRun) {
+            return this;
+        }
+
+        const optsMap = new Map<string, string>();
+        for (let op of options) {
+            let matched = false;
+            for (let arg of process.argv.slice(2)) {
+                if (op.endsWith('*')) {
+                    if (arg.startsWith(op.substring(0, op.length - 1))) {
+                        matched = true;
+                        optsMap.set(op, arg.substring(op.length - 1));
+                        break;
+                    }
+                } else {
+                    if (arg === op) {
+                        matched = true;
+                        optsMap.set(op, arg.substring(op.length));
+                        break;
+                    }
+                }
+            }
+            if (! matched) {
+                return this;
+            }
+        }
+
+        handler(optsMap);
+        App.suppressRun = true;
+        return this;
+    }
 
     public static route(name: string, lambda: AwsLambda) {
         App.lambdas.set(name, lambda);
@@ -47,6 +81,10 @@ export class App {
     }
 
     public static run(context: any, lambda?: AwsLambda) {
+        if (App.suppressRun) {
+            return;
+        }
+
         process.stdin.resume();
         process.stdin.setEncoding('utf8');
 
