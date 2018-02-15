@@ -1,0 +1,53 @@
+{
+    "compilerOptions": {
+        "moduleResolution": "node",
+        "module": "es2015",
+        "target": "es2015",
+        "lib": ["dom", "es6", "es2015", "es2016", "es2017", "scripthost"],
+        "sourceMap": true,
+        // "declaration": true,
+        // "declarationDir": "./declarations",
+        "noEmitOnError": true,
+        "noImplicitAny": true,
+        "suppressImplicitAnyIndexErrors": true,
+        "noImplicitReturns": true,
+        "noImplicitThis": true,
+        "strictNullChecks": true,
+        // "noUnusedParameters": true,
+        // "noUnusedLocals": true,
+        // "noFallthroughCasesInSwitch": true,
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "baseUrl": ".",
+        "paths": {
+            "red-agate-util/*": [
+                "../red-agate-util/*"
+            ],
+            "red-agate-svg-canvas/*": [
+                "../red-agate-svg-canvas/*"
+            ],
+            "red-agate-math/*": [
+                "../red-agate-math/*"
+            ],
+            "red-agate/*": [
+                "../red-agate/*"
+            ],
+            "red-agate-barcode/*": [
+                "../red-agate-barcode/*"
+            ],
+        },
+        // "traceResolution": true,
+        "types": ["node", "jasmine"],
+        "jsx": "react",
+        "jsxFactory": "RedAgate.createElement"
+    },
+    "exclude": [
+        "bin",
+        "modules",
+        "e2e",
+        "declarations",
+        "dist",
+        "src/spec",
+        "node_modules"
+    ]
+}

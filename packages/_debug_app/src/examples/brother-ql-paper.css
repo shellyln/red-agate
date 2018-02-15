@@ -1,0 +1,23 @@
+
+
+/** Paper sizes (-0.2mm) **/
+body.BrotherDk-AddressLabel-L            .sheet { width: 37.8mm; height: 89.6mm }
+body.BrotherDk-AddressLabel-L.landscape  .sheet { width: 89.6mm; height: 37.8mm }
+body.BrotherDk-AddressLabel-M            .sheet { width: 28.7mm; height: 89.6mm }
+body.BrotherDk-AddressLabel-M.landscape  .sheet { width: 89.6mm; height: 28.7mm }
+body.BrotherDk-AddressLabel-S            .sheet { width: 28.7mm; height: 61.8mm }
+body.BrotherDk-AddressLabel-S.landscape  .sheet { width: 61.8mm; height: 28.7mm }
+
+/** Padding area **/
+.sheet.padding-3mm { padding: 3mm }
+
+/** Fix for Chrome issue #273306 (-0.1mm) **/
+@media print {
+    body.BrotherDk-AddressLabel-L           { width: 37.9mm }
+    body.BrotherDk-AddressLabel-L.landscape { width: 89.7mm }
+    body.BrotherDk-AddressLabel-M           { width: 28.8mm }
+    body.BrotherDk-AddressLabel-M.landscape { width: 89.7mm }
+    body.BrotherDk-AddressLabel-S           { width: 28.8mm }
+    body.BrotherDk-AddressLabel-S.landscape { width: 61.9mm }
+}
+

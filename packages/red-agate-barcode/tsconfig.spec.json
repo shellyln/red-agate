@@ -1,0 +1,51 @@
+{
+    "compilerOptions": {
+        "moduleResolution": "node",
+        "module": "commonjs",
+        "target": "es2015",
+        "lib": ["dom", "es6", "es2015", "es2016", "es2017", "scripthost"],
+        "sourceMap": true,
+        // "declaration": true,
+        // "declarationDir": "./declarations",
+        "noEmitOnError": true,
+        "noImplicitAny": true,
+        "suppressImplicitAnyIndexErrors": true,
+        "noImplicitReturns": true,
+        "noImplicitThis": true,
+        "strictNullChecks": true,
+        // "noUnusedParameters": true,
+        // "noUnusedLocals": true,
+        // "noFallthroughCasesInSwitch": true,
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "baseUrl": ".",
+        "paths": {
+            "red-agate-util/*": [
+                "../red-agate-util/*"
+            ],
+            "red-agate-svg-canvas/*": [
+                "../red-agate-svg-canvas/*"
+            ],
+            "red-agate-math/*": [
+                "../red-agate-math/*"
+            ],
+            "red-agate/*": [
+                "../red-agate/*"
+            ],
+        },
+        // "traceResolution": true,
+        "types": ["node", "jasmine"],
+        "jsx": "react",
+        "jsxFactory": "Rutile.createElement"
+    },
+    "include": [
+        "src/_spec/**/*.spec.ts"
+    ],
+    "exclude": [
+        "bin",
+        "modules",
+        "node_modules",
+        "spec",
+        "src/**/*!(.spec.ts)"
+    ]
+}

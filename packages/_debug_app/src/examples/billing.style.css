@@ -1,0 +1,115 @@
+
+/* latin */
+@font-face {
+    font-family: 'Arvo';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Arvo'), url(https://fonts.gstatic.com/s/arvo/v10/J0GYVYTizO1mjpT3aOcSbQ.woff2) format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215;
+}
+/* latin */
+@font-face {
+    font-family: 'Libre Barcode 39 Text';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Libre Barcode 39 Text Regular'), local('LibreBarcode39Text-Regular'), url(https://fonts.gstatic.com/s/librebarcode39text/v5/O4inMvtTcDsw_GI-nhT1ngA9s1DpUaeSeqfKrIEfYns.woff2) format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215;
+}
+body {
+    font-family: 'Arvo', serif;
+}
+section.sheet {
+    position: relative; top: 0; left: 0;
+}
+td.number {
+    text-align: right;
+}
+
+section.report-header {
+    position: absolute; top: 10mm; left: 10mm; width: 190mm;
+}
+section.report-header h1.report-title {
+    position: absolute; top: 0; right: 0; margin: 0;
+    border-bottom: solid 2px;
+}
+section.report-header div.my-company-info {
+    position: absolute; top: 10mm; left: 0;
+}
+section.report-header div.my-company-info h1.company-name {
+    margin: 0 0 2mm 0;
+}
+section.report-header div.bill-to {
+    position: absolute; top: 15mm; right: 0;
+}
+section.report-header div.bill-to td.header {
+    width: 25mm; vertical-align: top;
+}
+section.report-header div.bill-to td.value {
+    width: 45mm;
+}
+
+section.report-detail {
+    position: absolute; top: 65mm; left: 10mm;
+}
+table.detail {
+    width: 188mm;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+table.detail thead {
+    border-bottom: 4px solid;
+}
+table.detail thead th {
+    border: 2px solid;
+}
+table.detail tbody {
+    border-bottom: 4px solid;
+}
+table.detail tbody td {
+    border: 2px solid;
+}
+table.detail td, table.detail th {
+    height: 8mm;
+}
+table.detail thead tr {
+    background: #fafafa;
+}
+table.detail tbody tr:nth-child(even) {
+    background: #eee;
+}
+table.detail thead th.date {
+    width: 25mm;
+}
+table.detail thead th.description {
+}
+table.detail thead th.qty {
+    width: 15mm;
+}
+table.detail thead th.rate {
+    width: 20mm;
+}
+table.detail thead th.amount {
+    width: 30mm;
+}
+table.detail tfoot th.header, table.detail tfoot td.header, table.detail tbody.brought-forward th.header {
+    text-align: right; border: 2px solid; padding-right: 1em;
+}
+table.detail tfoot th.value, table.detail tfoot td.value, table.detail tbody.brought-forward td.value {
+    border: 2px solid; 
+}
+table.detail tfoot tr.total-due {
+    border-top: 4px solid;
+}
+
+section.report-footer {
+    position: absolute; bottom: 10mm; left: 10mm;
+}
+section.report-footer div.notes {
+    position: relative; top: 5mm; left: 0;
+}
+section.report-footer div.notes-body {
+    width: 90mm; height: 20mm; border: solid 1px;
+}
+section.report-footer div.barcode {
+    position: absolute; top: 20mm; left: 115mm; font-size: 10mm; font-family: 'Libre Barcode 39 Text', cursive;
+}
