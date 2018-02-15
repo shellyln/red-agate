@@ -60,23 +60,23 @@ export let barcodeTestHandler: AwsLambda = (event: any, context, callback) => Re
                     <Code39 x={15} y={40}
                         data="HELLO"
                         narrowWidth={0.33 * 2} wideWidth={0.66 * 2} height={15} quietHeight={0}
-                        font="7px 'OCR B'" textHeight={7} />
+                        font="7px 'OCRB'" textHeight={7} />
                     <Code128 x={15} y={70}
                         data="Hello"
                         elementWidth={0.33 * 2} height={15} quietHeight={0}
-                        font="7px 'OCR B'" textHeight={7} />
+                        font="7px 'OCRB'" textHeight={7} />
                     <Ean13 x={15} y={100}
                         data="123456789012"
                         elementWidth={0.33 * 2} height={15} quietHeight={0}
-                        font="7px 'OCR B'" textHeight={7} />
+                        font="7px 'OCRB'" textHeight={7} />
                     <Itf x={15} y={130}
                         data="12345" addCheckDigit
                         narrowWidth={0.33 * 2} wideWidth={0.66 * 2} height={15} quietHeight={0}
-                        font="7px 'OCR B'" textHeight={7} />
+                        font="7px 'OCRB'" textHeight={7} />
                     <Nw7 x={15} y={160}
                         data="1234" startChar="A" stopChar="B"
                         narrowWidth={0.33 * 2} wideWidth={0.66 * 2} height={15} quietHeight={0}
-                        font="7px 'OCR B'" textHeight={7} />
+                        font="7px 'OCRB'" textHeight={7} />
                     <JapanPostal x={15} y={190}
                         data="1234567"
                         elementWidth={0.33 * 2} height={0.66 * 6} quietHeight={0} />
