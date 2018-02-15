@@ -20,24 +20,14 @@
         "emitDecoratorMetadata": true,
         "baseUrl": ".",
         "paths": {
-            "red-agate-util": [
-                "../red-agate-util"
-            ],
-            "red-agate-svg-canvas": [
-                "../red-agate-svg-canvas"
-            ],
-            "red-agate-math": [
-                "../red-agate-math"
-            ],
-
             "red-agate-util/*": [
-                "../red-agate-util/"
+                "../red-agate-util/*"
             ],
             "red-agate-svg-canvas/*": [
-                "../red-agate-svg-canvas/"
+                "../red-agate-svg-canvas/*"
             ],
             "red-agate-math/*": [
-                "../red-agate-math/"
+                "../red-agate-math/*"
             ],
         },
         // "traceResolution": true,
