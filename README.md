@@ -32,7 +32,7 @@ See main package's [README](https://github.com/shellyln/red-agate/tree/master/pa
 
 | package | description |
 |---------|-------------|
-| [red-agate](https://github.com/shellyln/red-agate/tree/master/packages/red-agate) | RedAgate's main package.<br>HTML|XML|SVG template engine using JSX, suitable for report output. |
+| [red-agate](https://github.com/shellyln/red-agate/tree/master/packages/red-agate) | RedAgate's main package.<br>HTML/XML/SVG template engine using JSX, suitable for report output. |
 | [red-agate-util](https://github.com/shellyln/red-agate/tree/master/packages/red-agate-util) | Utilities shared library. |
 | [red-agate-svg-canvas](https://github.com/shellyln/red-agate/tree/master/packages/red-agate-svg-canvas) | HTML5 canvas compatible SVG Canvas shared library. |
 | [red-agate-math](https://github.com/shellyln/red-agate/tree/master/packages/red-agate-math) | Math (Finite field, Error correction (RS,BCH,CRC)) shared library. |
