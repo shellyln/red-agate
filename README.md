@@ -36,7 +36,7 @@ See main package's [README](https://github.com/shellyln/red-agate/tree/master/pa
 | [red-agate-util](https://github.com/shellyln/red-agate/tree/master/packages/red-agate-util) | Utilities shared library. |
 | [red-agate-svg-canvas](https://github.com/shellyln/red-agate/tree/master/packages/red-agate-svg-canvas) | HTML5 canvas compatible SVG Canvas shared library. |
 | [red-agate-math](https://github.com/shellyln/red-agate/tree/master/packages/red-agate-math) | Math (Finite field, Error correction (RS,BCH,CRC)) shared library. |
-| [red-agate-barcode](https://github.com/shellyln/red-agate/tree/master/packages/red-agate-barcode) | 1d/2d barcodes shared library |
+| [red-agate-barcode](https://github.com/shellyln/red-agate/tree/master/packages/red-agate-barcode) | 1d/2d barcodes shared library. |
 
 ## License
 [ISC](https://github.com/shellyln/red-agate/blob/master/LICENSE.md)  
