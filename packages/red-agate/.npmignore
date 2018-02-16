@@ -70,5 +70,8 @@ build/Release
 /.vscode/
 /spec/
 .babelrc
+.travis.yml
 tsconfig.json
+tsconfig.spec.json
 tslint.json
+webpack.config.js
