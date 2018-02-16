@@ -1,7 +1,7 @@
 {
   "name": "red-agate-math",
   "private": false,
-  "version": "0.0.7",
+  "version": "0.0.13",
   "description": "red-agate math shared library.",
   "keywords": [
     "finite field",
@@ -23,7 +23,7 @@
   },
   "dependencies": {},
   "peerDependencies": {
-    "red-agate-util": "^0.0.7"
+    "red-agate-util": "^0.0.13"
   },
   "devDependencies": {
     "@types/jasmine": "^2.8.2",

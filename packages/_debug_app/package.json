@@ -14,10 +14,10 @@
   },
   "dependencies": {},
   "peerDependencies": {
-    "red-agate": "^0.0.8",
-    "red-agate-barcode": "^0.0.12",
-    "red-agate-svg-canvas": "^0.0.7",
-    "red-agate-util": "^0.0.7"
+    "red-agate": "^0.0.13",
+    "red-agate-barcode": "^0.0.13",
+    "red-agate-svg-canvas": "^0.0.13",
+    "red-agate-util": "^0.0.13"
   },
   "devDependencies": {
     "@types/jasmine": "^2.8.2",

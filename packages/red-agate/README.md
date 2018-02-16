@@ -14,7 +14,7 @@ You can start easily because we are using JSX and semantics similar to React.
 #### Advantages:
 * Easily to bundle resources (images, stylesheets, fonts, scripts, ...) .  
   `RedAgate.renderAsHtml()` API and component lifecycle `defer()` method return promise objects.  
-  You can use standard tags (e.g. Image, Style, Font, SingleFont, Script, Asset) to bundle them.
+  You can use standard Tag-Libs (e.g. Image, Style, Font, SingleFont, Script, Asset) to bundle them.
 
 * Many standard Tag-Libs (e.g. If, Repeat, ForEach, Template, Html5, Svg, SVG shapes,
   Barcodes (QR Code, Code39, Code128, EAN/UPC, ITF, NW7/Codabar, postal barcode) and complex objects) are bundled.
