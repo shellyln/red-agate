@@ -5,26 +5,27 @@
             "type": "node",
             "request": "launch",
             "name": "Launch Console Program",
-            "program": "${workspaceRoot}/src/app.tsx",
+            "program": "${workspaceRoot}/packages/_debug_app/src/app.tsx",
+            "cwd": "${workspaceFolder}/packages/_debug_app",
             "args": [
                 "--debug",
                 "--handler=/kanban"
             ],
             "outFiles": [
-                "${workspaceRoot}/dist/app.js"
+                "${workspaceRoot}/packages/_debug_app/dist/app.js"
             ]
         },
         {
             "type": "node",
             "request": "launch",
             "name": "Launch Web Program",
-            "program": "${workspaceRoot}/src/app.tsx",
+            "program": "${workspaceRoot}/packages/_debug_app/src/app.tsx",
+            "cwd": "${workspaceFolder}/packages/_debug_app",
             "args": [
-                "--debug",
-                "--handler=/kanban"
+                "--express"
             ],
             "outFiles": [
-                "${workspaceRoot}/dist/app.js"
+                "${workspaceRoot}/packages/_debug_app/dist/app.js"
             ]
         },
         {
@@ -33,10 +34,10 @@
             "request": "launch",
             "stopOnEntry": true,
             "pythonPath": "${config:python.pythonPath}",
-            "program": "${workspaceRoot}/app.py",
-            "cwd": "${workspaceFolder}",
+            "program": "${workspaceRoot}/packages/_debug_app/app.py",
+            "cwd": "${workspaceFolder}/packages/_debug_app",
             "env": {},
-            "envFile": "${workspaceFolder}/.env",
+            "envFile": "${workspaceFolder}/packages/_debug_app/.env",
             "debugOptions": [
                 "RedirectOutput"
             ]
@@ -48,9 +49,9 @@
             "stopOnEntry": true,
             "pythonPath": "${config:python.pythonPath}",
             "program": "${file}",
-            "cwd": "${workspaceFolder}",
+            "cwd": "${workspaceFolder}/packages/_debug_app",
             "env": {},
-            "envFile": "${workspaceFolder}/.env",
+            "envFile": "${workspaceFolder}/packages/_debug_app/.env",
             "debugOptions": [
                 "RedirectOutput"
             ]
