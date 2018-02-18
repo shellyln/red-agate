@@ -20,6 +20,7 @@
     "red-agate-util": "^0.0.13"
   },
   "devDependencies": {
+    "@types/express": "^4.11.1",
     "@types/jasmine": "^2.8.2",
     "@types/node": "^8.0.57",
     "autoprefixer": "^7.2.2",
@@ -33,6 +34,7 @@
     "cpx": "^1.5.0",
     "cross-env": "^5.1.1",
     "css-loader": "^0.28.7",
+    "express": "^4.16.2",
     "extract-text-webpack-plugin": "^3.0.2",
     "html-loader": "^0.5.1",
     "jasmine": "^2.8.0",
@@ -59,9 +61,9 @@
   },
   "scripts": {
     "start": "run-s start:node",
-    "start2": "cat ./src/examples/barcode.data.json | node dist/app.js > ./debug/index.html",
     "start:web": "lite-server -c=bs-config.js",
-    "start:node": "node dist/app.js",
+    "start:node": "node dist/app.js --debug --handler=/kanban",
+    "start:call": "cat ./src/examples/barcode.data.json | node dist/app.js > ./debug/index.html",
     "clean": "run-s clean:esm clean:declarations clean:dist",
     "clean:esm": "rimraf ./modules",
     "clean:declarations": "rimraf ./declarations",

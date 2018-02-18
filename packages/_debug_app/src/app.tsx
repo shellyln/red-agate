@@ -51,6 +51,31 @@ App.cli(['?--foo', '--debug', '--handler=*'], (opts) => {
         }
     });
 })
+.cli(['--express'], (opts) => {
+    // tslint:disable-next-line:no-implicit-dependencies
+    // import * as express from 'express'; // Can't resolve dependency with webpack:
+    //                                     // "81:13-25 Critical dependency:
+    //                                     // the request of a dependency is an expression"
+    // tslint:disable-next-line:no-var-requires no-implicit-dependencies
+    const express = require('express');
+
+    express()
+    .get('/', (req: any, res: any) =>
+        RedAgate.renderOnExpress(
+        <h1>
+            Home. your ip: {req.ip}
+        </h1>,
+        req, res))
+    .get('/a', (req: any, res: any) =>
+        RedAgate.renderOnExpress(
+        <h1>
+            A. your ip: {req.ip}
+        </h1>,
+        req, res))
+    .listen(process.env.PORT || 3000, () => {
+        console.log('start');
+    });
+})
 .route('/'            , (evt, ctx, cb) => cb(null, 'Hello, Node!'))
 // .route('/billing'     , billngReportHandler)
 // .route('/kanban'      , kanbanReportHandler)
