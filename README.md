@@ -26,7 +26,8 @@ You can start easily because we are using JSX and semantics similar to React.
 
 ## Get Started
 
-See main package's [README](https://github.com/shellyln/red-agate/tree/master/packages/red-agate/README.md).
+See main package's [README](https://github.com/shellyln/red-agate/tree/master/packages/red-agate/README.md) and
+[Live Demo](https://shellyln.github.io/red-agate/demo.html).
 
 ## Packages
 

@@ -32,9 +32,10 @@ $ npm install red-agate --save
 
 ## Usage
 
-See [examples](https://github.com/shellyln/red-agate-example).
+See [live demo](https://shellyln.github.io/red-agate/demo.html) and
+[examples](https://github.com/shellyln/red-agate-example).
 
-Hello, world:
+### Hello, world:
 ```tsx
 import * as RedAgate from 'red-agate/modules/red-agate';
 
@@ -51,7 +52,7 @@ RedAgate.renderAsHtml(<Hello name={'world'}/>)
 .catch(error => console.log(error))
 ```
 
-defining element by using lambda:
+### defining element by using lambda:
 ```tsx
 export interface IfProps extends RedAgate.ComponentProps {
     condition: boolean;
@@ -82,7 +83,7 @@ export class If extends RedAgate.RedAgateComponent<IfProps> {
 }
 ```
 
-defining SVG element by using component:
+### defining SVG element by using component:
 ```tsx
 import { SvgCanvas }          from 'red-agate-svg-canvas/modules/drawing/canvas/SvgCanvas';
 import { Shape,
@@ -111,7 +112,7 @@ export class Rect extends Shape<RectProps> {
 }
 ```
 
-example:
+### example:
 ```tsx
 import * as RedAgate     from 'red-agate/modules/red-agate';
 import { ForEach,
@@ -195,7 +196,7 @@ fbaA4ReportHandler(data /* PrintJob */, {} as any, (error, result) => {
 });
 ```
 
-call from another process:
+### call from another process:
 ```tsx
 import * as RedAgate     from 'red-agate/modules/red-agate';
 import { Html5 }         from 'red-agate/modules/red-agate/html';
@@ -396,26 +397,26 @@ Instead, you will import `red-agate` as `React`, you can let RedAgate and React 
 
 ## FAQ
 
-* Q: Can I receive element events (e.g. onclick) ?  
-* A: No. RedAgate is template engine. Please use React, Vue, Riot, Angular, knockout, ...
+* Can I receive element events (e.g. onclick) ?  
+    * No. RedAgate is template engine. Please use React, Vue, Riot, Angular, knockout, ...
 
 
 
 
-+ Q: Can I change DOM via API after rendered to real DOM?  
-+ A: No. Please use React, Vue, Riot, Angular, knockout, ...
++ Can I change DOM via API after rendered to real DOM?  
+    + No. Please use React, Vue, Riot, Angular, knockout, ...
 
 
 
 
-* Q: Can I build print preview window by using RedAgate?  
-* A: [paper-css](https://github.com/cognitom/paper-css) may help you to build print previews.
+* Can I build print preview window by using RedAgate?  
+    * [paper-css](https://github.com/cognitom/paper-css) may help you to build print previews.
 
 
 
 
-+ Q: Can I output rendered result as PDF, PNG, or other formats?  
-+ A: You can convert from html to any formats by using other libraries (e.g. [electron-pdf](https://github.com/fraserxu/electron-pdf), [wkhtmltopdf](https://wkhtmltopdf.org/)) .
++ Can I output rendered result as PDF, PNG, or other formats?  
+    + You can convert from html to any formats by using other libraries (e.g. [electron-pdf](https://github.com/fraserxu/electron-pdf), [wkhtmltopdf](https://wkhtmltopdf.org/)) .
 
 
 ## License
