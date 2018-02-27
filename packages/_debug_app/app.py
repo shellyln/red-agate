@@ -5,7 +5,9 @@ import os
 import sys
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) + '/../red-agate/')
+# pylint: disable=import-error, wrong-import-position
 from redagate_lambda import call, LambdaInternalErrorException
+# pylint: enable=import-error, wrong-import-position
 
 
 if __name__ == '__main__':
