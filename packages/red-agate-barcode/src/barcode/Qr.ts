@@ -512,10 +512,6 @@ export class Qr extends Shape<QrProps> {
                 funcPatternsMap.fill(nx - 9,      0, 9, 8, 1);
                 funcPatternsMap.fill(nx - 9, ny - 9, 9, 9, 1);
 
-                // timing pattern
-                funcPatternsMap.fill(     8, ny - 7, nx - 17,       1, 1);
-                funcPatternsMap.fill(nx - 7,      8,       1, ny - 17, 1);
-
                 // version info
                 if (7 <= version) {
                     funcPatternsMap.fill(     8, ny - 6, 3, 6, 1);
@@ -561,12 +557,6 @@ export class Qr extends Shape<QrProps> {
                 bitmap.set(px + 3, py + 3, 1);
             }
 
-            // timing pattern
-            for (let i = 8; i <= ny - 9; i += 2) {
-                bitmap.set(nx - 7, i, 1);
-                bitmap.set(i, ny - 7, 1);
-            }
-
             // alignment patterns
             const aps = qr.alignmentPatterns[version];
             for (let i = 0; i < aps.length; i++) {
@@ -605,6 +595,16 @@ export class Qr extends Shape<QrProps> {
                         bitmap.set(a - 1, b + 2, 1);
                     }
                 }
+            }
+
+            // timing pattern
+            funcPatternsMap.fill(     8, ny - 7, nx - 17,       1, 1);
+            funcPatternsMap.fill(nx - 7,      8,       1, ny - 17, 1);
+
+            // timing pattern
+            for (let i = 8; i <= ny - 9; i += 2) {
+                bitmap.set(nx - 7, i, 1);
+                bitmap.set(i, ny - 7, 1);
             }
         }
 

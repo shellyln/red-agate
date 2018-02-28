@@ -1,6 +1,19 @@
 
 import * as RedAgate             from 'red-agate/modules/red-agate';
 import { App }                   from 'red-agate/modules/red-agate/app';
+import { Svg }                   from 'red-agate/modules/red-agate/svg';
+import { Code39 }                from 'red-agate-barcode/modules/barcode/Code39';
+import { Code128 }               from 'red-agate-barcode/modules/barcode/Code128';
+import { Ean13,
+         Ean8,
+         Ean5,
+         Ean2,
+         UpcA,
+         UpcE }                  from 'red-agate-barcode/modules/barcode/Ean';
+import { Itf }                   from 'red-agate-barcode/modules/barcode/Itf';
+import { JapanPostal }           from 'red-agate-barcode/modules/barcode/JapanPostal';
+import { Nw7 }                   from 'red-agate-barcode/modules/barcode/Nw7';
+import { Qr }                    from 'red-agate-barcode/modules/barcode/Qr';
 import { billngReportHandler,
          BillingStatement }      from './examples/billing';
 import { default as billngData } from './examples/billing.data';
@@ -72,6 +85,48 @@ App.cli(['?--foo', '--debug', '--handler=*'], (opts) => {
             A. your ip: {req.ip}
         </h1>,
         req, res))
+    .get('/qr/:ver/:ec/:enc/:data', (req: any, res: any) => {
+        let ver: number | "auto" = "auto";
+        if (Number.isFinite(Number.parseInt(req.params.ver))) {
+            const v = Number.parseInt(req.params.ver);
+            if (0 < v && v < 41) {
+                ver = v;
+            }
+        }
+        let ec: "L" | "M" | "Q" | "H" = 'M';
+        switch (req.params.ec) {
+        case 'L': case 'l':
+            ec = 'L';
+        case 'M': case 'm':
+            ec = 'M';
+        case 'Q': case 'q':
+            ec = 'Q';
+        case 'H': case 'h':
+            ec = 'H';
+        }
+        let enc: "number" | "alnum" | "8bit" | "auto" = 'auto';
+        switch (req.params.enc) {
+        case 'N': case 'n':
+            enc = 'number';
+            break;
+        case 'A': case 'a':
+            enc = 'alnum';
+            break;
+        case 'B': case 'b':
+            enc = '8bit';
+            break;
+        case '-':
+            enc = 'auto';
+            break;
+        }
+        return RedAgate.renderOnExpress(
+            <Svg width={210 - 1} height={297 - 2} unit='mm'>
+                <Qr x={1} y={1} cellSize={1.0}
+                    version={ver} ecLevel={ec} encoding={enc}
+                    data={req.params.data} />
+            </Svg>,
+            req, res);
+        })
     .listen(process.env.PORT || 3000, () => {
         console.log('start');
     });
