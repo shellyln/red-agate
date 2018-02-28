@@ -14,8 +14,9 @@
   },
   "dependencies": {},
   "peerDependencies": {
-    "red-agate": "^0.0.13",
-    "red-agate-barcode": "^0.0.13",
+    "red-agate": "^0.0.14",
+    "red-agate-barcode": "^0.0.14",
+    "red-agate-math": "^0.0.13",
     "red-agate-svg-canvas": "^0.0.13",
     "red-agate-util": "^0.0.13"
   },
