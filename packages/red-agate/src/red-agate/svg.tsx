@@ -148,7 +148,10 @@ export class Arc extends Shape<ArcProps> {
 
 
 
+export type CanvasRenderFn = (canvas: SvgCanvas) => void;
+
 export interface CanvasProps extends ShapeProps {
+    children?: CanvasRenderFn | RedAgate.RedAgateNode | RedAgate.RedAgateNode[];
 }
 
 export const canvasPropsDefault: CanvasProps = Object.assign({}, shapePropsDefault, {
@@ -161,7 +164,7 @@ export class Canvas extends Shape<CanvasProps> {
 
     public render(contexts: Map<string, any>, children: string) {
         const canvas: SvgCanvas = this.getContext(contexts, CONTEXT_SVG_CANVAS);
-        const fn: (canvas: SvgCanvas) => void =
+        const fn: CanvasRenderFn =
             (Array.isArray(this.props.children) ?
                 (this.props.children as any[]).find(x => typeof x === 'function') :
                 this.props.children) as any;

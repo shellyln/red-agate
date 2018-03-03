@@ -1,7 +1,8 @@
 
 import * as RedAgate   from 'red-agate/modules/red-agate';
+import { ForEach }     from 'red-agate/modules/red-agate/taglib';
 import { Html5 }       from 'red-agate/modules/red-agate/html';
-import { Svg }         from 'red-agate/modules/red-agate/svg';
+import { Svg, Canvas }         from 'red-agate/modules/red-agate/svg';
 import { Code39 }      from 'red-agate-barcode/modules/barcode/Code39';
 import { Code128 }     from 'red-agate-barcode/modules/barcode/Code128';
 import { Ean13,
@@ -17,6 +18,21 @@ import { Qr }          from 'red-agate-barcode/modules/barcode/Qr';
 
 
 
+const barTypes = [
+    {v: 'c128',  n: 'Code 128'},
+    {v: 'c39',   n: 'Code 39'},
+    {v: 'ean13', n: 'EAN 13'},
+    {v: 'ean8',  n: 'EAN 8'},
+    {v: 'ean5',  n: 'EAN 5'},
+    {v: 'ean2',  n: 'EAN 2'},
+    {v: 'upca',  n: 'UPC A'},
+    {v: 'upce',  n: 'UPC E'},
+    {v: 'itf',   n: 'ITF'},
+    {v: 'nw7',   n: 'Codabar'},
+    {v: 'jp',    n: 'Japan Postal'},
+    {v: 'qr',    n: 'QR'},
+];
+
 export default function() {
     // tslint:disable-next-line:no-implicit-dependencies
     // import * as express from 'express'; // Can't resolve dependency with webpack:
@@ -30,7 +46,14 @@ export default function() {
             <head>
                 <script dangerouslySetInnerHTML={{ __html: `
                     function selectBartypes() {
+                        var isQr = document.forms.theForm.bartypes.value === "qr";
+                        Array.from(document.getElementsByClassName("qrconf"))
+                        .forEach(function(x) { x.style.display = isQr ? "block" : "none" });
                         var url = "./" + document.forms.theForm.bartypes.value + "/" +
+                                    (isQr ?
+                                        encodeURIComponent(document.forms.theForm.qrversion.value) + "/" +
+                                        document.forms.theForm.qreclevel.value + "/" +
+                                        document.forms.theForm.qrencoding.value + "/" : "") +
                                     encodeURIComponent(document.forms.theForm.data.value);
                         document.getElementById("theIframe").src = url;
                     }
@@ -39,36 +62,37 @@ export default function() {
             <body style="width: 100%; height: 100%; margin: 0;">
                 <div style="width: 100%; margin: 0;">
                     <form name="theForm">
-                        <div>
-                            <select name="bartypes" onchange="selectBartypes()">
-                                <option value="c128" selected>Code 128</option>
-                                <option value="c39">Code 39</option>
-                                <option value="ean13">EAN 13</option>
-                                <option value="ean8">EAN 8</option>
-                                <option value="ean5">EAN 5</option>
-                                <option value="ean2">EAN 2</option>
-                                <option value="upca">UPC A</option>
-                                <option value="upce">UPC E</option>
-                                <option value="itf">ITF</option>
-                                <option value="nw7">Codabar</option>
-                                <option value="jp">Japan Postal</option>
-                                <option value="qr/-/L/n">QR (L/n)</option>
-                                <option value="qr/-/L/a">QR (L/a)</option>
-                                <option value="qr/-/L/b">QR (L/b)</option>
-                                <option value="qr/-/L/-">QR (L/-)</option>
-                                <option value="qr/-/M/n">QR (M/n)</option>
-                                <option value="qr/-/M/a">QR (M/a)</option>
-                                <option value="qr/-/M/b">QR (M/b)</option>
-                                <option value="qr/-/M/-">QR (M/-)</option>
-                                <option value="qr/-/Q/n">QR (Q/n)</option>
-                                <option value="qr/-/Q/a">QR (Q/a)</option>
-                                <option value="qr/-/Q/b">QR (Q/b)</option>
-                                <option value="qr/-/Q/-">QR (Q/-)</option>
-                                <option value="qr/-/H/n">QR (H/n)</option>
-                                <option value="qr/-/H/a">QR (H/a)</option>
-                                <option value="qr/-/H/b">QR (H/b)</option>
-                                <option value="qr/-/H/-">QR (H/-)</option>
-                            </select>
+                        <div style="display: flex;">
+                            <div>
+                                <select name="bartypes" onchange="selectBartypes()">
+                                    <ForEach items={barTypes}> { (o, i) =>
+                                        <option value={o.v} selected={i === 0}>{o.n}</option> }
+                                    </ForEach>
+                                </select>
+                            </div>
+                            <div class="qrconf">
+                                version:
+                                <input name="qrversion" type="number" value="0"
+                                    onchange="selectBartypes()"></input>
+                            </div>
+                            <div class="qrconf">
+                                EC level:
+                                <select name="qreclevel" onchange="selectBartypes()">
+                                    <option value="L">L</option>
+                                    <option value="M" selected>M</option>
+                                    <option value="Q">Q</option>
+                                    <option value="H">H</option>
+                                </select>
+                            </div>
+                            <div class="qrconf">
+                                encoding:
+                                <select name="qrencoding" onchange="selectBartypes()">
+                                    <option value="n" selected>Number</option>
+                                    <option value="a">Alnum</option>
+                                    <option value="b">8bit binary</option>
+                                    <option value="-">Auto</option>
+                                </select>
+                            </div>
                         </div>
                         <div>
                             <textarea name="data" style="width: calc(100% - 50px); height: 100px;"

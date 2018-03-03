@@ -8,9 +8,14 @@ import * as RedAgate from './red-agate';
 
 
 
+// TODO: S formal argument type do not be applied to actual argument type on TSC 2.6.2.
+//       so set S to any.
+export type RepeatRepeater<S> = (times: number, scope: /*S*/any) => RedAgate.RedAgateNode;
+
 export interface RepeatProps<S> extends RedAgate.ComponentProps {
     times: number;
     scope?: S;
+    children?: RepeatRepeater<S> | RedAgate.RedAgateNode | RedAgate.RedAgateNode[];
 }
 
 export class Repeat<S> extends RedAgate.RedAgateComponent<RepeatProps<S>> {
@@ -19,12 +24,12 @@ export class Repeat<S> extends RedAgate.RedAgateComponent<RepeatProps<S>> {
     }
 
     public transform(): RedAgate.RedAgateNode {
-        const repeater: (times: number, scope: any) => RedAgate.RedAgateNode =
+        const repeater: RepeatRepeater<S> =
             (Array.isArray(this.props.children) ?
                 (this.props.children as any[]).find(x => typeof x === 'function') :
                 this.props.children) as any;
         const a: RedAgate.RedAgateNode[] = [];
-        const scope = Object.assign({}, this.props.scope || {});
+        const scope = Object.assign({}, this.props.scope || ({} as S));
         for (let i = 0; i < this.props.times; i++) {
             a.push(repeater(i, scope));
         }
@@ -33,24 +38,28 @@ export class Repeat<S> extends RedAgate.RedAgateComponent<RepeatProps<S>> {
 }
 
 
+// TODO: T and S formal argument types do not be applied to actual argument types on TSC 2.6.2.
+//       so set T and S to any.
+export type ForEachRepeater<T, S> = (v: /*T*/any, i: number, items: /*T*/any[], scope: /*S*/any) => RedAgate.RedAgateNode;
 
-export interface ForEachProps<S> extends RedAgate.ComponentProps {
-    items: any[];
+export interface ForEachProps<T, S> extends RedAgate.ComponentProps {
+    items: T[];
     scope?: S;
+    children?: ForEachRepeater<T, S> | RedAgate.RedAgateNode | RedAgate.RedAgateNode[];
 }
 
-export class ForEach<S> extends RedAgate.RedAgateComponent<ForEachProps<S>> {
-    public constructor(props: ForEachProps<S>) {
+export class ForEach<T, S> extends RedAgate.RedAgateComponent<ForEachProps<T, S>> {
+    public constructor(props: ForEachProps<T, S>) {
         super(props);
     }
 
     public transform() {
-        const repeater: (v: any, i: number, items: any[], scope: any) => RedAgate.RedAgateNode =
+        const repeater: ForEachRepeater<T, S> =
             (Array.isArray(this.props.children) ?
                 (this.props.children as any[]).find(x => typeof x === 'function') :
                 this.props.children) as any;
         const a: RedAgate.RedAgateNode[] = [];
-        const scope = Object.assign({}, this.props.scope || {});
+        const scope = Object.assign({}, this.props.scope || ({} as S));
         for (let i = 0; i < this.props.items.length; i++) {
             a.push(repeater(this.props.items[i], i, this.props.items, scope));
         }
