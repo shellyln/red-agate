@@ -2,7 +2,7 @@
 import * as RedAgate   from 'red-agate/modules/red-agate';
 import { ForEach }     from 'red-agate/modules/red-agate/taglib';
 import { Html5 }       from 'red-agate/modules/red-agate/html';
-import { Svg, Canvas }         from 'red-agate/modules/red-agate/svg';
+import { Svg }         from 'red-agate/modules/red-agate/svg';
 import { Code39 }      from 'red-agate-barcode/modules/barcode/Code39';
 import { Code128 }     from 'red-agate-barcode/modules/barcode/Code128';
 import { Ean13,
@@ -44,6 +44,53 @@ export default function() {
     express().get('/', (req: any, res: any) => RedAgate.renderOnExpress(
         <Html5 style="width: 100%; height: 100%; margin: 0;">
             <head>
+            </head>
+            <body style="width: 100%; height: 100%; margin: 0;">
+                <div style="width: calc(100% - 2em); margin: 0 1em;">
+                    <form style="width: 100%;" name="theForm">
+                        <div style="display: flex;">
+                            <div style="margin-right:1em;">
+                                <select name="bartypes" onchange="selectBartypes()">
+                                    <ForEach items={barTypes}> { (o, i) =>
+                                        <option value={o.v} selected={i === 0}>{o.n}</option> }
+                                    </ForEach>
+                                </select>
+                            </div>
+                            <div class="qrconf" style="margin-right:1em;">
+                                version:
+                                <input name="qrversion" type="number" value="0"
+                                    onchange="selectBartypes()" />
+                            </div>
+                            <div class="qrconf" style="margin-right:1em;">
+                                EC level:
+                                <select name="qreclevel" onchange="selectBartypes()">
+                                    <option value="L">L</option>
+                                    <option value="M" selected>M</option>
+                                    <option value="Q">Q</option>
+                                    <option value="H">H</option>
+                                </select>
+                            </div>
+                            <div class="qrconf" style="margin-right:1em;">
+                                encoding:
+                                <select name="qrencoding" onchange="selectBartypes()">
+                                    <option value="n" selected>Number</option>
+                                    <option value="a">Alnum</option>
+                                    <option value="b">8bit binary</option>
+                                    <option value="-">Auto</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div>
+                            <textarea name="data" style="width: 100%; height: 100px;"
+                                onchange="selectBartypes()">1234567890123</textarea>
+                        </div>
+                        <input type="text" name="dummy" style="display: none;" />
+                    </form>
+                </div>
+                <div style="width: 100%; height: calc(100% - 150px); margin: 0;">
+                    <iframe id="theIframe" scrolling="no" frameborder="no"
+                        style="width: 100%; height: 100%; margin: 0; border: 0; overflow: hidden;"></iframe>
+                </div>
                 <script dangerouslySetInnerHTML={{ __html: `
                     function selectBartypes() {
                         var isQr = document.forms.theForm.bartypes.value === "qr";
@@ -57,54 +104,8 @@ export default function() {
                                     encodeURIComponent(document.forms.theForm.data.value);
                         document.getElementById("theIframe").src = url;
                     }
+                    selectBartypes();
                 `}}></script>
-            </head>
-            <body style="width: 100%; height: 100%; margin: 0;">
-                <div style="width: 100%; margin: 0;">
-                    <form name="theForm">
-                        <div style="display: flex;">
-                            <div>
-                                <select name="bartypes" onchange="selectBartypes()">
-                                    <ForEach items={barTypes}> { (o, i) =>
-                                        <option value={o.v} selected={i === 0}>{o.n}</option> }
-                                    </ForEach>
-                                </select>
-                            </div>
-                            <div class="qrconf">
-                                version:
-                                <input name="qrversion" type="number" value="0"
-                                    onchange="selectBartypes()"></input>
-                            </div>
-                            <div class="qrconf">
-                                EC level:
-                                <select name="qreclevel" onchange="selectBartypes()">
-                                    <option value="L">L</option>
-                                    <option value="M" selected>M</option>
-                                    <option value="Q">Q</option>
-                                    <option value="H">H</option>
-                                </select>
-                            </div>
-                            <div class="qrconf">
-                                encoding:
-                                <select name="qrencoding" onchange="selectBartypes()">
-                                    <option value="n" selected>Number</option>
-                                    <option value="a">Alnum</option>
-                                    <option value="b">8bit binary</option>
-                                    <option value="-">Auto</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div>
-                            <textarea name="data" style="width: calc(100% - 50px); height: 100px;"
-                                onchange="selectBartypes()">1234567890123</textarea>
-                        </div>
-                    </form>
-                </div>
-                <div style="width: 100%; height: calc(100% - 150px); margin: 0;">
-                    <iframe id="theIframe" scrolling="no" frameborder="no"
-                        style="width: 100%; height: 100%; margin: 0; border: 0; overflow: hidden;"></iframe>
-                </div>
-                <script>{`selectBartypes();`}</script>
             </body>
         </Html5>, req, res)
     )
