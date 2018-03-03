@@ -15,6 +15,7 @@ import { Itf }         from 'red-agate-barcode/modules/barcode/Itf';
 import { JapanPostal } from 'red-agate-barcode/modules/barcode/JapanPostal';
 import { Nw7 }         from 'red-agate-barcode/modules/barcode/Nw7';
 import { Qr }          from 'red-agate-barcode/modules/barcode/Qr';
+import { Base64 }      from 'red-agate-util/modules/convert/Base64';
 
 import { billngReportHandler,
          BillingStatement }      from './examples/billing';
@@ -25,6 +26,10 @@ import { fbaA4ReportHandler }    from './examples/fba-a4';
 import { barcodeTestHandler }    from './examples/barcode-test';
 
 import * as path from 'path';
+
+
+// tslint:disable-next-line:no-eval
+const requireDynamic = eval("require");
 
 
 
@@ -44,14 +49,7 @@ const barTypes = [
 ];
 
 export default function() {
-    // tslint:disable-next-line:no-implicit-dependencies
-    // import * as express from 'express'; // Can't resolve dependency with webpack:
-    //                                     // "81:13-25 Critical dependency:
-    //                                     // the request of a dependency is an expression"
-    // tslint:disable-next-line:no-var-requires no-implicit-dependencies
-    const express = require('express');
-    // tslint:disable-next-line:no-var-requires no-implicit-dependencies
-    const pdf = require('html-pdf');
+    const express = requireDynamic('express');
 
     express().get('/', (req: any, res: any) => RedAgate.renderOnExpress(
         <Html5 style="width: 100%; height: 100%; margin: 0;">
@@ -330,6 +328,7 @@ export default function() {
                 sendError();
             } else {
                 try {
+                    const pdf = requireDynamic('html-pdf');
                     pdf.create(html, {
                         width: '210mm',
                         height: '297mm',
