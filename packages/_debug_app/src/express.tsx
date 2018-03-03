@@ -16,6 +16,16 @@ import { JapanPostal } from 'red-agate-barcode/modules/barcode/JapanPostal';
 import { Nw7 }         from 'red-agate-barcode/modules/barcode/Nw7';
 import { Qr }          from 'red-agate-barcode/modules/barcode/Qr';
 
+import { billngReportHandler,
+         BillingStatement }      from './examples/billing';
+import { default as billngData } from './examples/billing.data';
+import { kanbanReportHandler }   from './examples/kanban';
+import { default as kanbanData } from './examples/kanban.data';
+import { fbaA4ReportHandler }    from './examples/fba-a4';
+import { barcodeTestHandler }    from './examples/barcode-test';
+
+import * as path from 'path';
+
 
 
 const barTypes = [
@@ -40,6 +50,8 @@ export default function() {
     //                                     // the request of a dependency is an expression"
     // tslint:disable-next-line:no-var-requires no-implicit-dependencies
     const express = require('express');
+    // tslint:disable-next-line:no-var-requires no-implicit-dependencies
+    const pdf = require('html-pdf');
 
     express().get('/', (req: any, res: any) => RedAgate.renderOnExpress(
         <Html5 style="width: 100%; height: 100%; margin: 0;">
@@ -120,7 +132,7 @@ export default function() {
                 height={7} quietHeight={0}
                 font="3.5px 'OCRB'" textHeight={3.5}
                 data={req.params.data} />
-        </Svg>, req, res, [['content-type', 'image/svg+xml']])
+        </Svg>, req, res, [['Content-Type', 'image/svg+xml']])
     )
 
 
@@ -131,7 +143,7 @@ export default function() {
                 height={7} quietHeight={0}
                 font="3.5px 'OCRB'" textHeight={3.5}
                 data={req.params.data} />
-        </Svg>, req, res, [['content-type', 'image/svg+xml']])
+        </Svg>, req, res, [['Content-Type', 'image/svg+xml']])
     )
 
 
@@ -142,7 +154,7 @@ export default function() {
                 height={7} quietHeight={0}
                 font="3.5px 'OCRB'" textHeight={3.5}
                 data={req.params.data} />
-        </Svg>, req, res, [['content-type', 'image/svg+xml']])
+        </Svg>, req, res, [['Content-Type', 'image/svg+xml']])
     )
 
 
@@ -153,7 +165,7 @@ export default function() {
                 height={7} quietHeight={0}
                 font="3.5px 'OCRB'" textHeight={3.5}
                 data={req.params.data} />
-        </Svg>, req, res, [['content-type', 'image/svg+xml']])
+        </Svg>, req, res, [['Content-Type', 'image/svg+xml']])
     )
 
 
@@ -164,7 +176,7 @@ export default function() {
                 height={7} quietHeight={0}
                 font="3.5px 'OCRB'" textHeight={3.5}
                 data={req.params.data} />
-        </Svg>, req, res, [['content-type', 'image/svg+xml']])
+        </Svg>, req, res, [['Content-Type', 'image/svg+xml']])
     )
 
 
@@ -175,7 +187,7 @@ export default function() {
                 height={7} quietHeight={0}
                 font="3.5px 'OCRB'" textHeight={3.5}
                 data={req.params.data} />
-        </Svg>, req, res, [['content-type', 'image/svg+xml']])
+        </Svg>, req, res, [['Content-Type', 'image/svg+xml']])
     )
 
 
@@ -186,7 +198,7 @@ export default function() {
                 height={7} quietHeight={0}
                 font="3.5px 'OCRB'" textHeight={3.5}
                 data={req.params.data} />
-        </Svg>, req, res, [['content-type', 'image/svg+xml']])
+        </Svg>, req, res, [['Content-Type', 'image/svg+xml']])
     )
 
 
@@ -197,7 +209,7 @@ export default function() {
                 height={7} quietHeight={0}
                 font="3.5px 'OCRB'" textHeight={3.5}
                 data={req.params.data} />
-        </Svg>, req, res, [['content-type', 'image/svg+xml']])
+        </Svg>, req, res, [['Content-Type', 'image/svg+xml']])
     )
 
 
@@ -208,7 +220,7 @@ export default function() {
                 height={7} quietHeight={0}
                 font="3.5px 'OCRB'" textHeight={3.5}
                 data={req.params.data} />
-        </Svg>, req, res, [['content-type', 'image/svg+xml']])
+        </Svg>, req, res, [['Content-Type', 'image/svg+xml']])
     )
 
 
@@ -219,7 +231,7 @@ export default function() {
                 height={7} quietHeight={0}
                 font="3.5px 'OCRB'" textHeight={3.5}
                 data={req.params.data} />
-        </Svg>, req, res, [['content-type', 'image/svg+xml']])
+        </Svg>, req, res, [['Content-Type', 'image/svg+xml']])
     )
 
 
@@ -229,7 +241,7 @@ export default function() {
                 elementWidth={0.33 * 1.5}
                 height={0.33 * 1.5 * 6} quietHeight={0}
                 data={req.params.data} />
-        </Svg>, req, res, [['content-type', 'image/svg+xml']])
+        </Svg>, req, res, [['Content-Type', 'image/svg+xml']])
     )
 
 
@@ -280,9 +292,68 @@ export default function() {
                     version={ver} ecLevel={ec} encoding={enc}
                     data={req.params.data} />
             </Svg>,
-            req, res, [['content-type', 'image/svg+xml']]);
+            req, res, [['Content-Type', 'image/svg+xml']]);
         }
     )
+
+
+    .get('/phantom/pdf/:name', (req: any, res: any) => {
+        let handler = billngReportHandler;
+        let data: any = billngData;
+        switch (req.params.name) {
+        case 'billing':
+            handler = billngReportHandler;
+            data = billngData;
+            break;
+        case 'kanban':
+            handler = kanbanReportHandler;
+            data = kanbanData;
+            break;
+        case 'fba-a4':
+            handler = fbaA4ReportHandler;
+            data = kanbanData;
+            break;
+        case 'barcode-test':
+            handler = barcodeTestHandler;
+            data = kanbanData;
+            break;
+        }
+        let sent = false;
+        const sendError = () => {
+            if (!sent) {
+                res.status(500).send('error');
+                sent = true;
+            }
+        };
+        handler(data, {} as any, (error, html) => {
+            if (error) {
+                sendError();
+            } else {
+                try {
+                    pdf.create(html, {
+                        width: '210mm',
+                        height: '297mm',
+                        phantomPath: path.join(process.cwd(),
+                            'node_modules/phantomjs-prebuilt/lib/phantom/bin/phantomjs'),
+                        script: path.join(process.cwd(),
+                            'node_modules/html-pdf/lib/scripts/pdf_a4_portrait.js'),
+                    })
+                    .toBuffer((err: any, buffer: Buffer) => {
+                        if (err) {
+                            sendError();
+                        } else {
+                            res.set('Content-Disposition', `inline; filename="${"example.pdf"}"`);
+                            res.set('Content-Type', 'application/pdf');
+                            res.send(buffer);
+                            sent = true;
+                        }
+                    });
+                } catch (err) {
+                    sendError();
+                }
+            }
+        });
+    })
 
 
     .listen(process.env.PORT || 3000, () => {

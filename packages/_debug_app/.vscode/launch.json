@@ -20,12 +20,14 @@
             "name": "Launch Web Program",
             "program": "${workspaceRoot}/src/app.tsx",
             "args": [
-                "--debug",
-                "--handler=/kanban"
+                "--express"
             ],
             "outFiles": [
                 "${workspaceRoot}/dist/app.js"
-            ]
+            ],
+            "env": {
+                "phantomjs": "${workspaceRoot}/phantomjs-prebuilt/lib/phantom/bin/phantomjs"
+            }
         },
         {
             "name": "Python Web Program",
