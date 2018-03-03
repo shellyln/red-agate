@@ -15,7 +15,6 @@ import { Itf }         from 'red-agate-barcode/modules/barcode/Itf';
 import { JapanPostal } from 'red-agate-barcode/modules/barcode/JapanPostal';
 import { Nw7 }         from 'red-agate-barcode/modules/barcode/Nw7';
 import { Qr }          from 'red-agate-barcode/modules/barcode/Qr';
-import { Base64 }      from 'red-agate-util/modules/convert/Base64';
 
 import { billngReportHandler,
          BillingStatement }      from './examples/billing';
@@ -295,7 +294,7 @@ export default function() {
     )
 
 
-    .get('/phantom/pdf/:name', (req: any, res: any) => {
+    .get('/phantom/:pdf/:name', (req: any, res: any) => {
         let handler = billngReportHandler;
         let data: any = billngData;
         switch (req.params.name) {
@@ -328,25 +327,30 @@ export default function() {
                 sendError();
             } else {
                 try {
-                    const pdf = requireDynamic('html-pdf');
-                    pdf.create(html, {
-                        width: '210mm',
-                        height: '297mm',
-                        phantomPath: path.join(process.cwd(),
-                            'node_modules/phantomjs-prebuilt/lib/phantom/bin/phantomjs'),
-                        script: path.join(process.cwd(),
-                            'node_modules/html-pdf/lib/scripts/pdf_a4_portrait.js'),
-                    })
-                    .toBuffer((err: any, buffer: Buffer) => {
-                        if (err) {
-                            sendError();
-                        } else {
-                            res.set('Content-Disposition', `inline; filename="${"example.pdf"}"`);
-                            res.set('Content-Type', 'application/pdf');
-                            res.send(buffer);
-                            sent = true;
-                        }
-                    });
+                    if (req.params.pdf === 'pdf') {
+                        const pdf = requireDynamic('html-pdf');
+                        pdf.create(html, {
+                            width: '210mm',
+                            height: '297mm',
+                            phantomPath: path.join(process.cwd(),
+                                'node_modules/phantomjs-prebuilt/lib/phantom/bin/phantomjs'),
+                            script: path.join(process.cwd(),
+                                'node_modules/html-pdf/lib/scripts/pdf_a4_portrait.js'),
+                        })
+                        .toBuffer((err: any, buffer: Buffer) => {
+                            if (err) {
+                                sendError();
+                            } else {
+                                res.set('Content-Disposition', `inline; filename="${"example.pdf"}"`);
+                                res.set('Content-Type', 'application/pdf');
+                                res.send(buffer);
+                                sent = true;
+                            }
+                        });
+                    } else {
+                        res.send(html);
+                        sent = true;
+                    }
                 } catch (err) {
                     sendError();
                 }
