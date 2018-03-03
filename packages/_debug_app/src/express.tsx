@@ -1,20 +1,22 @@
 
-import * as RedAgate   from 'red-agate/modules/red-agate';
-import { ForEach }     from 'red-agate/modules/red-agate/taglib';
-import { Html5 }       from 'red-agate/modules/red-agate/html';
-import { Svg }         from 'red-agate/modules/red-agate/svg';
-import { Code39 }      from 'red-agate-barcode/modules/barcode/Code39';
-import { Code128 }     from 'red-agate-barcode/modules/barcode/Code128';
+import * as RedAgate             from 'red-agate/modules/red-agate';
+import { ForEach }               from 'red-agate/modules/red-agate/taglib';
+import { Html5 }                 from 'red-agate/modules/red-agate/html';
+import { Svg }                   from 'red-agate/modules/red-agate/svg';
+import { Code39 }                from 'red-agate-barcode/modules/barcode/Code39';
+import { Code128 }               from 'red-agate-barcode/modules/barcode/Code128';
 import { Ean13,
          Ean8,
          Ean5,
          Ean2,
          UpcA,
-         UpcE }        from 'red-agate-barcode/modules/barcode/Ean';
-import { Itf }         from 'red-agate-barcode/modules/barcode/Itf';
-import { JapanPostal } from 'red-agate-barcode/modules/barcode/JapanPostal';
-import { Nw7 }         from 'red-agate-barcode/modules/barcode/Nw7';
-import { Qr }          from 'red-agate-barcode/modules/barcode/Qr';
+         UpcE }                  from 'red-agate-barcode/modules/barcode/Ean';
+import { Itf }                   from 'red-agate-barcode/modules/barcode/Itf';
+import { JapanPostal }           from 'red-agate-barcode/modules/barcode/JapanPostal';
+import { Nw7 }                   from 'red-agate-barcode/modules/barcode/Nw7';
+import { Qr }                    from 'red-agate-barcode/modules/barcode/Qr';
+import { Base64 }                from 'red-agate-util/modules/convert/Base64';
+import { TextEncoding }          from 'red-agate-util/modules/convert/TextEncoding'
 
 import { billngReportHandler,
          BillingStatement }      from './examples/billing';
@@ -29,7 +31,7 @@ import * as path from 'path';
 
 // tslint:disable-next-line:no-eval
 const requireDynamic = eval("require");
-
+const sleep = (msec: number) => new Promise(resolve => setTimeout(resolve, msec));
 
 
 const barTypes = [
@@ -294,7 +296,7 @@ export default function() {
     )
 
 
-    .get('/phantom/:pdf/:name', (req: any, res: any) => {
+    .get('/:pdf/:name', (req: any, res: any) => {
         let handler = billngReportHandler;
         let data: any = billngData;
         switch (req.params.name) {
