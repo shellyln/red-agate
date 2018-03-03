@@ -44,6 +44,7 @@ export default function() {
     express().get('/', (req: any, res: any) => RedAgate.renderOnExpress(
         <Html5 style="width: 100%; height: 100%; margin: 0;">
             <head>
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css" />
             </head>
             <body style="width: 100%; height: 100%; margin: 0;">
                 <div style="width: calc(100% - 2em); margin: 0 1em;">
@@ -82,7 +83,8 @@ export default function() {
                         </div>
                         <div>
                             <textarea name="data" style="width: 100%; height: 100px;"
-                                onchange="selectBartypes()">1234567890123</textarea>
+                                onchange="selectBartypes()"
+                                >1234567890123</textarea>
                         </div>
                         <input type="text" name="dummy" style="display: none;" />
                     </form>
@@ -118,7 +120,7 @@ export default function() {
                 height={7} quietHeight={0}
                 font="3.5px 'OCRB'" textHeight={3.5}
                 data={req.params.data} />
-        </Svg>, req, res)
+        </Svg>, req, res, [['content-type', 'image/svg+xml']])
     )
 
 
@@ -129,7 +131,7 @@ export default function() {
                 height={7} quietHeight={0}
                 font="3.5px 'OCRB'" textHeight={3.5}
                 data={req.params.data} />
-        </Svg>, req, res)
+        </Svg>, req, res, [['content-type', 'image/svg+xml']])
     )
 
 
@@ -140,7 +142,7 @@ export default function() {
                 height={7} quietHeight={0}
                 font="3.5px 'OCRB'" textHeight={3.5}
                 data={req.params.data} />
-        </Svg>, req, res)
+        </Svg>, req, res, [['content-type', 'image/svg+xml']])
     )
 
 
@@ -151,7 +153,7 @@ export default function() {
                 height={7} quietHeight={0}
                 font="3.5px 'OCRB'" textHeight={3.5}
                 data={req.params.data} />
-        </Svg>, req, res)
+        </Svg>, req, res, [['content-type', 'image/svg+xml']])
     )
 
 
@@ -162,7 +164,7 @@ export default function() {
                 height={7} quietHeight={0}
                 font="3.5px 'OCRB'" textHeight={3.5}
                 data={req.params.data} />
-        </Svg>, req, res)
+        </Svg>, req, res, [['content-type', 'image/svg+xml']])
     )
 
 
@@ -173,7 +175,7 @@ export default function() {
                 height={7} quietHeight={0}
                 font="3.5px 'OCRB'" textHeight={3.5}
                 data={req.params.data} />
-        </Svg>, req, res)
+        </Svg>, req, res, [['content-type', 'image/svg+xml']])
     )
 
 
@@ -184,7 +186,7 @@ export default function() {
                 height={7} quietHeight={0}
                 font="3.5px 'OCRB'" textHeight={3.5}
                 data={req.params.data} />
-        </Svg>, req, res)
+        </Svg>, req, res, [['content-type', 'image/svg+xml']])
     )
 
 
@@ -195,7 +197,7 @@ export default function() {
                 height={7} quietHeight={0}
                 font="3.5px 'OCRB'" textHeight={3.5}
                 data={req.params.data} />
-        </Svg>, req, res)
+        </Svg>, req, res, [['content-type', 'image/svg+xml']])
     )
 
 
@@ -206,7 +208,7 @@ export default function() {
                 height={7} quietHeight={0}
                 font="3.5px 'OCRB'" textHeight={3.5}
                 data={req.params.data} />
-        </Svg>, req, res)
+        </Svg>, req, res, [['content-type', 'image/svg+xml']])
     )
 
 
@@ -217,7 +219,7 @@ export default function() {
                 height={7} quietHeight={0}
                 font="3.5px 'OCRB'" textHeight={3.5}
                 data={req.params.data} />
-        </Svg>, req, res)
+        </Svg>, req, res, [['content-type', 'image/svg+xml']])
     )
 
 
@@ -227,7 +229,7 @@ export default function() {
                 elementWidth={0.33 * 1.5}
                 height={0.33 * 1.5 * 6} quietHeight={0}
                 data={req.params.data} />
-        </Svg>, req, res)
+        </Svg>, req, res, [['content-type', 'image/svg+xml']])
     )
 
 
@@ -278,7 +280,7 @@ export default function() {
                     version={ver} ecLevel={ec} encoding={enc}
                     data={req.params.data} />
             </Svg>,
-            req, res);
+            req, res, [['content-type', 'image/svg+xml']]);
         }
     )
 

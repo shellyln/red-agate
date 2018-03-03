@@ -517,13 +517,25 @@ export function renderOnAwsLambda(
 
 
 
+export interface ExpressRequest {
+}
+
+export interface ExpressResponse {
+    status(code: number): ExpressResponse;
+    set(field: string, value?: string): ExpressResponse;
+    send(content: any): ExpressResponse;
+}
+
 export function renderOnExpress(
     element: RedAgateNode,
-    req: any, res: any): void {
+    req: ExpressRequest, res: ExpressResponse, headers?: Array<[string, string | null | undefined]>): void {
 
     renderAsHtml(element)
-    .then(html => {
-        res.send(html);
+    .then(content => {
+        if (headers) {
+            headers.forEach((x) => res.set(x[0], typeof x[1] === 'string' ? x[1] as string : void 0));
+        }
+        res.send(content);
     })
     .catch(error => {
         console.error(JSON.stringify(error));
