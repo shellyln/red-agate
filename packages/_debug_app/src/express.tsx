@@ -58,8 +58,8 @@ export default function() {
                 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css" />
             </head>
             <body style="width: 100%; height: 100%; margin: 0;">
-                <div style="width: calc(100% - 2em); margin: 0 1em;">
-                    <form style="width: 100%;" name="theForm">
+                <form style="width: 100%; height: 100%;" name="theForm">
+                    <div style="width: calc(100% - 2em); margin: 0 1em;">
                         <div style="display: flex;">
                             <div style="margin-right:1em;">
                                 <select name="bartypes" onchange="selectBartypes()">
@@ -98,27 +98,27 @@ export default function() {
                                 >1234567890123</textarea>
                         </div>
                         <input type="text" name="dummy" style="display: none;" />
-                    </form>
-                </div>
-                <div style="width: 100%; height: calc(100% - 150px); margin: 0;">
-                    <iframe id="theIframe" scrolling="no" frameborder="no"
-                        style="width: 100%; height: 100%; margin: 0; border: 0; overflow: hidden;"></iframe>
-                </div>
-                <script dangerouslySetInnerHTML={{ __html: `
-                    function selectBartypes() {
-                        var isQr = document.forms.theForm.bartypes.value === "qr";
-                        Array.from(document.getElementsByClassName("qrconf"))
-                        .forEach(function(x) { x.style.display = isQr ? "block" : "none" });
-                        var url = "./" + document.forms.theForm.bartypes.value + "/" +
-                                    (isQr ?
-                                        encodeURIComponent(document.forms.theForm.qrversion.value) + "/" +
-                                        document.forms.theForm.qreclevel.value + "/" +
-                                        document.forms.theForm.qrencoding.value + "/" : "") +
-                                    encodeURIComponent(document.forms.theForm.data.value);
-                        document.getElementById("theIframe").src = url;
-                    }
-                    selectBartypes();
-                `}}></script>
+                    </div>
+                    <div style="width: 100%; height: calc(100% - 150px); margin: 0;">
+                        <iframe id="theIframe" scrolling="no" frameborder="no"
+                            style="width: 100%; height: 100%; margin: 0; border: 0; overflow: hidden;"></iframe>
+                    </div>
+                    <script dangerouslySetInnerHTML={{ __html: `
+                        function selectBartypes() {
+                            var isQr = document.forms.theForm.bartypes.value === "qr";
+                            Array.from(document.getElementsByClassName("qrconf"))
+                            .forEach(function(x) { x.style.display = isQr ? "block" : "none" });
+                            var url = "./" + document.forms.theForm.bartypes.value + "/" +
+                                        (isQr ?
+                                            encodeURIComponent(document.forms.theForm.qrversion.value) + "/" +
+                                            document.forms.theForm.qreclevel.value + "/" +
+                                            document.forms.theForm.qrencoding.value + "/" : "") +
+                                        encodeURIComponent(document.forms.theForm.data.value);
+                            document.getElementById("theIframe").src = url;
+                        }
+                        selectBartypes();
+                    `}}></script>
+                </form>
             </body>
         </Html5>, req, res)
     )
