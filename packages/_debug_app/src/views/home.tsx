@@ -1,6 +1,5 @@
 
 import * as RedAgate    from 'red-agate/modules/red-agate';
-import { ForEach }      from 'red-agate/modules/red-agate/taglib';
 import { Html5 }        from 'red-agate/modules/red-agate/html';
 import { Svg }          from 'red-agate/modules/red-agate/svg';
 import { Code39 }       from 'red-agate-barcode/modules/barcode/Code39';
@@ -17,26 +16,15 @@ import { Nw7 }          from 'red-agate-barcode/modules/barcode/Nw7';
 import { Qr }           from 'red-agate-barcode/modules/barcode/Qr';
 import { Base64 }       from 'red-agate-util/modules/convert/Base64';
 import { TextEncoding } from 'red-agate-util/modules/convert/TextEncoding'
+import { Form,
+         Select,
+         Input,
+         TextArea }     from '../components/forms';
 
 // tslint:disable-next-line:no-eval
 const requireDynamic = eval("require");
 
 
-
-const barTypes = [
-    {v: 'c128',  n: 'Code 128'},
-    {v: 'c39',   n: 'Code 39'},
-    {v: 'ean13', n: 'EAN 13'},
-    {v: 'ean8',  n: 'EAN 8'},
-    {v: 'ean5',  n: 'EAN 5'},
-    {v: 'ean2',  n: 'EAN 2'},
-    {v: 'upca',  n: 'UPC A'},
-    {v: 'upce',  n: 'UPC E'},
-    {v: 'itf',   n: 'ITF'},
-    {v: 'nw7',   n: 'Codabar'},
-    {v: 'jp',    n: 'Japan Postal'},
-    {v: 'qr',    n: 'QR'},
-];
 
 export default function(express: any): any {
     express
@@ -46,15 +34,24 @@ export default function(express: any): any {
                 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css" />
             </head>
             <body style="width: 100%; height: 100%; margin: 0;">
-                <form style="width: 100%; height: 100%;" name="theForm">
+                <Form style="width: 100%; height: 100%;" name="theForm">
                     <div style="width: calc(100% - 2em); margin: 0 1em;">
                         <div style="display: flex;">
                             <div style="margin-right:1em;">
-                                <select name="bartypes" onchange="selectBartypes()">
-                                    <ForEach items={barTypes}> { (o, i) =>
-                                        <option value={o.v} selected={i === 0}>{o.n}</option> }
-                                    </ForEach>
-                                </select>
+                                <Select name="bartypes" selected="M" onchange="selectBartypes()" options={[
+                                    ['c128',  'Code 128'],
+                                    ['c39',   'Code 39'],
+                                    ['ean13', 'EAN 13'],
+                                    ['ean8',  'EAN 8'],
+                                    ['ean5',  'EAN 5'],
+                                    ['ean2',  'EAN 2'],
+                                    ['upca',  'UPC A'],
+                                    ['upce',  'UPC E'],
+                                    ['itf',   'ITF'],
+                                    ['nw7',   'Codabar'],
+                                    ['jp',    'Japan Postal'],
+                                    ['qr',    'QR'],
+                                ]} />
                             </div>
                             <div class="qrconf" style="margin-right:1em;">
                                 version:
@@ -63,29 +60,29 @@ export default function(express: any): any {
                             </div>
                             <div class="qrconf" style="margin-right:1em;">
                                 EC level:
-                                <select name="qreclevel" onchange="selectBartypes()">
-                                    <option value="L">L</option>
-                                    <option value="M" selected>M</option>
-                                    <option value="Q">Q</option>
-                                    <option value="H">H</option>
-                                </select>
+                                <Select name="qreclevel" selected="M" onchange="selectBartypes()" options={[
+                                    ['L', 'L'],
+                                    ['M', 'M'],
+                                    ['Q', 'Q'],
+                                    ['H', 'H'],
+                                ]} />
                             </div>
                             <div class="qrconf" style="margin-right:1em;">
                                 encoding:
-                                <select name="qrencoding" onchange="selectBartypes()">
-                                    <option value="n" selected>Number</option>
-                                    <option value="a">Alnum</option>
-                                    <option value="b">8bit binary</option>
-                                    <option value="-">Auto</option>
-                                </select>
+                                <Select name="qrencoding" selected="n" onchange="selectBartypes()" options={[
+                                    ['n', 'Number'],
+                                    ['a', 'Alnum'],
+                                    ['b', '8bit binary'],
+                                    ['-', 'Auto'],
+                                ]} />
                             </div>
                         </div>
                         <div>
-                            <textarea name="data" style="width: 100%; height: 100px;"
+                            <TextArea name="data" style="width: 100%; height: 100px;"
                                 onchange="selectBartypes()"
-                                >1234567890123</textarea>
+                                >1234567890123</TextArea>
                         </div>
-                        <input type="text" name="dummy" style="display: none;" />
+                        <Input type="text" name="dummy" style="display: none;" />
                     </div>
                     <div style="width: 100%; height: calc(100% - 150px); margin: 0;">
                         <iframe id="theIframe" scrolling="no" frameborder="no"
@@ -106,7 +103,7 @@ export default function(express: any): any {
                         }
                         selectBartypes();
                     `}}></script>
-                </form>
+                </Form>
             </body>
         </Html5>, req, res)
     )
