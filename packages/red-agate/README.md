@@ -235,14 +235,14 @@ if __name__ == '__main__':
 
     @app.route('/billing')
     def run_billing_report():
-        with open('./src/examples/billing.data.json') as f:
+        with open('./src/reports/billing.data.json') as f:
             event = json.loads(f.read())
             event['eventName'] = '/billing'
             return call(command=["node", "dist/app.js"], event=event)
 
     @app.route('/kanban')
     def run_barcode_test_report():
-        with open('./src/examples/kanban.data.json') as f:
+        with open('./src/reports/kanban.data.json') as f:
             event = json.loads(f.read())
             event['eventName'] = '/kanban'
             return call(command=["node", "dist/app.js"], event=event)

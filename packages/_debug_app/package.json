@@ -66,7 +66,7 @@
     "start": "run-s start:node",
     "start:web": "lite-server -c=bs-config.js",
     "start:node": "node dist/app.js --debug --handler=/kanban",
-    "start:call": "cat ./src/examples/barcode.data.json | node dist/app.js > ./debug/index.html",
+    "start:call": "cat ./src/reports/barcode.data.json | node dist/app.js > ./debug/index.html",
     "clean": "run-s clean:esm clean:declarations clean:dist",
     "clean:esm": "rimraf ./modules",
     "clean:declarations": "rimraf ./declarations",

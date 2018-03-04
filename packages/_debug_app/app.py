@@ -20,35 +20,35 @@ if __name__ == '__main__':
 
     @app.route('/')
     def run_report():
-        with open('./src/examples/barcode.data.json') as f:
+        with open('./src/reports/barcode.data.json') as f:
             event = json.loads(f.read())
             event['eventName'] = '/'
             return call(command=["node", "dist/app.js"], event=event)
 
     @app.route('/billing')
     def run_billing_report():
-        with open('./src/examples/barcode.data.json') as f:
+        with open('./src/reports/barcode.data.json') as f:
             event = json.loads(f.read())
             event['eventName'] = '/billing'
             return call(command=["node", "dist/app.js"], event=event)
 
     @app.route('/kanban')
     def run_kanban_report():
-        with open('./src/examples/barcode.data.json') as f:
+        with open('./src/reports/barcode.data.json') as f:
             event = json.loads(f.read())
             event['eventName'] = '/kanban'
             return call(command=["node", "dist/app.js"], event=event)
 
     @app.route('/fba-a4')
     def run_fba_report():
-        with open('./src/examples/barcode.data.json') as f:
+        with open('./src/reports/barcode.data.json') as f:
             event = json.loads(f.read())
             event['eventName'] = '/fba-a4'
             return call(command=["node", "dist/app.js"], event=event)
 
     @app.route('/barcode')
     def run_barcode_test_report():
-        with open('./src/examples/barcode.data.json') as f:
+        with open('./src/reports/barcode.data.json') as f:
             event = json.loads(f.read())
             event['eventName'] = '/barcode-test'
             return call(command=["node", "dist/app.js"], event=event)
