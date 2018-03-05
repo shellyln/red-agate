@@ -1,18 +1,78 @@
 
 import * as RedAgate from 'red-agate/modules/red-agate';
-import { ForEach }   from 'red-agate/modules/red-agate/taglib';
+import { ForEach,
+         Template, 
+         If}  from 'red-agate/modules/red-agate/taglib';
 
+
+
+export function propsExcept<T>(props: T, ...x: string[]) {
+    let p = Object.assign({}, props);
+    delete p['id'];
+    delete p['ref'];
+    delete p['refs'];
+    delete p['__nodeId'];
+    delete p['children'];
+    for (let n of x) {
+        delete p[n];
+    }
+    return p;
+}
 
 
 export interface FormProps extends RedAgate.ComponentProps {
     name: string;
+    setState?: string;
     [propName: string]: any;
 }
 
 export class Form extends RedAgate.RedAgateComponent<FormProps> {
     public transform() {
+        let props = propsExcept(this.props, 'setState');
         return (
-            <form name={this.props.name} {...this.props}>{this.props.children}</form>
+            <Template>
+                <form name={props.name} {...props}>{this.props.children}</form>
+                <If condition={Boolean(this.props.setState)}>
+                    <script dangerouslySetInnerHTML={{ __html: `
+                        (function() {
+                            var changeHandler = function(event) {
+                                ${this.props.setState}(event.type, {
+                                    "${'path'}": event.target.value
+                                });
+                            };
+                            var clickHandler = function(event) {
+                                ${this.props.setState}(event.type, {
+                                    "${'path'}": event.target.value
+                                });
+                            };
+                            var form = document.forms["${props.name}"];
+                            var state = {};
+                            for (var item of form){
+                                switch (item.nodeName) {
+                                case 'INPUT':
+                                    switch (item.type) {
+                                    case 'button': case 'reset': case 'submit':
+                                        item.addEventListener('click', clickHandler);
+                                        break;
+                                    default:
+                                        item.addEventListener('change', changeHandler);
+                                        break;
+                                    }
+                                    break;
+                                case 'BUTTON':
+                                    item.addEventListener('click', clickHandler);
+                                    break;
+                                default:
+                                    item.addEventListener('change', changeHandler);
+                                    break;
+                                }
+                                state["${'path'}"] = item.value;
+                            }
+                            ${this.props.setState}('init', state);
+                        })();
+                    `}}></script>
+                </If>
+            </Template>
         );
     }
 }
@@ -22,14 +82,13 @@ export interface SelectProps extends RedAgate.ComponentProps {
     name: string;
     options: Array<[string, string]>;
     selected?: string;
+    statePath?: string;
     [propName: string]: any;
 }
 
 export class Select extends RedAgate.RedAgateComponent<SelectProps> {
     public transform() {
-        let props = Object.assign({}, this.props);
-        delete props.options;
-        delete props.selected;
+        let props = propsExcept(this.props, 'options', 'selected', 'statePath');
         return (
             <select name={props.name} {...props}>
                 <ForEach items={this.props.options}> { (o, i) =>
@@ -44,13 +103,15 @@ export class Select extends RedAgate.RedAgateComponent<SelectProps> {
 export interface InputProps extends RedAgate.ComponentProps {
     name: string;
     type: string;
+    statePath?: string;
     [propName: string]: any;
 }
 
 export class Input extends RedAgate.RedAgateComponent<InputProps> {
     public transform() {
+        let props = propsExcept(this.props, 'statePath');
         return (
-            <input name={this.props.name} {...this.props}/>
+            <input name={props.name} {...props}/>
         );
     }
 }
@@ -58,13 +119,15 @@ export class Input extends RedAgate.RedAgateComponent<InputProps> {
 
 export interface TextAreaProps extends RedAgate.ComponentProps {
     name: string;
+    statePath?: string;
     [propName: string]: any;
 }
 
 export class TextArea extends RedAgate.RedAgateComponent<TextAreaProps> {
     public transform() {
+        let props = propsExcept(this.props, 'statePath');
         return (
-            <textarea name={this.props.name} {...this.props}>{this.props.children}</textarea>
+            <textarea name={props.name} {...props}>{this.props.children}</textarea>
         );
     }
 }

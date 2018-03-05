@@ -34,11 +34,11 @@ export default function(express: any): any {
                 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css" />
             </head>
             <body style="width: 100%; height: 100%; margin: 0;">
-                <Form style="width: 100%; height: 100%;" name="theForm">
+                <Form style="width: 100%; height: 100%;" name="theForm" setState="setState">
                     <div style="width: calc(100% - 2em); margin: 0 1em;">
                         <div style="display: flex;">
                             <div style="margin-right:1em;">
-                                <Select name="bartypes" selected="M" onchange="selectBartypes()" options={[
+                                <Select name="bartypes" selected="c128" options={[
                                     ['c128',  'Code 128'],
                                     ['c39',   'Code 39'],
                                     ['ean13', 'EAN 13'],
@@ -55,12 +55,11 @@ export default function(express: any): any {
                             </div>
                             <div class="qrconf" style="margin-right:1em;">
                                 version:
-                                <input name="qrversion" type="number" value="0"
-                                    onchange="selectBartypes()" />
+                                <input name="qrversion" type="number" value="0" />
                             </div>
                             <div class="qrconf" style="margin-right:1em;">
                                 EC level:
-                                <Select name="qreclevel" selected="M" onchange="selectBartypes()" options={[
+                                <Select name="qreclevel" selected="M" options={[
                                     ['L', 'L'],
                                     ['M', 'M'],
                                     ['Q', 'Q'],
@@ -69,7 +68,7 @@ export default function(express: any): any {
                             </div>
                             <div class="qrconf" style="margin-right:1em;">
                                 encoding:
-                                <Select name="qrencoding" selected="n" onchange="selectBartypes()" options={[
+                                <Select name="qrencoding" selected="n" options={[
                                     ['n', 'Number'],
                                     ['a', 'Alnum'],
                                     ['b', '8bit binary'],
@@ -79,9 +78,9 @@ export default function(express: any): any {
                         </div>
                         <div>
                             <TextArea name="data" style="width: 100%; height: 100px;"
-                                onchange="selectBartypes()"
                                 >1234567890123</TextArea>
                         </div>
+                        {/*<Input type="button" name="zzz" />*/}
                         <Input type="text" name="dummy" style="display: none;" />
                     </div>
                     <div style="width: 100%; height: calc(100% - 150px); margin: 0;">
@@ -89,7 +88,7 @@ export default function(express: any): any {
                             style="width: 100%; height: 100%; margin: 0; border: 0; overflow: hidden;"></iframe>
                     </div>
                     <script dangerouslySetInnerHTML={{ __html: `
-                        function selectBartypes() {
+                        function setState(eventType, state) {
                             var isQr = document.forms.theForm.bartypes.value === "qr";
                             Array.from(document.getElementsByClassName("qrconf"))
                             .forEach(function(x) { x.style.display = isQr ? "block" : "none" });
@@ -101,7 +100,6 @@ export default function(express: any): any {
                                         encodeURIComponent(document.forms.theForm.data.value);
                             document.getElementById("theIframe").src = url;
                         }
-                        selectBartypes();
                     `}}></script>
                 </Form>
             </body>
