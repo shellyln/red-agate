@@ -2,7 +2,7 @@
 import * as RedAgate from 'red-agate/modules/red-agate';
 import { ForEach,
          Template, 
-         If}  from 'red-agate/modules/red-agate/taglib';
+         If }        from 'red-agate/modules/red-agate/taglib';
 
 
 
