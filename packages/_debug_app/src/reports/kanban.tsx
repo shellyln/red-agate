@@ -196,7 +196,7 @@ export let kanbanReportHandler: AwsLambda = (event: KanbanPrintJob, context, cal
     <Asset contextName="qr-asset" src="https://upload.wikimedia.org/wikipedia/commons/d/d0/QR_code_for_mobile_English_Wikipedia.svg"/>
     <head>
         <title>Kanban</title>
-        <link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet"/>
+        <Font src="https://fonts.googleapis.com/css?family=Noto+Sans"/>
         <Style src="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css"/>
         <Style src="https://cdnjs.cloudflare.com/ajax/libs/paper-css/0.3.0/paper.css"/>
         <style dangerouslySetInnerHTML={{ __html: require('./kanban.style.css') }}/>

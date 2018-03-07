@@ -57,8 +57,8 @@ export let fbaA4ReportHandler: AwsLambda = (event: FbaPrintJob, context, callbac
 <Html5>
     <head>
         <title>FBA</title>
-        <link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet"/>
-        <link href="https://fonts.googleapis.com/css?family=Libre+Barcode+128+Text" rel="stylesheet"/>
+        <Font src="https://fonts.googleapis.com/css?family=Noto+Sans"/>
+        <Font src="https://fonts.googleapis.com/css?family=Libre+Barcode+128+Text"/>
         <Style src="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css"/>
         <Style src="https://cdnjs.cloudflare.com/ajax/libs/paper-css/0.3.0/paper.css"/>
         <style dangerouslySetInnerHTML={{ __html: require('./fba-a4.style.css') }}/>
