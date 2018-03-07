@@ -64,7 +64,7 @@ export const If = (props: IfProps) => {
 };
 ```
 
-defining element by using component:
+### defining element by using component:
 ```tsx
 export interface IfProps extends RedAgate.ComponentProps {
     condition: boolean;
@@ -295,7 +295,7 @@ Instead, you can also import the whole by simply specifying `red-agate*` as the 
 
 | method | description |
 |--------|-------------|
-| `App.cli(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`options: string[]`<br>&nbsp;&nbsp;&nbsp;&nbsp;`handler: (opts: Map<string, string>) => void`<br>`): App` | Add CLI routing.<br>If `options[i]` starts with `?` it is a optional parameter.<br>If `options[i]` ends with `*` it is a wildcard. |
+| `App.cli(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`options: string[]`<br>&nbsp;&nbsp;&nbsp;&nbsp;`handler: (`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`opts: Map<string, string>`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`) => void`<br>`): App` | Add CLI routing.<br>If `options[i]` starts with `?` it is a optional parameter.<br>If `options[i]` ends with `*` it is a wildcard. |
 | `App.route(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`name: string`<br>&nbsp;&nbsp;&nbsp;&nbsp;`lambda: AwsLambda`<br>`): App` | Add routing to lambda.<br>`name` parameter is used as routing path.<br>When request event is received call the lambda that `name` equals to `event.eventName`. |
 | `App.run(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`context: any`<br>&nbsp;&nbsp;&nbsp;&nbsp;`lambda?: AwsLambda`<br>`): App` | Run routing.<br>event is received from stdin as JSON and send response to stdout.<br>Exit process by calling `exit()` when response is ended.<br>If `lambda` is specified, ignore `route()` and call `lambda`. |
 
@@ -305,66 +305,66 @@ Instead, you can also import the whole by simply specifying `red-agate*` as the 
 
 | tag | description |
 |-----|-------------|
-| Repeat | Loop N times. |
-| ForEach | Iterate an array. |
-| If | Conditional branch. |
-| Do | Call a lambda function when `createElement` . |
-| Facet | Grouping child elements.<br>Give a name to group. |
-| Template | Synonym for `Facet` . |
+| [Repeat](https://github.com/shellyln/red-agate/blob/master/packages/red-agate/src/red-agate/taglib.tsx) | Loop N times. |
+| [ForEach](https://github.com/shellyln/red-agate/blob/master/packages/red-agate/src/red-agate/taglib.tsx) | Iterate an array. |
+| [If](https://github.com/shellyln/red-agate/blob/master/packages/red-agate/src/red-agate/taglib.tsx) | Conditional branch. |
+| [Do](https://github.com/shellyln/red-agate/blob/master/packages/red-agate/src/red-agate/taglib.tsx) | Call a lambda function when `createElement` . |
+| [Facet](https://github.com/shellyln/red-agate/blob/master/packages/red-agate/src/red-agate/taglib.tsx) | Grouping child elements.<br>Give a name to group. |
+| [Template](https://github.com/shellyln/red-agate/blob/master/packages/red-agate/src/red-agate/taglib.tsx) | Synonym for `Facet` . |
 
 ### `red-agate/modules/red-agate/bundler`
 
 | tag | description |
 |-----|-------------|
-| Asset | Fetch a external resource.<br>Fetched resource is referred from other tags. |
-| Image | Fetch a external image resource. |
-| Script | Fetch a external script resource. |
-| Style | Fetch a external stylesheet resource. |
-| Font | Synonym for `Style` . |
-| SingleFont | Fetch a external single font-family font resource. |
+| [Asset](https://github.com/shellyln/red-agate/blob/master/packages/red-agate/src/red-agate/bundler.tsx) | Fetch a external resource.<br>Fetched resource is referred from other tags. |
+| [Image](https://github.com/shellyln/red-agate/blob/master/packages/red-agate/src/red-agate/bundler.tsx) | Fetch a external image resource. |
+| [Script](https://github.com/shellyln/red-agate/blob/master/packages/red-agate/src/red-agate/bundler.tsx) | Fetch a external script resource. |
+| [Style](https://github.com/shellyln/red-agate/blob/master/packages/red-agate/src/red-agate/bundler.tsx) | Fetch a external stylesheet resource. |
+| [Font](https://github.com/shellyln/red-agate/blob/master/packages/red-agate/src/red-agate/bundler.tsx) | Synonym for `Style` . |
+| [SingleFont](https://github.com/shellyln/red-agate/blob/master/packages/red-agate/src/red-agate/bundler.tsx) | Fetch a external single font-family font resource. |
 
 ### `red-agate/modules/red-agate/html`
 
 | tag | description |
 |-----|-------------|
-| Html4_01_Strict | Output `doctype` declaration and `html` tag. |
-| Html4_01_Transitional | Output `doctype` declaration and `html` tag. |
-| Html4_01_Frameset | Output `doctype` declaration and `html` tag. |
-| Xhtml1_0_Strict | Output `doctype` declaration and `html` tag. |
-| Xhtml1_0_Transitional | Output `doctype` declaration and `html` tag. |
-| Xhtml1_0_Frameset | Output `doctype` declaration and `html` tag. |
-| Html5 | Output `doctype` declaration and `html` tag. |
-| Xml | Output xml declaration. |
-| HtmlImposition | Impose pages in a physical page. |
+| [Html4_01_Strict](https://github.com/shellyln/red-agate/blob/master/packages/red-agate/src/red-agate/html.tsx) | Output `doctype` declaration and `html` tag. |
+| [Html4_01_Transitional](https://github.com/shellyln/red-agate/blob/master/packages/red-agate/src/red-agate/html.tsx) | Output `doctype` declaration and `html` tag. |
+| [Html4_01_Frameset](https://github.com/shellyln/red-agate/blob/master/packages/red-agate/src/red-agate/html.tsx) | Output `doctype` declaration and `html` tag. |
+| [Xhtml1_0_Strict](https://github.com/shellyln/red-agate/blob/master/packages/red-agate/src/red-agate/html.tsx) | Output `doctype` declaration and `html` tag. |
+| [Xhtml1_0_Transitional](https://github.com/shellyln/red-agate/blob/master/packages/red-agate/src/red-agate/html.tsx) | Output `doctype` declaration and `html` tag. |
+| [Xhtml1_0_Frameset](https://github.com/shellyln/red-agate/blob/master/packages/red-agate/src/red-agate/html.tsx) | Output `doctype` declaration and `html` tag. |
+| [Html5](https://github.com/shellyln/red-agate/blob/master/packages/red-agate/src/red-agate/html.tsx) | Output `doctype` declaration and `html` tag. |
+| [Xml](https://github.com/shellyln/red-agate/blob/master/packages/red-agate/src/red-agate/html.tsx) | Output xml declaration. |
+| [HtmlImposition](https://github.com/shellyln/red-agate/blob/master/packages/red-agate/src/red-agate/html.tsx) | Impose pages in a physical page. |
 
 ### `red-agate/modules/red-agate/svg`
 
 | tag | description |
 |-----|-------------|
-| Svg | Output `svg` tag.<br>Children can use a `Canvas` context. |
-| Ambient | Change current graphic state properties. |
-| Arc | Draw an arc. |
-| Canvas | Call a lambda function and draw by using `Canvas` context object. |
-| Circle | Draw a circle. |
-| Curve | Draw bezier curve(s). |
-| GridLine | Draw grid lines for design time. |
-| Group | Group children.<br>Output `g` tag. |
-| Line | Draw line(s). |
-| Path | Group path fragments (e.g. Arc, Circle, Curve, Line, Rect, ...) . |
-| Pie | Draw a pie. |
-| Polygon | Draw a polygon. |
-| Rect | Draw a rectangle. |
-| RoundRect | Draw a rounded rectangle. |
-| SvgAssetFragment | Append raw SVG tags into `defs`. |
-| SvgFragment | Append raw SVG tags. |
-| Text | Draw text line(s). |
-| SvgImposition | Impose pages in a physical page. |
+| [Svg](https://github.com/shellyln/red-agate/blob/master/packages/red-agate/src/red-agate/svg.tsx) | Output `svg` tag.<br>Children can use a `Canvas` context. |
+| [Ambient](https://github.com/shellyln/red-agate/blob/master/packages/red-agate/src/red-agate/svg.tsx) | Change current graphic state properties. |
+| [Arc](https://github.com/shellyln/red-agate/blob/master/packages/red-agate/src/red-agate/svg.tsx) | Draw an arc. |
+| [Canvas](https://github.com/shellyln/red-agate/blob/master/packages/red-agate/src/red-agate/svg.tsx) | Call a lambda function and draw by using `Canvas` context object. |
+| [Circle](https://github.com/shellyln/red-agate/blob/master/packages/red-agate/src/red-agate/svg.tsx) | Draw a circle. |
+| [Curve](https://github.com/shellyln/red-agate/blob/master/packages/red-agate/src/red-agate/svg.tsx) | Draw bezier curve(s). |
+| [GridLine](https://github.com/shellyln/red-agate/blob/master/packages/red-agate/src/red-agate/svg.tsx) | Draw grid lines for design time. |
+| [Group](https://github.com/shellyln/red-agate/blob/master/packages/red-agate/src/red-agate/svg.tsx) | Group children.<br>Output `g` tag. |
+| [Line](https://github.com/shellyln/red-agate/blob/master/packages/red-agate/src/red-agate/svg.tsx) | Draw line(s). |
+| [Path](https://github.com/shellyln/red-agate/blob/master/packages/red-agate/src/red-agate/svg.tsx) | Group path fragments (e.g. Arc, Circle, Curve, Line, Rect, ...) . |
+| [Pie](https://github.com/shellyln/red-agate/blob/master/packages/red-agate/src/red-agate/svg.tsx) | Draw a pie. |
+| [Polygon](https://github.com/shellyln/red-agate/blob/master/packages/red-agate/src/red-agate/svg.tsx) | Draw a polygon. |
+| [Rect](https://github.com/shellyln/red-agate/blob/master/packages/red-agate/src/red-agate/svg.tsx) | Draw a rectangle. |
+| [RoundRect](https://github.com/shellyln/red-agate/blob/master/packages/red-agate/src/red-agate/svg.tsx) | Draw a rounded rectangle. |
+| [SvgAssetFragment](https://github.com/shellyln/red-agate/blob/master/packages/red-agate/src/red-agate/svg.tsx) | Append raw SVG tags into `defs`. |
+| [SvgFragment](https://github.com/shellyln/red-agate/blob/master/packages/red-agate/src/red-agate/svg.tsx) | Append raw SVG tags. |
+| [Text](https://github.com/shellyln/red-agate/blob/master/packages/red-agate/src/red-agate/svg.tsx) | Draw text line(s). |
+| [SvgImposition](https://github.com/shellyln/red-agate/blob/master/packages/red-agate/src/red-agate/svg.tsx) | Impose pages in a physical page. |
 
 ### `red-agate/modules/red-agate/printing`
 
 | tag | description |
 |-----|-------------|
-| PrinterMarksProps | Draw printer marks (crop mark, bleed mark, center mark, fold mark). |
+| [PrinterMarksProps](https://github.com/shellyln/red-agate/blob/master/packages/red-agate/src/red-agate/printing.tsx) | Draw printer marks (crop mark, bleed mark, center mark, fold mark). |
 
 ### `red-agate-barcode/modules/barcode/(Code39|Code128|Ean|Itf|JapanPostal|Nw7|Qr)`
 
@@ -374,26 +374,26 @@ $ npm install red-agate-barcode --save
 
 | tag | description |
 |-----|-------------|
-| Code39 | Draw a CODE39 barcode. |
-| Code128 | Draw a CODE128 barcode. (GS1-128 is available) |
-| Ean13 | Draw a EAN-13 (GTIN-13 / JAN-13) barcode. |
-| Ean8 | Draw a EAN-8 (GTIN-8 / JAN-8) barcode. |
-| Ean5 | Draw a EAN-5 (JAN-5) barcode. |
-| Ean2 | Draw a EAN-2 (JAN-2) barcode. |
-| UpcA | Draw a UPC-A (GTIN-12) barcode. |
-| UpcE | Draw a UPC-E barcode. |
-| Itf | Draw a ITF barcode. (GTIN-14 is available) |
-| JapanPostal | Draw a Japan Post Customer barcode. |
-| Nw7 | Draw a NW7 (Codabar) barcode. |
-| Qr | Draw a QR Code (model 2) barcode. |
+| [Code39](https://github.com/shellyln/red-agate/blob/master/packages/red-agate-barcode/src/barcode/Code39.ts) | Draw a CODE39 barcode. |
+| [Code128](https://github.com/shellyln/red-agate/blob/master/packages/red-agate-barcode/src/barcode/Code128.ts) | Draw a CODE128 barcode. (GS1-128 is available) |
+| [Ean13](https://github.com/shellyln/red-agate/blob/master/packages/red-agate-barcode/src/barcode/Ean.ts) | Draw a EAN-13 (GTIN-13 / JAN-13) barcode. |
+| [Ean8](https://github.com/shellyln/red-agate/blob/master/packages/red-agate-barcode/src/barcode/Ean.ts) | Draw a EAN-8 (GTIN-8 / JAN-8) barcode. |
+| [Ean5](https://github.com/shellyln/red-agate/blob/master/packages/red-agate-barcode/src/barcode/Ean.ts) | Draw a EAN-5 (JAN-5) barcode. |
+| [Ean2](https://github.com/shellyln/red-agate/blob/master/packages/red-agate-barcode/src/barcode/Ean.ts) | Draw a EAN-2 (JAN-2) barcode. |
+| [UpcA](https://github.com/shellyln/red-agate/blob/master/packages/red-agate-barcode/src/barcode/Ean.ts) | Draw a UPC-A (GTIN-12) barcode. |
+| [UpcE](https://github.com/shellyln/red-agate/blob/master/packages/red-agate-barcode/src/barcode/Ean.ts) | Draw a UPC-E barcode. |
+| [Itf](https://github.com/shellyln/red-agate/blob/master/packages/red-agate-barcode/src/barcode/Itf.ts) | Draw a ITF barcode. (GTIN-14 is available) |
+| [JapanPostal](https://github.com/shellyln/red-agate/blob/master/packages/red-agate-barcode/src/barcode/JapanPostal.ts) | Draw a Japan Post Customer barcode. |
+| [Nw7](https://github.com/shellyln/red-agate/blob/master/packages/red-agate-barcode/src/barcode/Nw7.ts) | Draw a NW7 (Codabar) barcode. |
+| [Qr](https://github.com/shellyln/red-agate/blob/master/packages/red-agate-barcode/src/barcode/Qr.ts) | Draw a QR Code (model 2) barcode. |
 
 
 ## Configurations for building application
 You should configure `tsconfig` or `.babelrc` for building JSX.  
 Prease see [here](https://www.typescriptlang.org/docs/handbook/jsx.html)
 or [here](https://babeljs.io/docs/plugins/transform-react-jsx/)
-or [examples](https://github.com/shellyln/red-agate-example).  
-Instead, you will import `red-agate` as `React`, you can let RedAgate and React coexist.
+or [examples](https://github.com/shellyln/red-agate-example).
+
 
 ## FAQ
 
@@ -416,7 +416,8 @@ Instead, you will import `red-agate` as `React`, you can let RedAgate and React 
 
 
 + Can I output rendered result as PDF, PNG, or other formats?  
-    + You can convert from html to any formats by using other libraries (e.g. [electron-pdf](https://github.com/fraserxu/electron-pdf), [wkhtmltopdf](https://wkhtmltopdf.org/)) .
+    + You can convert from html to any formats by using other libraries
+      (e.g. [puppeteer](https://github.com/GoogleChrome/puppeteer), [html-pdf (wrapper of PhantomJS)](https://github.com/marcbachmann/node-html-pdf), [wkhtmltopdf](https://wkhtmltopdf.org/)) .
 
 
 ## License
