@@ -12,4 +12,5 @@ export * from './red-agate/svg';
 export * from './red-agate/bundler';
 export * from './red-agate/printing';
 export * from './red-agate/app';
+export * from './red-agate/renderer';
 
