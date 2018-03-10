@@ -87,21 +87,21 @@ export default function(express: any): any {
                         <iframe id="theIframe" scrolling="no" frameborder="no"
                             style="width: 100%; height: 100%; margin: 0; border: 0; overflow: hidden;"></iframe>
                     </div>
-                    <script dangerouslySetInnerHTML={{ __html: `
-                        function setState(eventType, state) {
-                            var isQr = document.forms.theForm.bartypes.value === "qr";
-                            Array.from(document.getElementsByClassName("qrconf"))
-                            .forEach(function(x) { x.style.display = isQr ? "block" : "none" });
-                            var url = "./" + document.forms.theForm.bartypes.value + "/" +
-                                        (isQr ?
-                                            encodeURIComponent(document.forms.theForm.qrversion.value) + "/" +
-                                            document.forms.theForm.qreclevel.value + "/" +
-                                            document.forms.theForm.qrencoding.value + "/" : "") +
-                                        encodeURIComponent(document.forms.theForm.data.value);
-                            document.getElementById("theIframe").src = url;
-                        }
-                    `}}></script>
                 </Form>
+                <script dangerouslySetInnerHTML={{ __html: `
+                    setState.subscribe(null, function(state, newState) {
+                        var isQr = state.bartypes === "qr";
+                        Array.from(document.getElementsByClassName("qrconf"))
+                        .forEach(function(x) { x.style.display = isQr ? "block" : "none" });
+                        var url = "./" + state.bartypes + "/" +
+                                    (isQr ?
+                                        encodeURIComponent(state.qrversion) + "/" +
+                                        state.qreclevel + "/" +
+                                        state.qrencoding + "/" : "") +
+                                    encodeURIComponent(state.data);
+                        document.getElementById("theIframe").src = url;
+                    });
+                `}}></script>
             </body>
         </Html5>, req, res)
     )
