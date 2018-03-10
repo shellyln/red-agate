@@ -33,8 +33,8 @@ export class Form extends RedAgate.RedAgateComponent<FormProps> {
             <Template>
                 <form name={props.name} {...props}>{this.props.children}</form>
                 <If condition={Boolean(this.props.setState)}>
-                    <script dangerouslySetInnerHTML={{ __html: `
-(function() {
+                    <script dangerouslySetInnerHTML={{ __html:
+`(function() {
     var global = Function("return this")();
     var _state = {};
     var _subscribers = [];
@@ -99,8 +99,7 @@ export class Form extends RedAgate.RedAgateComponent<FormProps> {
         }
         _setState(state);
     })();
-})();
-                    `}}></script>
+})();`}}/>
                 </If>
             </Template>
         );
