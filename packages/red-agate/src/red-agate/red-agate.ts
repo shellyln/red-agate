@@ -371,7 +371,7 @@ function camelToKebabCase(s: string): string {
     return s.replace(/([a-z0-9])([A-Z])/g, (match, p1, p2) => `${p1}-${p2.toLowerCase()}`);
 }
 
-export function htmlAttributesRenderer(props: any, omitKeys?: Set<string>): {attrs: string, children: string} {
+export function htmlAttributesRenderer(props: any, omitKeys?: Set<string>, whiteListKeys?: Set<string>): {attrs: string, children: string} {
     let attrs = '';
     let children = '';
 
@@ -411,6 +411,8 @@ export function htmlAttributesRenderer(props: any, omitKeys?: Set<string>): {att
 
             default:
                 if (omitKeys && omitKeys.has(key)) {
+                    // no output
+                } else if (whiteListKeys && !whiteListKeys.has(key) && key !== 'id') {
                     // no output
                 } else if (props[key] === null || props[key] === void 0 || props[key] === false) {
                     // no output

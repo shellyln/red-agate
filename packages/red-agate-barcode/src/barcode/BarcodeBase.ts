@@ -14,11 +14,16 @@ import { WebColor }           from 'red-agate-svg-canvas/modules/drawing/canvas/
 import { ShapeProps,
          shapePropsDefault,
          Shape,
+         ImagingShapeBasePropsMixin,
+         renderSvgCanvas,
+         toSvg,
+         toDataUrl,
+         toImgTag,
          CONTEXT_SVG_CANVAS } from 'red-agate/modules/red-agate/tags/Shape';
 
 
 
-export interface BarcodeBaseProps extends ShapeProps {
+export interface BarcodeBaseProps extends ShapeProps, ImagingShapeBasePropsMixin {
     fillColor?: string | WebColor;
     font?: string;
 
@@ -33,9 +38,12 @@ export interface BarcodeBaseProps extends ShapeProps {
 
     data?: string;
     text?: string;
+
+    asDataUrl?: boolean;
+    asImgTag?: boolean;
 }
 
-export interface BarcodeBasePropsNoUndefined extends ShapeProps {
+export interface BarcodeBasePropsNoUndefined extends ShapeProps, ImagingShapeBasePropsMixin {
     fillColor: string | WebColor;
     font: string;
 
@@ -50,6 +58,9 @@ export interface BarcodeBasePropsNoUndefined extends ShapeProps {
 
     data?: string;
     text?: string;
+
+    asDataUrl?: boolean;
+    asImgTag?: boolean;
 }
 
 export const barcodeBasePropsDefault: BarcodeBasePropsNoUndefined = Object.assign({}, shapePropsDefault, {
@@ -71,23 +82,15 @@ export class BarcodeBase<T extends BarcodeBaseProps> extends Shape<T> {
     }
 
     public toSvg(): string {
-        const propsNew = Object.assign({}, this.props);
-        propsNew.dataUrl = false;
-        const propsSaved = this.props;
-        this.props = propsNew;
-        const r = RedAgate.renderAsHtml_noDefer(this);
-        this.props = propsSaved;
-        return r;
+        return toSvg(this);
     }
 
     public toDataUrl(): string {
-        const propsNew = Object.assign({}, this.props);
-        propsNew.dataUrl = true;
-        const propsSaved = this.props;
-        this.props = propsNew;
-        const r = RedAgate.renderAsHtml_noDefer(this);
-        this.props = propsSaved;
-        return r;
+        return toDataUrl(this);
+    }
+
+    public toImgTag(): string {
+        return toImgTag(this);
     }
 
     public render(contexts: Map<string, any>, children: string) {
@@ -169,17 +172,9 @@ export class BarcodeBase<T extends BarcodeBaseProps> extends Shape<T> {
         if (contextHasCanvas) {
             return ``;
         } else {
-            if (this.props.dataUrl) {
-                return (
-                    `<img style="width:${
-                        tw}${this.props.unit};height:${
-                        th}${this.props.unit};" src="${
-                        canvas.toDataUrl(new Rect2D(0, 0, tw, th), this.props.unit, 120)}" ${
-                        RedAgate.htmlAttributesRenderer(this.props, new Set(['unit', 'width', 'height'])).attrs}"></img>`
-                );
-            } else {
-                return canvas.render(new Rect2D(0, 0, tw, th), this.props.unit);
-            }
+            const imageWidth  = tw + (this.props.x || 0);
+            const imageHeight = th + (this.props.y || 0);
+            return renderSvgCanvas(this.props, canvas, imageWidth, imageHeight);
         }
     }
 

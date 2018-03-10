@@ -14,6 +14,11 @@ import { WebColor }           from 'red-agate-svg-canvas/modules/drawing/canvas/
 import { ShapeProps,
          shapePropsDefault,
          Shape,
+         ImagingShapeBasePropsMixin,
+         renderSvgCanvas,
+         toSvg,
+         toDataUrl,
+         toImgTag,
          CONTEXT_SVG_CANVAS } from 'red-agate/modules/red-agate/tags/Shape';
 import { Gf2e8Field }         from 'red-agate-math/modules/math/Gf2Ext';
 import { BCH }                from 'red-agate-math/modules/error-correction/BCH';
@@ -30,27 +35,34 @@ import * as qr                from './data/Qr.m2.data';
 
 
 
-export interface QrProps extends ShapeProps {
+export interface QrProps extends ShapeProps, ImagingShapeBasePropsMixin {
     data?: Array<Uint8Array | string | number> | Uint8Array | string;
     version?: number | "auto";
     ecLevel?: "L" | "M" | "Q" | "H";
     encoding?: "number" | "alnum" | "8bit" | "auto";
     cellSize?: number;
+    unit?: string;
+    asDataUrl?: boolean;
+    asImgTag?: boolean;
 }
 
-export interface QrPropsNoUndefined extends ShapeProps {
+export interface QrPropsNoUndefined extends ShapeProps, ImagingShapeBasePropsMixin {
     data?: Array<Uint8Array | string | number> | Uint8Array | string;
     version: number | "auto";
     ecLevel: "L" | "M" | "Q" | "H";
     encoding: "number" | "alnum" | "8bit" | "auto";
     cellSize: number;
+    unit?: string;
+    asDataUrl?: boolean;
+    asImgTag?: boolean;
 }
 
 export const qrPropsDefault: QrPropsNoUndefined = Object.assign({}, shapePropsDefault, {
     version: "auto",
     ecLevel: "M",
     encoding: "auto",
-    cellSize: 0.33
+    cellSize: 0.33,
+    unit: "mm",
 } as any);
 
 
@@ -76,6 +88,18 @@ export class Qr extends Shape<QrProps> {
         super(Object.assign({}, qrPropsDefault, props));
     }
 
+    public toSvg(): string {
+        return toSvg(this);
+    }
+
+    public toDataUrl(): string {
+        return toDataUrl(this);
+    }
+
+    public toImgTag(): string {
+        return toImgTag(this);
+    }
+
     public render(contexts: Map<string, any>, children: string) {
         let canvas: SvgCanvas = this.getContext(contexts, CONTEXT_SVG_CANVAS);
         const contextHasCanvas = Boolean(canvas);
@@ -92,17 +116,10 @@ export class Qr extends Shape<QrProps> {
         if (contextHasCanvas) {
             return ``;
         } else {
-            if (this.props.dataUrl) {
-                return (
-                    `<img style="width:${
-                        tw}${this.props.unit};height:${
-                        th}${this.props.unit};" src="${
-                        canvas.toDataUrl(new Rect2D(0, 0, tw, th), this.props.unit, 120)}" ${
-                        RedAgate.htmlAttributesRenderer(this.props, new Set(['unit', 'width', 'height'])).attrs}"></img>`
-                );
-            } else {
-                return canvas.render(new Rect2D(0, 0, tw, th), this.props.unit);
-            }
+            const total = bitmap.width * (this.props.cellSize as number) + (this.props.margin as number) * 2;
+            const imageWidth  = total + (this.props.x || 0);
+            const imageHeight = total + (this.props.y || 0);
+            return renderSvgCanvas(this.props, canvas, imageWidth, imageHeight);
         }
     }
 
