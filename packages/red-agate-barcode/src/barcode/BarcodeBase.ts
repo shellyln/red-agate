@@ -26,6 +26,7 @@ export interface BarcodeBaseProps extends ShapeProps {
     height?: number;
     quietWidth?: number;
     quietHeight?: number;
+    unit?: string;
     drawText?: boolean;
     useRawDataAsText?: boolean;
     textHeight?: number;
@@ -42,6 +43,7 @@ export interface BarcodeBasePropsNoUndefined extends ShapeProps {
     height: number;
     quietWidth: number;
     quietHeight: number;
+    unit?: string;
     drawText: boolean;
     useRawDataAsText: boolean;
     textHeight: number;
@@ -57,6 +59,7 @@ export const barcodeBasePropsDefault: BarcodeBasePropsNoUndefined = Object.assig
     height: 6.35,
     quietWidth: 2.54,
     quietHeight: 0.66,
+    unit: "mm",
     drawText: true,
     useRawDataAsText: false,
     textHeight: 3.55
@@ -67,8 +70,32 @@ export class BarcodeBase<T extends BarcodeBaseProps> extends Shape<T> {
         super(Object.assign({}, barcodeBasePropsDefault, props as any));
     }
 
+    public toSvg(): string {
+        const propsNew = Object.assign({}, this.props);
+        propsNew.dataUrl = false;
+        const propsSaved = this.props;
+        this.props = propsNew;
+        const r = RedAgate.renderAsHtml_noDefer(this);
+        this.props = propsSaved;
+        return r;
+    }
+
+    public toDataUrl(): string {
+        const propsNew = Object.assign({}, this.props);
+        propsNew.dataUrl = true;
+        const propsSaved = this.props;
+        this.props = propsNew;
+        const r = RedAgate.renderAsHtml_noDefer(this);
+        this.props = propsSaved;
+        return r;
+    }
+
     public render(contexts: Map<string, any>, children: string) {
-        const canvas: SvgCanvas = this.getContext(contexts, CONTEXT_SVG_CANVAS);
+        let canvas: SvgCanvas = this.getContext(contexts, CONTEXT_SVG_CANVAS);
+        const contextHasCanvas = Boolean(canvas);
+        if (!contextHasCanvas) {
+            canvas = new SvgCanvas();
+        }
 
         let data = this.props.data || "";
         let text = this.props.text;
@@ -139,9 +166,22 @@ export class BarcodeBase<T extends BarcodeBaseProps> extends Shape<T> {
             canvas.endGroup();
         }
 
-        return ``;
+        if (contextHasCanvas) {
+            return ``;
+        } else {
+            if (this.props.dataUrl) {
+                return (
+                    `<img style="width:${
+                        tw}${this.props.unit};height:${
+                        th}${this.props.unit};" src="${
+                        canvas.toDataUrl(new Rect2D(0, 0, tw, th), this.props.unit, 120)}" ${
+                        RedAgate.htmlAttributesRenderer(this.props, new Set(['unit', 'width', 'height'])).attrs}"></img>`
+                );
+            } else {
+                return canvas.render(new Rect2D(0, 0, tw, th), this.props.unit);
+            }
+        }
     }
-
 
 
     // total width (quiet + data + start + stop + cd)

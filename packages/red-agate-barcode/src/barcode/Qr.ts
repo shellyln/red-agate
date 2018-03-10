@@ -77,7 +77,11 @@ export class Qr extends Shape<QrProps> {
     }
 
     public render(contexts: Map<string, any>, children: string) {
-        const canvas: SvgCanvas = this.getContext(contexts, CONTEXT_SVG_CANVAS);
+        let canvas: SvgCanvas = this.getContext(contexts, CONTEXT_SVG_CANVAS);
+        const contextHasCanvas = Boolean(canvas);
+        if (!contextHasCanvas) {
+            canvas = new SvgCanvas();
+        }
 
         const data = this.props.data || "";
 
@@ -85,7 +89,21 @@ export class Qr extends Shape<QrProps> {
         const bitmap  = this.buildBitmap(encoded.data, encoded.version);
         this.drawBitmap(canvas, bitmap);
 
-        return ``;
+        if (contextHasCanvas) {
+            return ``;
+        } else {
+            if (this.props.dataUrl) {
+                return (
+                    `<img style="width:${
+                        tw}${this.props.unit};height:${
+                        th}${this.props.unit};" src="${
+                        canvas.toDataUrl(new Rect2D(0, 0, tw, th), this.props.unit, 120)}" ${
+                        RedAgate.htmlAttributesRenderer(this.props, new Set(['unit', 'width', 'height'])).attrs}"></img>`
+                );
+            } else {
+                return canvas.render(new Rect2D(0, 0, tw, th), this.props.unit);
+            }
+        }
     }
 
 

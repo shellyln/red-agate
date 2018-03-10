@@ -484,6 +484,14 @@ export function renderAsHtml(element: RedAgateNode): Promise<string> {
     );
 }
 
+export function renderAsHtml_noDefer(element: RedAgateNode): string {
+    const contexts = new Map<string, any>();
+    const transformContext = { counter: 0 };
+    const z = transform(element, transformContext);
+
+    return htmlRenderer(z, contexts);
+}
+
 
 
 export function render(
