@@ -186,7 +186,7 @@ export function renderSvgCanvas(props: ImagingShapeBasePropsMixin, canvas: SvgCa
                 RedAgate.htmlAttributesRenderer(props, void 0, new Set([])).attrs}"></img>`
         );
     } else if (props.asDataUrl) {
-        return canvas.toDataUrl(new Rect2D(0, 0, imageWidth, imageHeight), props.unit, 120);
+        return canvas.toDataUrl(new Rect2D(0, 0, imageWidth, imageHeight), props.unit, void 0);
     } else {
         return canvas.render(new Rect2D(0, 0, imageWidth, imageHeight), props.unit);
     }
