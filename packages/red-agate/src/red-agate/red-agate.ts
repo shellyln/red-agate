@@ -371,6 +371,14 @@ function camelToKebabCase(s: string): string {
     return s.replace(/([a-z0-9])([A-Z])/g, (match, p1, p2) => `${p1}-${p2.toLowerCase()}`);
 }
 
+export function elementStyleRenderer(style: object | string) {
+    return typeof style === 'string' ? style :
+        Object.getOwnPropertyNames(style)
+            .filter(x => style[x] !== null && style[x] !== void 0)
+            .map(x => `${Escape.html(camelToKebabCase(x))}:${Escape.html(style[x])};`)
+            .join('');
+}
+
 export function htmlAttributesRenderer(props: any, omitKeys?: Set<string>, whiteListKeys?: Set<string>): {attrs: string, children: string} {
     let attrs = '';
     let children = '';
@@ -390,12 +398,7 @@ export function htmlAttributesRenderer(props: any, omitKeys?: Set<string>, white
                 break;
 
             case 'style':
-                attrs += ` style="${
-                    typeof props.style === 'string' ? props.style :
-                        Object.getOwnPropertyNames(props.style)
-                            .filter(x => props.style[x] !== null && props.style[x] !== void 0)
-                            .map(x => `${Escape.html(camelToKebabCase(x))}:${Escape.html(props.style[x])};`)
-                            .join('')}"`;
+                attrs += ` style="${elementStyleRenderer(props.style)}"`;
                 break;
 
             case 'children': case '__nodeId':

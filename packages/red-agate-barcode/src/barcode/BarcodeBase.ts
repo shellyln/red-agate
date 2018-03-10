@@ -16,9 +16,10 @@ import { ShapeProps,
          Shape,
          ImagingShapeBasePropsMixin,
          renderSvgCanvas,
-         toSvg,
-         toDataUrl,
          toImgTag,
+         toElementStyle,
+         toDataUrl,
+         toSvg,
          CONTEXT_SVG_CANVAS } from 'red-agate/modules/red-agate/tags/Shape';
 
 
@@ -81,16 +82,24 @@ export class BarcodeBase<T extends BarcodeBaseProps> extends Shape<T> {
         super(Object.assign({}, barcodeBasePropsDefault, props as any));
     }
 
-    public toSvg(): string {
-        return toSvg(this);
+    public toImgTag(): string {
+        return toImgTag(this);
+    }
+
+    public toElementStyle(): string {
+        return toElementStyle(this);
     }
 
     public toDataUrl(): string {
         return toDataUrl(this);
     }
 
-    public toImgTag(): string {
-        return toImgTag(this);
+    public toSvg(): string {
+        return toSvg(this);
+    }
+
+    public toRendered(): string {
+        return RedAgate.renderAsHtml_noDefer(this);
     }
 
     public render(contexts: Map<string, any>, children: string) {

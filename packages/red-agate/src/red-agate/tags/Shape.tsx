@@ -165,8 +165,9 @@ export abstract class Shape<T extends ShapeProps> extends RedAgate.RedAgatePhant
 
 
 export interface ImagingShapeBasePropsMixin {
-    asDataUrl?: boolean;
     asImgTag?: boolean;
+    asElementStyle?: boolean;
+    asDataUrl?: boolean;
     unit?: string;
 }
 
@@ -176,7 +177,7 @@ export interface ImagingShapeBaseProps extends ShapeBaseProps, ImagingShapeBaseP
 export interface ImagingShapeProps extends ShapeProps, ImagingShapeBasePropsMixin {
 }
 
-export function renderSvgCanvas(props: ImagingShapeBasePropsMixin, canvas: SvgCanvas, imageWidth: number, imageHeight: number): string {
+export function renderSvgCanvas(props: ImagingShapeBaseProps, canvas: SvgCanvas, imageWidth: number, imageHeight: number): string {
     if (props.asImgTag) {
         return (
             `<img style="width:${
@@ -185,6 +186,12 @@ export function renderSvgCanvas(props: ImagingShapeBasePropsMixin, canvas: SvgCa
                 canvas.toDataUrl(new Rect2D(0, 0, imageWidth, imageHeight), props.unit, 120)}" ${
                 RedAgate.htmlAttributesRenderer(props, void 0, new Set([])).attrs}"></img>`
         );
+    } else if (props.asElementStyle) {
+        return `${
+            props.style ? RedAgate.elementStyleRenderer(props.style) : ''}${
+            RedAgate.elementStyleRenderer({'background-image': `url("${
+                canvas.toDataUrl(new Rect2D(0, 0, imageWidth, imageHeight), props.unit, void 0)}")`})
+        }`;
     } else if (props.asDataUrl) {
         return canvas.toDataUrl(new Rect2D(0, 0, imageWidth, imageHeight), props.unit, void 0);
     } else {
@@ -192,38 +199,54 @@ export function renderSvgCanvas(props: ImagingShapeBasePropsMixin, canvas: SvgCa
     }
 }
 
-export function toSvg(component: RedAgate.RedAgatePhantomComponent<ImagingShapeBaseProps>): string {
-    const propsNew = Object.assign({}, component.props);
-    propsNew.asDataUrl = false;
-    propsNew.asImgTag = false;
-    const propsSaved = component.props;
-
-    component.props = propsNew;
-    const r = RedAgate.renderAsHtml_noDefer(component);
-    component.props = propsSaved;
-    return r;
-}
-
-export function toDataUrl(component: RedAgate.RedAgatePhantomComponent<ImagingShapeBaseProps>): string {
-    const propsNew = Object.assign({}, component.props);
-    propsNew.asDataUrl = true;
-    propsNew.asImgTag = false;
-    const propsSaved = component.props;
-
-    component.props = propsNew;
-    const r = RedAgate.renderAsHtml_noDefer(component);
-    component.props = propsSaved;
-    return r;
-}
-
-export function toImgTag(component: RedAgate.RedAgatePhantomComponent<ImagingShapeBaseProps>): string {
-    const propsNew = Object.assign({}, component.props);
-    propsNew.asDataUrl = false;
+export function toImgTag(element: RedAgate.RedAgatePhantomComponent<ImagingShapeBaseProps>): string {
+    const propsNew = Object.assign({}, element.props);
     propsNew.asImgTag = true;
-    const propsSaved = component.props;
+    propsNew.asElementStyle = false;
+    propsNew.asDataUrl = false;
+    const propsSaved = element.props;
 
-    component.props = propsNew;
-    const r = RedAgate.renderAsHtml_noDefer(component);
-    component.props = propsSaved;
+    element.props = propsNew;
+    const r = RedAgate.renderAsHtml_noDefer(element);
+    element.props = propsSaved;
+    return r;
+}
+
+export function toElementStyle(element: RedAgate.RedAgatePhantomComponent<ImagingShapeBaseProps>): string {
+    const propsNew = Object.assign({}, element.props);
+    propsNew.asImgTag = false;
+    propsNew.asElementStyle = true;
+    propsNew.asDataUrl = false;
+    const propsSaved = element.props;
+
+    element.props = propsNew;
+    const r = RedAgate.renderAsHtml_noDefer(element);
+    element.props = propsSaved;
+    return r;
+}
+
+export function toDataUrl(element: RedAgate.RedAgatePhantomComponent<ImagingShapeBaseProps>): string {
+    const propsNew = Object.assign({}, element.props);
+    propsNew.asImgTag = false;
+    propsNew.asElementStyle = false;
+    propsNew.asDataUrl = true;
+    const propsSaved = element.props;
+
+    element.props = propsNew;
+    const r = RedAgate.renderAsHtml_noDefer(element);
+    element.props = propsSaved;
+    return r;
+}
+
+export function toSvg(element: RedAgate.RedAgatePhantomComponent<ImagingShapeBaseProps>): string {
+    const propsNew = Object.assign({}, element.props);
+    propsNew.asImgTag = false;
+    propsNew.asElementStyle = false;
+    propsNew.asDataUrl = false;
+    const propsSaved = element.props;
+
+    element.props = propsNew;
+    const r = RedAgate.renderAsHtml_noDefer(element);
+    element.props = propsSaved;
     return r;
 }

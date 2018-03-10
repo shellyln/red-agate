@@ -16,9 +16,10 @@ import { ShapeProps,
          Shape,
          ImagingShapeBasePropsMixin,
          renderSvgCanvas,
-         toSvg,
-         toDataUrl,
          toImgTag,
+         toElementStyle,
+         toDataUrl,
+         toSvg,
          CONTEXT_SVG_CANVAS } from 'red-agate/modules/red-agate/tags/Shape';
 import { Gf2e8Field }         from 'red-agate-math/modules/math/Gf2Ext';
 import { BCH }                from 'red-agate-math/modules/error-correction/BCH';
@@ -88,16 +89,24 @@ export class Qr extends Shape<QrProps> {
         super(Object.assign({}, qrPropsDefault, props));
     }
 
-    public toSvg(): string {
-        return toSvg(this);
+    public toImgTag(): string {
+        return toImgTag(this);
+    }
+
+    public toElementStyle(): string {
+        return toElementStyle(this);
     }
 
     public toDataUrl(): string {
         return toDataUrl(this);
     }
 
-    public toImgTag(): string {
-        return toImgTag(this);
+    public toSvg(): string {
+        return toSvg(this);
+    }
+
+    public toRendered(): string {
+        return RedAgate.renderAsHtml_noDefer(this);
     }
 
     public render(contexts: Map<string, any>, children: string) {

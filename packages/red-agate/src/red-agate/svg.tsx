@@ -20,9 +20,10 @@ import { ShapeBaseProps,
          AmbientProps,
          ImagingShapeBasePropsMixin,
          renderSvgCanvas,
-         toSvg,
-         toDataUrl,
          toImgTag,
+         toElementStyle,
+         toDataUrl,
+         toSvg,
          CONTEXT_SVG_CANVAS,
          CONTEXT_SVG_PATH }   from './tags/Shape';
 
@@ -74,16 +75,24 @@ export class Svg extends RedAgate.RedAgatePhantomComponent<SvgProps> {
         }
     }
 
-    public toSvg(): string {
-        return toSvg(this);
+    public toImgTag(): string {
+        return toImgTag(this);
+    }
+
+    public toElementStyle(): string {
+        return toElementStyle(this);
     }
 
     public toDataUrl(): string {
         return toDataUrl(this);
     }
 
-    public toImgTag(): string {
-        return toImgTag(this);
+    public toSvg(): string {
+        return toSvg(this);
+    }
+
+    public toRendered(): string {
+        return RedAgate.renderAsHtml_noDefer(this);
     }
 
     public beforeRender(contexts: Map<string, any>) {
