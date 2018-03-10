@@ -106,7 +106,158 @@ export default function(express: any): any {
         </Html5>, req, res)
     )
 
+
+
     .get('/c128/:data', (req: any, res: any) => RedAgate.renderOnExpress(
+        <Code128 x={1} y={1}
+            elementWidth={0.33 * 1.5}
+            height={7} quietHeight={0}
+            font="3.5px 'OCRB'" textHeight={3.5}
+            data={req.params.data} />,
+        req, res, [['Content-Type', 'image/svg+xml']])
+    )
+
+    .get('/c39/:data', (req: any, res: any) => RedAgate.renderOnExpress(
+        <Code39 x={1} y={1}
+            narrowWidth={0.33 * 1.5} wideWidth={0.66 * 1.5}
+            height={7} quietHeight={0}
+            font="3.5px 'OCRB'" textHeight={3.5}
+            data={req.params.data} />,
+        req, res, [['Content-Type', 'image/svg+xml']])
+    )
+
+    .get('/ean13/:data', (req: any, res: any) => RedAgate.renderOnExpress(
+        <Ean13 x={10} y={1}
+            elementWidth={0.33 * 1.5}
+            height={7} quietHeight={0}
+            font="3.5px 'OCRB'" textHeight={3.5}
+            data={req.params.data} />,
+        req, res, [['Content-Type', 'image/svg+xml']])
+    )
+
+    .get('/ean8/:data', (req: any, res: any) => RedAgate.renderOnExpress(
+        <Ean8 x={10} y={1}
+            elementWidth={0.33 * 1.5}
+            height={7} quietHeight={0}
+            font="3.5px 'OCRB'" textHeight={3.5}
+            data={req.params.data} />,
+        req, res, [['Content-Type', 'image/svg+xml']])
+    )
+
+    .get('/ean5/:data', (req: any, res: any) => RedAgate.renderOnExpress(
+        <Ean5 x={10} y={1}
+            elementWidth={0.33 * 1.5}
+            height={7} quietHeight={0}
+            font="3.5px 'OCRB'" textHeight={3.5}
+            data={req.params.data} />,
+        req, res, [['Content-Type', 'image/svg+xml']])
+    )
+
+    .get('/ean2/:data', (req: any, res: any) => RedAgate.renderOnExpress(
+        <Ean2 x={10} y={1}
+            elementWidth={0.33 * 1.5}
+            height={7} quietHeight={0}
+            font="3.5px 'OCRB'" textHeight={3.5}
+            data={req.params.data} />,
+        req, res, [['Content-Type', 'image/svg+xml']])
+    )
+
+    .get('/upca/:data', (req: any, res: any) => RedAgate.renderOnExpress(
+        <UpcA x={10} y={1}
+            elementWidth={0.33 * 1.5}
+            height={7} quietHeight={0}
+            font="3.5px 'OCRB'" textHeight={3.5}
+            data={req.params.data} />,
+        req, res, [['Content-Type', 'image/svg+xml']])
+    )
+
+    .get('/upce/:data', (req: any, res: any) => RedAgate.renderOnExpress(
+        <UpcE x={10} y={1}
+            elementWidth={0.33 * 1.5}
+            height={7} quietHeight={0}
+            font="3.5px 'OCRB'" textHeight={3.5}
+            data={req.params.data} />,
+        req, res, [['Content-Type', 'image/svg+xml']])
+    )
+
+    .get('/itf/:data', (req: any, res: any) => RedAgate.renderOnExpress(
+        <Itf x={1} y={1}
+            narrowWidth={0.33 * 1.5} wideWidth={0.66 * 1.5}
+            height={7} quietHeight={0}
+            font="3.5px 'OCRB'" textHeight={3.5}
+            data={req.params.data} />,
+        req, res, [['Content-Type', 'image/svg+xml']])
+    )
+
+    .get('/nw7/:data', (req: any, res: any) => RedAgate.renderOnExpress(
+        <Nw7 x={1} y={1}
+            narrowWidth={0.33 * 1.5} wideWidth={0.66 * 1.5}
+            height={7} quietHeight={0}
+            font="3.5px 'OCRB'" textHeight={3.5}
+            data={req.params.data} />,
+        req, res, [['Content-Type', 'image/svg+xml']])
+    )
+
+    .get('/jp/:data', (req: any, res: any) => RedAgate.renderOnExpress(
+        <JapanPostal x={1} y={1}
+            elementWidth={0.33 * 1.5}
+            height={0.33 * 1.5 * 6} quietHeight={0}
+            data={req.params.data} />,
+        req, res, [['Content-Type', 'image/svg+xml']])
+    )
+
+    .get('/qr/:ver/:ec/:enc/:data', (req: any, res: any) => {
+        let ver: number | "auto" = "auto";
+        if (Number.isFinite(Number.parseInt(req.params.ver))) {
+            const v = Number.parseInt(req.params.ver);
+            if (0 < v && v < 41) {
+                ver = v;
+            }
+        }
+
+        let ec: "L" | "M" | "Q" | "H" = 'M';
+        switch (req.params.ec) {
+        case 'L': case 'l':
+            ec = 'L';
+            break;
+        case 'M': case 'm':
+            ec = 'M';
+            break;
+        case 'Q': case 'q':
+            ec = 'Q';
+            break;
+        case 'H': case 'h':
+            ec = 'H';
+            break;
+        }
+
+        let enc: "number" | "alnum" | "8bit" | "auto" = 'auto';
+        switch (req.params.enc) {
+        case 'N': case 'n':
+            enc = 'number';
+            break;
+        case 'A': case 'a':
+            enc = 'alnum';
+            break;
+        case 'B': case 'b':
+            enc = '8bit';
+            break;
+        case '-':
+            enc = 'auto';
+            break;
+        }
+
+        return RedAgate.renderOnExpress(
+            <Qr x={1} y={1} cellSize={1.0}
+                version={ver} ecLevel={ec} encoding={enc}
+                data={req.params.data} />,
+            req, res, [['Content-Type', 'image/svg+xml']]);
+        }
+    )
+
+
+
+    .get('/x/c128/:data', (req: any, res: any) => RedAgate.renderOnExpress(
         <Svg width={210 - 1} height={297 - 2} unit='mm'>
             <Code128 x={1} y={1}
                 elementWidth={0.33 * 1.5}
@@ -116,7 +267,7 @@ export default function(express: any): any {
         </Svg>, req, res, [['Content-Type', 'image/svg+xml']])
     )
 
-    .get('/c39/:data', (req: any, res: any) => RedAgate.renderOnExpress(
+    .get('/x/c39/:data', (req: any, res: any) => RedAgate.renderOnExpress(
         <Svg width={210 - 1} height={297 - 2} unit='mm'>
             <Code39 x={1} y={1}
                 narrowWidth={0.33 * 1.5} wideWidth={0.66 * 1.5}
@@ -126,7 +277,7 @@ export default function(express: any): any {
         </Svg>, req, res, [['Content-Type', 'image/svg+xml']])
     )
 
-    .get('/ean13/:data', (req: any, res: any) => RedAgate.renderOnExpress(
+    .get('/x/ean13/:data', (req: any, res: any) => RedAgate.renderOnExpress(
         <Svg width={210 - 1} height={297 - 2} unit='mm'>
             <Ean13 x={10} y={1}
                 elementWidth={0.33 * 1.5}
@@ -136,7 +287,7 @@ export default function(express: any): any {
         </Svg>, req, res, [['Content-Type', 'image/svg+xml']])
     )
 
-    .get('/ean8/:data', (req: any, res: any) => RedAgate.renderOnExpress(
+    .get('/x/ean8/:data', (req: any, res: any) => RedAgate.renderOnExpress(
         <Svg width={210 - 1} height={297 - 2} unit='mm'>
             <Ean8 x={10} y={1}
                 elementWidth={0.33 * 1.5}
@@ -146,7 +297,7 @@ export default function(express: any): any {
         </Svg>, req, res, [['Content-Type', 'image/svg+xml']])
     )
 
-    .get('/ean5/:data', (req: any, res: any) => RedAgate.renderOnExpress(
+    .get('/x/ean5/:data', (req: any, res: any) => RedAgate.renderOnExpress(
         <Svg width={210 - 1} height={297 - 2} unit='mm'>
             <Ean5 x={10} y={1}
                 elementWidth={0.33 * 1.5}
@@ -156,7 +307,7 @@ export default function(express: any): any {
         </Svg>, req, res, [['Content-Type', 'image/svg+xml']])
     )
 
-    .get('/ean2/:data', (req: any, res: any) => RedAgate.renderOnExpress(
+    .get('/x/ean2/:data', (req: any, res: any) => RedAgate.renderOnExpress(
         <Svg width={210 - 1} height={297 - 2} unit='mm'>
             <Ean2 x={10} y={1}
                 elementWidth={0.33 * 1.5}
@@ -166,7 +317,7 @@ export default function(express: any): any {
         </Svg>, req, res, [['Content-Type', 'image/svg+xml']])
     )
 
-    .get('/upca/:data', (req: any, res: any) => RedAgate.renderOnExpress(
+    .get('/x/upca/:data', (req: any, res: any) => RedAgate.renderOnExpress(
         <Svg width={210 - 1} height={297 - 2} unit='mm'>
             <UpcA x={10} y={1}
                 elementWidth={0.33 * 1.5}
@@ -176,7 +327,7 @@ export default function(express: any): any {
         </Svg>, req, res, [['Content-Type', 'image/svg+xml']])
     )
 
-    .get('/upce/:data', (req: any, res: any) => RedAgate.renderOnExpress(
+    .get('/x/upce/:data', (req: any, res: any) => RedAgate.renderOnExpress(
         <Svg width={210 - 1} height={297 - 2} unit='mm'>
             <UpcE x={10} y={1}
                 elementWidth={0.33 * 1.5}
@@ -186,7 +337,7 @@ export default function(express: any): any {
         </Svg>, req, res, [['Content-Type', 'image/svg+xml']])
     )
 
-    .get('/itf/:data', (req: any, res: any) => RedAgate.renderOnExpress(
+    .get('/x/itf/:data', (req: any, res: any) => RedAgate.renderOnExpress(
         <Svg width={210 - 1} height={297 - 2} unit='mm'>
             <Itf x={1} y={1}
                 narrowWidth={0.33 * 1.5} wideWidth={0.66 * 1.5}
@@ -196,7 +347,7 @@ export default function(express: any): any {
         </Svg>, req, res, [['Content-Type', 'image/svg+xml']])
     )
 
-    .get('/nw7/:data', (req: any, res: any) => RedAgate.renderOnExpress(
+    .get('/x/nw7/:data', (req: any, res: any) => RedAgate.renderOnExpress(
         <Svg width={210 - 1} height={297 - 2} unit='mm'>
             <Nw7 x={1} y={1}
                 narrowWidth={0.33 * 1.5} wideWidth={0.66 * 1.5}
@@ -206,7 +357,7 @@ export default function(express: any): any {
         </Svg>, req, res, [['Content-Type', 'image/svg+xml']])
     )
 
-    .get('/jp/:data', (req: any, res: any) => RedAgate.renderOnExpress(
+    .get('/x/jp/:data', (req: any, res: any) => RedAgate.renderOnExpress(
         <Svg width={210 - 1} height={297 - 2} unit='mm'>
             <JapanPostal x={1} y={1}
                 elementWidth={0.33 * 1.5}
@@ -215,7 +366,7 @@ export default function(express: any): any {
         </Svg>, req, res, [['Content-Type', 'image/svg+xml']])
     )
 
-    .get('/qr/:ver/:ec/:enc/:data', (req: any, res: any) => {
+    .get('/x/qr/:ver/:ec/:enc/:data', (req: any, res: any) => {
         let ver: number | "auto" = "auto";
         if (Number.isFinite(Number.parseInt(req.params.ver))) {
             const v = Number.parseInt(req.params.ver);
