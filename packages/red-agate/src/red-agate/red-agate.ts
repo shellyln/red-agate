@@ -295,6 +295,16 @@ export function cloneElement(el: RedAgateElement<any>): RedAgateElement<any> {
     };
 }
 
+export function createElementFromComponentInstance<P extends ComponentProps>(c: RedAgateComponent<P>): RedAgateElement<P> {
+    return {
+        type: (c.constructor as any),
+        props: c.props,
+        nodeId: null,
+        children: (Array.isArray(c.props.children) ? c.props.children : []),
+        component: c,
+    };
+}
+
 
 
 export interface TransformContext {

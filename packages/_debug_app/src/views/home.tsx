@@ -53,6 +53,17 @@ export default function(express: any): any {
                                     ['qr',    'QR'],
                                 ]} />
                             </div>
+                            <div style="margin-right:1em;">
+                                Output format:
+                                <Select name="out" selected="page-svg" options={[
+                                    ['page-svg', 'SVG (A4)'],
+                                    ['svg', 'SVG'],
+                                    ['img-tag', 'img tag'],
+                                    ['el-style', 'element style'],
+                                    ['svg-url', 'SVG (data url)'],
+                                    ['svg-nodefer', 'SVG (no defer)'],
+                                ]} />
+                            </div>
                             <div class="qrconf" style="margin-right:1em;">
                                 version:
                                 <input name="qrversion" type="number" value="0" />
@@ -93,7 +104,7 @@ export default function(express: any): any {
                         var isQr = state.bartypes === "qr";
                         Array.from(document.getElementsByClassName("qrconf"))
                         .forEach(function(x) { x.style.display = isQr ? "block" : "none" });
-                        var url = "./" + state.bartypes + "/" +
+                        var url = "./" + state.bartypes + "/" + state.out + "/" +
                                     (isQr ?
                                         encodeURIComponent(state.qrversion) + "/" +
                                         state.qreclevel + "/" +
@@ -108,7 +119,7 @@ export default function(express: any): any {
 
 
 
-    .get('/c128/:data', (req: any, res: any) => RedAgate.renderOnExpress(
+    .get('/zzz/c128/:data', (req: any, res: any) => RedAgate.renderOnExpress(
         <Code128 x={1} y={1}
             elementWidth={0.33 * 1.5}
             height={7} quietHeight={0}
@@ -117,96 +128,602 @@ export default function(express: any): any {
         req, res, [['Content-Type', 'image/svg+xml']])
     )
 
-    .get('/c39/:data', (req: any, res: any) => RedAgate.renderOnExpress(
-        <Code39 x={1} y={1}
-            narrowWidth={0.33 * 1.5} wideWidth={0.66 * 1.5}
-            height={7} quietHeight={0}
-            font="3.5px 'OCRB'" textHeight={3.5}
-            data={req.params.data} />,
-        req, res, [['Content-Type', 'image/svg+xml']])
-    )
 
-    .get('/ean13/:data', (req: any, res: any) => RedAgate.renderOnExpress(
-        <Ean13 x={10} y={1}
-            elementWidth={0.33 * 1.5}
-            height={7} quietHeight={0}
-            font="3.5px 'OCRB'" textHeight={3.5}
-            data={req.params.data} />,
-        req, res, [['Content-Type', 'image/svg+xml']])
-    )
 
-    .get('/ean8/:data', (req: any, res: any) => RedAgate.renderOnExpress(
-        <Ean8 x={10} y={1}
-            elementWidth={0.33 * 1.5}
-            height={7} quietHeight={0}
-            font="3.5px 'OCRB'" textHeight={3.5}
-            data={req.params.data} />,
-        req, res, [['Content-Type', 'image/svg+xml']])
-    )
+    .get('/c128/:out/:data', (req: any, res: any) => {
+        switch (req.params.out) {
+        case 'img-tag': case 'el-style': case 'svg-url': case 'svg-nodefer':
+            {
+                const el = new Code128({
+                    id: 'foo1234',
+                    x: 1,
+                    y: 1,
+                    elementWidth: 0.33 * 1.5,
+                    height: 7,
+                    quietHeight: 0,
+                    font: "3.5px 'OCRB'",
+                    textHeight: 3.5,
+                    data: req.params.data,
+                });
+                switch (req.params.out) {
+                case 'img-tag':
+                    res.send(el.toImgTag());
+                    break;
+                case 'el-style':
+                    res.send(el.toElementStyle());
+                    break;
+                case 'svg-url':
+                    res.send(el.toDataUrl());
+                    break;
+                case 'svg-nodefer':
+                    res.set('Content-Type', 'image/svg+xml');
+                    res.send(el.toSvg());
+                    break;
+                }
+            }
+            break;
+        case 'svg':
+            RedAgate.renderOnExpress(
+                <Code128 x={1} y={1}
+                    elementWidth={0.33 * 1.5}
+                    height={7} quietHeight={0}
+                    font="3.5px 'OCRB'" textHeight={3.5}
+                    data={req.params.data} />,
+                req, res, [['Content-Type', 'image/svg+xml']]);
+            break;
+        case 'page-svg': default:
+            RedAgate.renderOnExpress(
+                <Svg width={210 - 1} height={297 - 2} unit='mm'>
+                    <Code128 x={1} y={1}
+                        elementWidth={0.33 * 1.5}
+                        height={7} quietHeight={0}
+                        font="3.5px 'OCRB'" textHeight={3.5}
+                        data={req.params.data} />
+                </Svg>, req, res, [['Content-Type', 'image/svg+xml']]);
+            break;
+        }
+    })
 
-    .get('/ean5/:data', (req: any, res: any) => RedAgate.renderOnExpress(
-        <Ean5 x={10} y={1}
-            elementWidth={0.33 * 1.5}
-            height={7} quietHeight={0}
-            font="3.5px 'OCRB'" textHeight={3.5}
-            data={req.params.data} />,
-        req, res, [['Content-Type', 'image/svg+xml']])
-    )
+    .get('/c39/:out/:data', (req: any, res: any) => {
+        switch (req.params.out) {
+        case 'img-tag': case 'el-style': case 'svg-url': case 'svg-nodefer':
+            {
+                const el = new Code39({
+                    id: 'foo1234',
+                    x: 1,
+                    y: 1,
+                    narrowWidth: 0.33 * 1.5,
+                    wideWidth: 0.66 * 1.5,
+                    height: 7,
+                    quietHeight: 0,
+                    font: "3.5px 'OCRB'",
+                    textHeight: 3.5,
+                    data: req.params.data,
+                });
+                switch (req.params.out) {
+                case 'img-tag':
+                    res.send(el.toImgTag());
+                    break;
+                case 'el-style':
+                    res.send(el.toElementStyle());
+                    break;
+                case 'svg-url':
+                    res.send(el.toDataUrl());
+                    break;
+                case 'svg-nodefer':
+                    res.set('Content-Type', 'image/svg+xml');
+                    res.send(el.toSvg());
+                    break;
+                }
+            }
+            break;
+        case 'svg':
+            RedAgate.renderOnExpress(
+                <Code39 x={1} y={1}
+                    narrowWidth={0.33 * 1.5} wideWidth={0.66 * 1.5}
+                    height={7} quietHeight={0}
+                    font="3.5px 'OCRB'" textHeight={3.5}
+                    data={req.params.data} />,
+                req, res, [['Content-Type', 'image/svg+xml']]);
+            break;
+        case 'page-svg': default:
+            RedAgate.renderOnExpress(
+                <Svg width={210 - 1} height={297 - 2} unit='mm'>
+                    <Code39 x={1} y={1}
+                        narrowWidth={0.33 * 1.5} wideWidth={0.66 * 1.5}
+                        height={7} quietHeight={0}
+                        font="3.5px 'OCRB'" textHeight={3.5}
+                        data={req.params.data} />
+                </Svg>, req, res, [['Content-Type', 'image/svg+xml']]);
+            break;
+        }
+    })
 
-    .get('/ean2/:data', (req: any, res: any) => RedAgate.renderOnExpress(
-        <Ean2 x={10} y={1}
-            elementWidth={0.33 * 1.5}
-            height={7} quietHeight={0}
-            font="3.5px 'OCRB'" textHeight={3.5}
-            data={req.params.data} />,
-        req, res, [['Content-Type', 'image/svg+xml']])
-    )
+    .get('/ean13/:out/:data', (req: any, res: any) => {
+        switch (req.params.out) {
+        case 'img-tag': case 'el-style': case 'svg-url': case 'svg-nodefer':
+            {
+                const el = new Ean13({
+                    id: 'foo1234',
+                    x: 10,
+                    y: 1,
+                    elementWidth: 0.33 * 1.5,
+                    height: 7,
+                    quietHeight: 0,
+                    font: "3.5px 'OCRB'",
+                    textHeight: 3.5,
+                    data: req.params.data,
+                });
+                switch (req.params.out) {
+                case 'img-tag':
+                    res.send(el.toImgTag());
+                    break;
+                case 'el-style':
+                    res.send(el.toElementStyle());
+                    break;
+                case 'svg-url':
+                    res.send(el.toDataUrl());
+                    break;
+                case 'svg-nodefer':
+                    res.set('Content-Type', 'image/svg+xml');
+                    res.send(el.toSvg());
+                    break;
+                }
+            }
+            break;
+        case 'svg':
+            RedAgate.renderOnExpress(
+                <Ean13 x={10} y={1}
+                    elementWidth={0.33 * 1.5}
+                    height={7} quietHeight={0}
+                    font="3.5px 'OCRB'" textHeight={3.5}
+                    data={req.params.data} />,
+                req, res, [['Content-Type', 'image/svg+xml']]);
+            break;
+        case 'page-svg': default:
+            RedAgate.renderOnExpress(
+                <Svg width={210 - 1} height={297 - 2} unit='mm'>
+                    <Ean13 x={10} y={1}
+                        elementWidth={0.33 * 1.5}
+                        height={7} quietHeight={0}
+                        font="3.5px 'OCRB'" textHeight={3.5}
+                        data={req.params.data} />
+                </Svg>, req, res, [['Content-Type', 'image/svg+xml']]);
+            break;
+        }
+    })
 
-    .get('/upca/:data', (req: any, res: any) => RedAgate.renderOnExpress(
-        <UpcA x={10} y={1}
-            elementWidth={0.33 * 1.5}
-            height={7} quietHeight={0}
-            font="3.5px 'OCRB'" textHeight={3.5}
-            data={req.params.data} />,
-        req, res, [['Content-Type', 'image/svg+xml']])
-    )
+    .get('/ean8/:out/:data', (req: any, res: any) => {
+        switch (req.params.out) {
+        case 'img-tag': case 'el-style': case 'svg-url': case 'svg-nodefer':
+            {
+                const el = new Ean8({
+                    id: 'foo1234',
+                    x: 10,
+                    y: 1,
+                    elementWidth: 0.33 * 1.5,
+                    height: 7,
+                    quietHeight: 0,
+                    font: "3.5px 'OCRB'",
+                    textHeight: 3.5,
+                    data: req.params.data,
+                });
+                switch (req.params.out) {
+                case 'img-tag':
+                    res.send(el.toImgTag());
+                    break;
+                case 'el-style':
+                    res.send(el.toElementStyle());
+                    break;
+                case 'svg-url':
+                    res.send(el.toDataUrl());
+                    break;
+                case 'svg-nodefer':
+                    res.set('Content-Type', 'image/svg+xml');
+                    res.send(el.toSvg());
+                    break;
+                }
+            }
+            break;
+        case 'svg':
+            RedAgate.renderOnExpress(
+                <Ean8 x={10} y={1}
+                    elementWidth={0.33 * 1.5}
+                    height={7} quietHeight={0}
+                    font="3.5px 'OCRB'" textHeight={3.5}
+                    data={req.params.data} />,
+                req, res, [['Content-Type', 'image/svg+xml']]);
+            break;
+        case 'page-svg': default:
+            RedAgate.renderOnExpress(
+                <Svg width={210 - 1} height={297 - 2} unit='mm'>
+                    <Ean8 x={10} y={1}
+                        elementWidth={0.33 * 1.5}
+                        height={7} quietHeight={0}
+                        font="3.5px 'OCRB'" textHeight={3.5}
+                        data={req.params.data} />
+                </Svg>, req, res, [['Content-Type', 'image/svg+xml']]);
+            break;
+        }
+    })
 
-    .get('/upce/:data', (req: any, res: any) => RedAgate.renderOnExpress(
-        <UpcE x={10} y={1}
-            elementWidth={0.33 * 1.5}
-            height={7} quietHeight={0}
-            font="3.5px 'OCRB'" textHeight={3.5}
-            data={req.params.data} />,
-        req, res, [['Content-Type', 'image/svg+xml']])
-    )
+    .get('/ean5/:out/:data', (req: any, res: any) => {
+        switch (req.params.out) {
+        case 'img-tag': case 'el-style': case 'svg-url': case 'svg-nodefer':
+            {
+                const el = new Ean5({
+                    id: 'foo1234',
+                    x: 10,
+                    y: 1,
+                    elementWidth: 0.33 * 1.5,
+                    height: 7,
+                    quietHeight: 0,
+                    font: "3.5px 'OCRB'",
+                    textHeight: 3.5,
+                    data: req.params.data,
+                });
+                switch (req.params.out) {
+                case 'img-tag':
+                    res.send(el.toImgTag());
+                    break;
+                case 'el-style':
+                    res.send(el.toElementStyle());
+                    break;
+                case 'svg-url':
+                    res.send(el.toDataUrl());
+                    break;
+                case 'svg-nodefer':
+                    res.set('Content-Type', 'image/svg+xml');
+                    res.send(el.toSvg());
+                    break;
+                }
+            }
+            break;
+        case 'svg':
+            RedAgate.renderOnExpress(
+                <Ean5 x={10} y={1}
+                    elementWidth={0.33 * 1.5}
+                    height={7} quietHeight={0}
+                    font="3.5px 'OCRB'" textHeight={3.5}
+                    data={req.params.data} />,
+                req, res, [['Content-Type', 'image/svg+xml']]);
+            break;
+        case 'page-svg': default:
+            RedAgate.renderOnExpress(
+                <Svg width={210 - 1} height={297 - 2} unit='mm'>
+                    <Ean5 x={10} y={1}
+                        elementWidth={0.33 * 1.5}
+                        height={7} quietHeight={0}
+                        font="3.5px 'OCRB'" textHeight={3.5}
+                        data={req.params.data} />
+                </Svg>, req, res, [['Content-Type', 'image/svg+xml']]);
+            break;
+        }
+    })
 
-    .get('/itf/:data', (req: any, res: any) => RedAgate.renderOnExpress(
-        <Itf x={1} y={1}
-            narrowWidth={0.33 * 1.5} wideWidth={0.66 * 1.5}
-            height={7} quietHeight={0}
-            font="3.5px 'OCRB'" textHeight={3.5}
-            data={req.params.data} />,
-        req, res, [['Content-Type', 'image/svg+xml']])
-    )
+    .get('/ean2/:out/:data', (req: any, res: any) => {
+        switch (req.params.out) {
+        case 'img-tag': case 'el-style': case 'svg-url': case 'svg-nodefer':
+            {
+                const el = new Ean2({
+                    id: 'foo1234',
+                    x: 10,
+                    y: 1,
+                    elementWidth: 0.33 * 1.5,
+                    height: 7,
+                    quietHeight: 0,
+                    font: "3.5px 'OCRB'",
+                    textHeight: 3.5,
+                    data: req.params.data,
+                });
+                switch (req.params.out) {
+                case 'img-tag':
+                    res.send(el.toImgTag());
+                    break;
+                case 'el-style':
+                    res.send(el.toElementStyle());
+                    break;
+                case 'svg-url':
+                    res.send(el.toDataUrl());
+                    break;
+                case 'svg-nodefer':
+                    res.set('Content-Type', 'image/svg+xml');
+                    res.send(el.toSvg());
+                    break;
+                }
+            }
+            break;
+        case 'svg':
+            RedAgate.renderOnExpress(
+                <Ean2 x={10} y={1}
+                    elementWidth={0.33 * 1.5}
+                    height={7} quietHeight={0}
+                    font="3.5px 'OCRB'" textHeight={3.5}
+                    data={req.params.data} />,
+                req, res, [['Content-Type', 'image/svg+xml']]);
+            break;
+        case 'page-svg': default:
+            RedAgate.renderOnExpress(
+                <Svg width={210 - 1} height={297 - 2} unit='mm'>
+                    <Ean2 x={10} y={1}
+                        elementWidth={0.33 * 1.5}
+                        height={7} quietHeight={0}
+                        font="3.5px 'OCRB'" textHeight={3.5}
+                        data={req.params.data} />
+                </Svg>, req, res, [['Content-Type', 'image/svg+xml']]);
+            break;
+        }
+    })
 
-    .get('/nw7/:data', (req: any, res: any) => RedAgate.renderOnExpress(
-        <Nw7 x={1} y={1}
-            narrowWidth={0.33 * 1.5} wideWidth={0.66 * 1.5}
-            height={7} quietHeight={0}
-            font="3.5px 'OCRB'" textHeight={3.5}
-            data={req.params.data} />,
-        req, res, [['Content-Type', 'image/svg+xml']])
-    )
+    .get('/upca/:out/:data', (req: any, res: any) => {
+        switch (req.params.out) {
+        case 'img-tag': case 'el-style': case 'svg-url': case 'svg-nodefer':
+            {
+                const el = new UpcA({
+                    id: 'foo1234',
+                    x: 10,
+                    y: 1,
+                    elementWidth: 0.33 * 1.5,
+                    height: 7,
+                    quietHeight: 0,
+                    font: "3.5px 'OCRB'",
+                    textHeight: 3.5,
+                    data: req.params.data,
+                });
+                switch (req.params.out) {
+                case 'img-tag':
+                    res.send(el.toImgTag());
+                    break;
+                case 'el-style':
+                    res.send(el.toElementStyle());
+                    break;
+                case 'svg-url':
+                    res.send(el.toDataUrl());
+                    break;
+                case 'svg-nodefer':
+                    res.set('Content-Type', 'image/svg+xml');
+                    res.send(el.toSvg());
+                    break;
+                }
+            }
+            break;
+        case 'svg':
+            RedAgate.renderOnExpress(
+                <UpcA x={10} y={1}
+                    elementWidth={0.33 * 1.5}
+                    height={7} quietHeight={0}
+                    font="3.5px 'OCRB'" textHeight={3.5}
+                    data={req.params.data} />,
+                req, res, [['Content-Type', 'image/svg+xml']]);
+            break;
+        case 'page-svg': default:
+            RedAgate.renderOnExpress(
+                <Svg width={210 - 1} height={297 - 2} unit='mm'>
+                    <UpcA x={10} y={1}
+                        elementWidth={0.33 * 1.5}
+                        height={7} quietHeight={0}
+                        font="3.5px 'OCRB'" textHeight={3.5}
+                        data={req.params.data} />
+                </Svg>, req, res, [['Content-Type', 'image/svg+xml']]);
+            break;
+        }
+    })
 
-    .get('/jp/:data', (req: any, res: any) => RedAgate.renderOnExpress(
-        <JapanPostal x={1} y={1}
-            elementWidth={0.33 * 1.5}
-            height={0.33 * 1.5 * 6} quietHeight={0}
-            data={req.params.data} />,
-        req, res, [['Content-Type', 'image/svg+xml']])
-    )
+    .get('/upce/:out/:data', (req: any, res: any) => {
+        switch (req.params.out) {
+        case 'img-tag': case 'el-style': case 'svg-url': case 'svg-nodefer':
+            {
+                const el = new UpcE({
+                    id: 'foo1234',
+                    x: 10,
+                    y: 1,
+                    elementWidth: 0.33 * 1.5,
+                    height: 7,
+                    quietHeight: 0,
+                    font: "3.5px 'OCRB'",
+                    textHeight: 3.5,
+                    data: req.params.data,
+                });
+                switch (req.params.out) {
+                case 'img-tag':
+                    res.send(el.toImgTag());
+                    break;
+                case 'el-style':
+                    res.send(el.toElementStyle());
+                    break;
+                case 'svg-url':
+                    res.send(el.toDataUrl());
+                    break;
+                case 'svg-nodefer':
+                    res.set('Content-Type', 'image/svg+xml');
+                    res.send(el.toSvg());
+                    break;
+                }
+            }
+            break;
+        case 'svg':
+            RedAgate.renderOnExpress(
+                <UpcE x={10} y={1}
+                    elementWidth={0.33 * 1.5}
+                    height={7} quietHeight={0}
+                    font="3.5px 'OCRB'" textHeight={3.5}
+                    data={req.params.data} />,
+                req, res, [['Content-Type', 'image/svg+xml']]);
+            break;
+        case 'page-svg': default:
+            RedAgate.renderOnExpress(
+                <Svg width={210 - 1} height={297 - 2} unit='mm'>
+                    <UpcE x={10} y={1}
+                        elementWidth={0.33 * 1.5}
+                        height={7} quietHeight={0}
+                        font="3.5px 'OCRB'" textHeight={3.5}
+                        data={req.params.data} />
+                </Svg>, req, res, [['Content-Type', 'image/svg+xml']]);
+            break;
+        }
+    })
 
-    .get('/qr/:ver/:ec/:enc/:data', (req: any, res: any) => {
+    .get('/itf/:out/:data', (req: any, res: any) => {
+        switch (req.params.out) {
+        case 'img-tag': case 'el-style': case 'svg-url': case 'svg-nodefer':
+            {
+                const el = new Itf({
+                    id: 'foo1234',
+                    x: 1,
+                    y: 1,
+                    narrowWidth: 0.33 * 1.5,
+                    wideWidth: 0.66 * 1.5,
+                    height: 7,
+                    quietHeight: 0,
+                    font: "3.5px 'OCRB'",
+                    textHeight: 3.5,
+                    data: req.params.data,
+                });
+                switch (req.params.out) {
+                case 'img-tag':
+                    res.send(el.toImgTag());
+                    break;
+                case 'el-style':
+                    res.send(el.toElementStyle());
+                    break;
+                case 'svg-url':
+                    res.send(el.toDataUrl());
+                    break;
+                case 'svg-nodefer':
+                    res.set('Content-Type', 'image/svg+xml');
+                    res.send(el.toSvg());
+                    break;
+                }
+            }
+            break;
+        case 'svg':
+            RedAgate.renderOnExpress(
+                <Itf x={1} y={1}
+                    narrowWidth={0.33 * 1.5} wideWidth={0.66 * 1.5}
+                    height={7} quietHeight={0}
+                    font="3.5px 'OCRB'" textHeight={3.5}
+                    data={req.params.data} />,
+                req, res, [['Content-Type', 'image/svg+xml']]);
+            break;
+        case 'page-svg': default:
+            RedAgate.renderOnExpress(
+                <Svg width={210 - 1} height={297 - 2} unit='mm'>
+                    <Itf x={1} y={1}
+                        narrowWidth={0.33 * 1.5} wideWidth={0.66 * 1.5}
+                        height={7} quietHeight={0}
+                        font="3.5px 'OCRB'" textHeight={3.5}
+                        data={req.params.data} />
+                </Svg>, req, res, [['Content-Type', 'image/svg+xml']]);
+            break;
+        }
+    })
+
+    .get('/nw7/:out/:data', (req: any, res: any) => {
+        switch (req.params.out) {
+        case 'img-tag': case 'el-style': case 'svg-url': case 'svg-nodefer':
+            {
+                const el = new Nw7({
+                    id: 'foo1234',
+                    x: 1,
+                    y: 1,
+                    narrowWidth: 0.33 * 1.5,
+                    wideWidth: 0.66 * 1.5,
+                    height: 7,
+                    quietHeight: 0,
+                    font: "3.5px 'OCRB'",
+                    textHeight: 3.5,
+                    data: req.params.data,
+                });
+                switch (req.params.out) {
+                case 'img-tag':
+                    res.send(el.toImgTag());
+                    break;
+                case 'el-style':
+                    res.send(el.toElementStyle());
+                    break;
+                case 'svg-url':
+                    res.send(el.toDataUrl());
+                    break;
+                case 'svg-nodefer':
+                    res.set('Content-Type', 'image/svg+xml');
+                    res.send(el.toSvg());
+                    break;
+                }
+            }
+            break;
+        case 'svg':
+            RedAgate.renderOnExpress(
+                <Nw7 x={1} y={1}
+                    narrowWidth={0.33 * 1.5} wideWidth={0.66 * 1.5}
+                    height={7} quietHeight={0}
+                    font="3.5px 'OCRB'" textHeight={3.5}
+                    data={req.params.data} />,
+                req, res, [['Content-Type', 'image/svg+xml']]);
+            break;
+        case 'page-svg': default:
+            RedAgate.renderOnExpress(
+                <Svg width={210 - 1} height={297 - 2} unit='mm'>
+                    <Nw7 x={1} y={1}
+                        narrowWidth={0.33 * 1.5} wideWidth={0.66 * 1.5}
+                        height={7} quietHeight={0}
+                        font="3.5px 'OCRB'" textHeight={3.5}
+                        data={req.params.data} />
+                </Svg>, req, res, [['Content-Type', 'image/svg+xml']]);
+            break;
+        }
+    })
+
+    .get('/jp/:out/:data', (req: any, res: any) => {
+        switch (req.params.out) {
+        case 'img-tag': case 'el-style': case 'svg-url': case 'svg-nodefer':
+            {
+                const el = new JapanPostal({
+                    id: 'foo1234',
+                    x: 1,
+                    y: 1,
+                    elementWidth: 0.33 * 1.5,
+                    height: 0.33 * 1.5 * 6,
+                    quietHeight: 0,
+                    data: req.params.data,
+                });
+                switch (req.params.out) {
+                case 'img-tag':
+                    res.send(el.toImgTag());
+                    break;
+                case 'el-style':
+                    res.send(el.toElementStyle());
+                    break;
+                case 'svg-url':
+                    res.send(el.toDataUrl());
+                    break;
+                case 'svg-nodefer':
+                    res.set('Content-Type', 'image/svg+xml');
+                    res.send(el.toSvg());
+                    break;
+                }
+            }
+            break;
+        case 'svg':
+            RedAgate.renderOnExpress(
+                <JapanPostal x={1} y={1}
+                    elementWidth={0.33 * 1.5}
+                    height={0.33 * 1.5 * 6} quietHeight={0}
+                    data={req.params.data} />,
+                req, res, [['Content-Type', 'image/svg+xml']]);
+            break;
+        case 'page-svg': default:
+            RedAgate.renderOnExpress(
+                <Svg width={210 - 1} height={297 - 2} unit='mm'>
+                    <JapanPostal x={1} y={1}
+                        elementWidth={0.33 * 1.5}
+                        height={0.33 * 1.5 * 6} quietHeight={0}
+                        data={req.params.data} />
+                </Svg>, req, res, [['Content-Type', 'image/svg+xml']]);
+            break;
+        }
+    })
+
+    .get('/qr/:out/:ver/:ec/:enc/:data', (req: any, res: any) => {
         let ver: number | "auto" = "auto";
         if (Number.isFinite(Number.parseInt(req.params.ver))) {
             const v = Number.parseInt(req.params.ver);
@@ -247,175 +764,56 @@ export default function(express: any): any {
             break;
         }
 
-        return RedAgate.renderOnExpress(
-            <Qr x={1} y={1} cellSize={1.0}
-                version={ver} ecLevel={ec} encoding={enc}
-                data={req.params.data} />,
-            req, res, [['Content-Type', 'image/svg+xml']]);
-        }
-    )
-
-
-
-    .get('/x/c128/:data', (req: any, res: any) => RedAgate.renderOnExpress(
-        <Svg width={210 - 1} height={297 - 2} unit='mm'>
-            <Code128 x={1} y={1}
-                elementWidth={0.33 * 1.5}
-                height={7} quietHeight={0}
-                font="3.5px 'OCRB'" textHeight={3.5}
-                data={req.params.data} />
-        </Svg>, req, res, [['Content-Type', 'image/svg+xml']])
-    )
-
-    .get('/x/c39/:data', (req: any, res: any) => RedAgate.renderOnExpress(
-        <Svg width={210 - 1} height={297 - 2} unit='mm'>
-            <Code39 x={1} y={1}
-                narrowWidth={0.33 * 1.5} wideWidth={0.66 * 1.5}
-                height={7} quietHeight={0}
-                font="3.5px 'OCRB'" textHeight={3.5}
-                data={req.params.data} />
-        </Svg>, req, res, [['Content-Type', 'image/svg+xml']])
-    )
-
-    .get('/x/ean13/:data', (req: any, res: any) => RedAgate.renderOnExpress(
-        <Svg width={210 - 1} height={297 - 2} unit='mm'>
-            <Ean13 x={10} y={1}
-                elementWidth={0.33 * 1.5}
-                height={7} quietHeight={0}
-                font="3.5px 'OCRB'" textHeight={3.5}
-                data={req.params.data} />
-        </Svg>, req, res, [['Content-Type', 'image/svg+xml']])
-    )
-
-    .get('/x/ean8/:data', (req: any, res: any) => RedAgate.renderOnExpress(
-        <Svg width={210 - 1} height={297 - 2} unit='mm'>
-            <Ean8 x={10} y={1}
-                elementWidth={0.33 * 1.5}
-                height={7} quietHeight={0}
-                font="3.5px 'OCRB'" textHeight={3.5}
-                data={req.params.data} />
-        </Svg>, req, res, [['Content-Type', 'image/svg+xml']])
-    )
-
-    .get('/x/ean5/:data', (req: any, res: any) => RedAgate.renderOnExpress(
-        <Svg width={210 - 1} height={297 - 2} unit='mm'>
-            <Ean5 x={10} y={1}
-                elementWidth={0.33 * 1.5}
-                height={7} quietHeight={0}
-                font="3.5px 'OCRB'" textHeight={3.5}
-                data={req.params.data} />
-        </Svg>, req, res, [['Content-Type', 'image/svg+xml']])
-    )
-
-    .get('/x/ean2/:data', (req: any, res: any) => RedAgate.renderOnExpress(
-        <Svg width={210 - 1} height={297 - 2} unit='mm'>
-            <Ean2 x={10} y={1}
-                elementWidth={0.33 * 1.5}
-                height={7} quietHeight={0}
-                font="3.5px 'OCRB'" textHeight={3.5}
-                data={req.params.data} />
-        </Svg>, req, res, [['Content-Type', 'image/svg+xml']])
-    )
-
-    .get('/x/upca/:data', (req: any, res: any) => RedAgate.renderOnExpress(
-        <Svg width={210 - 1} height={297 - 2} unit='mm'>
-            <UpcA x={10} y={1}
-                elementWidth={0.33 * 1.5}
-                height={7} quietHeight={0}
-                font="3.5px 'OCRB'" textHeight={3.5}
-                data={req.params.data} />
-        </Svg>, req, res, [['Content-Type', 'image/svg+xml']])
-    )
-
-    .get('/x/upce/:data', (req: any, res: any) => RedAgate.renderOnExpress(
-        <Svg width={210 - 1} height={297 - 2} unit='mm'>
-            <UpcE x={10} y={1}
-                elementWidth={0.33 * 1.5}
-                height={7} quietHeight={0}
-                font="3.5px 'OCRB'" textHeight={3.5}
-                data={req.params.data} />
-        </Svg>, req, res, [['Content-Type', 'image/svg+xml']])
-    )
-
-    .get('/x/itf/:data', (req: any, res: any) => RedAgate.renderOnExpress(
-        <Svg width={210 - 1} height={297 - 2} unit='mm'>
-            <Itf x={1} y={1}
-                narrowWidth={0.33 * 1.5} wideWidth={0.66 * 1.5}
-                height={7} quietHeight={0}
-                font="3.5px 'OCRB'" textHeight={3.5}
-                data={req.params.data} />
-        </Svg>, req, res, [['Content-Type', 'image/svg+xml']])
-    )
-
-    .get('/x/nw7/:data', (req: any, res: any) => RedAgate.renderOnExpress(
-        <Svg width={210 - 1} height={297 - 2} unit='mm'>
-            <Nw7 x={1} y={1}
-                narrowWidth={0.33 * 1.5} wideWidth={0.66 * 1.5}
-                height={7} quietHeight={0}
-                font="3.5px 'OCRB'" textHeight={3.5}
-                data={req.params.data} />
-        </Svg>, req, res, [['Content-Type', 'image/svg+xml']])
-    )
-
-    .get('/x/jp/:data', (req: any, res: any) => RedAgate.renderOnExpress(
-        <Svg width={210 - 1} height={297 - 2} unit='mm'>
-            <JapanPostal x={1} y={1}
-                elementWidth={0.33 * 1.5}
-                height={0.33 * 1.5 * 6} quietHeight={0}
-                data={req.params.data} />
-        </Svg>, req, res, [['Content-Type', 'image/svg+xml']])
-    )
-
-    .get('/x/qr/:ver/:ec/:enc/:data', (req: any, res: any) => {
-        let ver: number | "auto" = "auto";
-        if (Number.isFinite(Number.parseInt(req.params.ver))) {
-            const v = Number.parseInt(req.params.ver);
-            if (0 < v && v < 41) {
-                ver = v;
+        switch (req.params.out) {
+        case 'img-tag': case 'el-style': case 'svg-url': case 'svg-nodefer':
+            {
+                const el = new Qr({
+                    id: 'foo1234',
+                    x: 1,
+                    y: 1,
+                    cellSize: 1.0,
+                    version: ver,
+                    ecLevel: ec,
+                    encoding: enc,
+                    data: req.params.data,
+                });
+                switch (req.params.out) {
+                case 'img-tag':
+                    res.send(el.toImgTag());
+                    break;
+                case 'el-style':
+                    res.send(el.toElementStyle());
+                    break;
+                case 'svg-url':
+                    res.send(el.toDataUrl());
+                    break;
+                case 'svg-nodefer':
+                    res.set('Content-Type', 'image/svg+xml');
+                    res.send(el.toSvg());
+                    break;
+                }
             }
-        }
-
-        let ec: "L" | "M" | "Q" | "H" = 'M';
-        switch (req.params.ec) {
-        case 'L': case 'l':
-            ec = 'L';
             break;
-        case 'M': case 'm':
-            ec = 'M';
-            break;
-        case 'Q': case 'q':
-            ec = 'Q';
-            break;
-        case 'H': case 'h':
-            ec = 'H';
-            break;
-        }
-
-        let enc: "number" | "alnum" | "8bit" | "auto" = 'auto';
-        switch (req.params.enc) {
-        case 'N': case 'n':
-            enc = 'number';
-            break;
-        case 'A': case 'a':
-            enc = 'alnum';
-            break;
-        case 'B': case 'b':
-            enc = '8bit';
-            break;
-        case '-':
-            enc = 'auto';
-            break;
-        }
-
-        return RedAgate.renderOnExpress(
-            <Svg width={210 - 1} height={297 - 2} unit='mm'>
+        case 'svg':
+            RedAgate.renderOnExpress(
                 <Qr x={1} y={1} cellSize={1.0}
                     version={ver} ecLevel={ec} encoding={enc}
-                    data={req.params.data} />
-            </Svg>,
-            req, res, [['Content-Type', 'image/svg+xml']]);
+                    data={req.params.data} />,
+                req, res, [['Content-Type', 'image/svg+xml']]);
+            break;
+        case 'page-svg': default:
+            RedAgate.renderOnExpress(
+                <Svg width={210 - 1} height={297 - 2} unit='mm'>
+                    <Qr x={1} y={1} cellSize={1.0}
+                        version={ver} ecLevel={ec} encoding={enc}
+                        data={req.params.data} />
+                </Svg>,
+                req, res, [['Content-Type', 'image/svg+xml']]);
+            break;
         }
-    );
+    })
+
+
 
     return express;
 }
