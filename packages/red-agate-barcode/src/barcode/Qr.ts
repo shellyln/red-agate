@@ -109,10 +109,6 @@ export class Qr extends Shape<QrProps> {
         return RedAgate.renderAsHtml_noDefer(this);
     }
 
-    public beforeRender(contexts: Map<string, any>) {
-        // DO NOT call super!
-    }
-
     public render(contexts: Map<string, any>, children: string) {
         let canvas: SvgCanvas = this.getContext(contexts, CONTEXT_SVG_CANVAS);
         const contextHasCanvas = Boolean(canvas);
@@ -138,10 +134,6 @@ export class Qr extends Shape<QrProps> {
             const imageHeight = total + (this.props.y || 0);
             return renderSvgCanvas(this.props, canvas, imageWidth, imageHeight);
         }
-    }
-
-    public afterRender(contexts: Map<string, any>) {
-        // DO NOT call super!
     }
 
 
