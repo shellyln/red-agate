@@ -295,6 +295,16 @@ export function cloneElement(el: RedAgateElement<any>): RedAgateElement<any> {
     };
 }
 
+export function createElementFromComponentInstance<P extends ComponentProps>(c: RedAgateComponent<P>): RedAgateElement<P> {
+    return {
+        type: (c.constructor as any),
+        props: c.props,
+        nodeId: null,
+        children: (Array.isArray(c.props.children) ? c.props.children : []),
+        component: c,
+    };
+}
+
 
 
 export interface TransformContext {
@@ -371,7 +381,15 @@ function camelToKebabCase(s: string): string {
     return s.replace(/([a-z0-9])([A-Z])/g, (match, p1, p2) => `${p1}-${p2.toLowerCase()}`);
 }
 
-export function htmlAttributesRenderer(props: any, omitKeys?: Set<string>): {attrs: string, children: string} {
+export function elementStyleRenderer(style: object | string) {
+    return typeof style === 'string' ? style :
+        Object.getOwnPropertyNames(style)
+            .filter(x => style[x] !== null && style[x] !== void 0)
+            .map(x => `${Escape.html(camelToKebabCase(x))}:${Escape.html(style[x])};`)
+            .join('');
+}
+
+export function htmlAttributesRenderer(props: any, omitKeys?: Set<string>, whiteListKeys?: Set<string>): {attrs: string, children: string} {
     let attrs = '';
     let children = '';
 
@@ -390,12 +408,7 @@ export function htmlAttributesRenderer(props: any, omitKeys?: Set<string>): {att
                 break;
 
             case 'style':
-                attrs += ` style="${
-                    typeof props.style === 'string' ? props.style :
-                        Object.getOwnPropertyNames(props.style)
-                            .filter(x => props.style[x] !== null && props.style[x] !== void 0)
-                            .map(x => `${Escape.html(camelToKebabCase(x))}:${Escape.html(props.style[x])};`)
-                            .join('')}"`;
+                attrs += ` style="${elementStyleRenderer(props.style)}"`;
                 break;
 
             case 'children': case '__nodeId':
@@ -411,6 +424,8 @@ export function htmlAttributesRenderer(props: any, omitKeys?: Set<string>): {att
 
             default:
                 if (omitKeys && omitKeys.has(key)) {
+                    // no output
+                } else if (whiteListKeys && !whiteListKeys.has(key) && key !== 'id') {
                     // no output
                 } else if (props[key] === null || props[key] === void 0 || props[key] === false) {
                     // no output
@@ -482,6 +497,14 @@ export function renderAsHtml(element: RedAgateNode): Promise<string> {
         Promise.all(getPromises([], z))
             .then(d => htmlRenderer(z, contexts))
     );
+}
+
+export function renderAsHtml_noDefer(element: RedAgateNode): string {
+    const contexts = new Map<string, any>();
+    const transformContext = { counter: 0 };
+    const z = transform(element, transformContext);
+
+    return htmlRenderer(z, contexts);
 }
 
 

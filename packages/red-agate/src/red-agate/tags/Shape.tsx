@@ -10,6 +10,7 @@ import { SvgCanvas,
          SvgTextAttributes,
          TextAlignValue,
          TextBaselineValue } from 'red-agate-svg-canvas/modules/drawing/canvas/SvgCanvas';
+import { Rect2D }            from 'red-agate-svg-canvas/modules/drawing/canvas/TransferMatrix2D';
 
 
 
@@ -23,7 +24,6 @@ export interface ShapeBaseProps extends RedAgate.ComponentProps {
     x?: number;
     y?: number;
     margin?: number;
-    dataUrl?: boolean;
 }
 
 export interface ShapeProps extends ShapeBaseProps {
@@ -52,7 +52,6 @@ export const shapePropsDefault: ShapeProps = {
     x: 0,
     y: 0,
     margin: 0,
-    dataUrl: true
 };
 
 export abstract class Shape<T extends ShapeProps> extends RedAgate.RedAgatePhantomComponent<T> {
@@ -161,4 +160,93 @@ export abstract class Shape<T extends ShapeProps> extends RedAgate.RedAgatePhant
             }
         }
     }
+}
+
+
+
+export interface ImagingShapeBasePropsMixin {
+    asImgTag?: boolean;
+    asElementStyle?: boolean;
+    asDataUrl?: boolean;
+    unit?: string;
+}
+
+export interface ImagingShapeBaseProps extends ShapeBaseProps, ImagingShapeBasePropsMixin {
+}
+
+export interface ImagingShapeProps extends ShapeProps, ImagingShapeBasePropsMixin {
+}
+
+export function renderSvgCanvas(props: ImagingShapeBaseProps, canvas: SvgCanvas, imageWidth: number, imageHeight: number): string {
+    if (props.asImgTag) {
+        return (
+            `<img style="width:${
+                imageWidth}${props.unit};height:${
+                    imageHeight}${props.unit};" src="${
+                canvas.toDataUrl(new Rect2D(0, 0, imageWidth, imageHeight), props.unit, 120)}"${
+                RedAgate.htmlAttributesRenderer(props, void 0, new Set([])).attrs}></img>`
+        );
+    } else if (props.asElementStyle) {
+        return `${
+            props.style ? RedAgate.elementStyleRenderer(props.style) : ''}${
+            RedAgate.elementStyleRenderer({'background-image': `url("${
+                canvas.toDataUrl(new Rect2D(0, 0, imageWidth, imageHeight), props.unit, 0)}")`})
+        }`;
+    } else if (props.asDataUrl) {
+        return canvas.toDataUrl(new Rect2D(0, 0, imageWidth, imageHeight), props.unit, 0);
+    } else {
+        return canvas.render(new Rect2D(0, 0, imageWidth, imageHeight), props.unit);
+    }
+}
+
+export function toImgTag(component: RedAgate.RedAgatePhantomComponent<ImagingShapeBaseProps>): string {
+    const propsNew = Object.assign({}, component.props);
+    propsNew.asImgTag = true;
+    propsNew.asElementStyle = false;
+    propsNew.asDataUrl = false;
+    const propsSaved = component.props;
+
+    component.props = propsNew;
+    const r = RedAgate.renderAsHtml_noDefer(RedAgate.createElementFromComponentInstance(component));
+    component.props = propsSaved;
+    return r;
+}
+
+export function toElementStyle(component: RedAgate.RedAgatePhantomComponent<ImagingShapeBaseProps>): string {
+    const propsNew = Object.assign({}, component.props);
+    propsNew.asImgTag = false;
+    propsNew.asElementStyle = true;
+    propsNew.asDataUrl = false;
+    const propsSaved = component.props;
+
+    component.props = propsNew;
+    const r = RedAgate.renderAsHtml_noDefer(RedAgate.createElementFromComponentInstance(component));
+    component.props = propsSaved;
+    return r;
+}
+
+export function toDataUrl(component: RedAgate.RedAgatePhantomComponent<ImagingShapeBaseProps>): string {
+    const propsNew = Object.assign({}, component.props);
+    propsNew.asImgTag = false;
+    propsNew.asElementStyle = false;
+    propsNew.asDataUrl = true;
+    const propsSaved = component.props;
+
+    component.props = propsNew;
+    const r = RedAgate.renderAsHtml_noDefer(RedAgate.createElementFromComponentInstance(component));
+    component.props = propsSaved;
+    return r;
+}
+
+export function toSvg(component: RedAgate.RedAgatePhantomComponent<ImagingShapeBaseProps>): string {
+    const propsNew = Object.assign({}, component.props);
+    propsNew.asImgTag = false;
+    propsNew.asElementStyle = false;
+    propsNew.asDataUrl = false;
+    const propsSaved = component.props;
+
+    component.props = propsNew;
+    const r = RedAgate.renderAsHtml_noDefer(RedAgate.createElementFromComponentInstance(component));
+    component.props = propsSaved;
+    return r;
 }

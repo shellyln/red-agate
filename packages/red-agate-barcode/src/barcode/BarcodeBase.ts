@@ -14,11 +14,17 @@ import { WebColor }           from 'red-agate-svg-canvas/modules/drawing/canvas/
 import { ShapeProps,
          shapePropsDefault,
          Shape,
+         ImagingShapeBasePropsMixin,
+         renderSvgCanvas,
+         toImgTag,
+         toElementStyle,
+         toDataUrl,
+         toSvg,
          CONTEXT_SVG_CANVAS } from 'red-agate/modules/red-agate/tags/Shape';
 
 
 
-export interface BarcodeBaseProps extends ShapeProps {
+export interface BarcodeBaseProps extends ShapeProps, ImagingShapeBasePropsMixin {
     fillColor?: string | WebColor;
     font?: string;
 
@@ -26,15 +32,19 @@ export interface BarcodeBaseProps extends ShapeProps {
     height?: number;
     quietWidth?: number;
     quietHeight?: number;
+    unit?: string;
     drawText?: boolean;
     useRawDataAsText?: boolean;
     textHeight?: number;
 
     data?: string;
     text?: string;
+
+    asDataUrl?: boolean;
+    asImgTag?: boolean;
 }
 
-export interface BarcodeBasePropsNoUndefined extends ShapeProps {
+export interface BarcodeBasePropsNoUndefined extends ShapeProps, ImagingShapeBasePropsMixin {
     fillColor: string | WebColor;
     font: string;
 
@@ -42,12 +52,16 @@ export interface BarcodeBasePropsNoUndefined extends ShapeProps {
     height: number;
     quietWidth: number;
     quietHeight: number;
+    unit?: string;
     drawText: boolean;
     useRawDataAsText: boolean;
     textHeight: number;
 
     data?: string;
     text?: string;
+
+    asDataUrl?: boolean;
+    asImgTag?: boolean;
 }
 
 export const barcodeBasePropsDefault: BarcodeBasePropsNoUndefined = Object.assign({}, shapePropsDefault, {
@@ -57,6 +71,7 @@ export const barcodeBasePropsDefault: BarcodeBasePropsNoUndefined = Object.assig
     height: 6.35,
     quietWidth: 2.54,
     quietHeight: 0.66,
+    unit: "mm",
     drawText: true,
     useRawDataAsText: false,
     textHeight: 3.55
@@ -67,8 +82,34 @@ export class BarcodeBase<T extends BarcodeBaseProps> extends Shape<T> {
         super(Object.assign({}, barcodeBasePropsDefault, props as any));
     }
 
+    public toImgTag(): string {
+        return toImgTag(this);
+    }
+
+    public toElementStyle(): string {
+        return toElementStyle(this);
+    }
+
+    public toDataUrl(): string {
+        return toDataUrl(this);
+    }
+
+    public toSvg(): string {
+        return toSvg(this);
+    }
+
+    public toRendered(): string {
+        return RedAgate.renderAsHtml_noDefer(this);
+    }
+
     public render(contexts: Map<string, any>, children: string) {
-        const canvas: SvgCanvas = this.getContext(contexts, CONTEXT_SVG_CANVAS);
+        let canvas: SvgCanvas = this.getContext(contexts, CONTEXT_SVG_CANVAS);
+        const contextHasCanvas = Boolean(canvas);
+        if (!contextHasCanvas) {
+            canvas = new SvgCanvas();
+            this.setContext(contexts, CONTEXT_SVG_CANVAS, canvas);
+            super.beforeRender(contexts);
+        }
 
         let data = this.props.data || "";
         let text = this.props.text;
@@ -139,9 +180,16 @@ export class BarcodeBase<T extends BarcodeBaseProps> extends Shape<T> {
             canvas.endGroup();
         }
 
-        return ``;
+        if (contextHasCanvas) {
+            return ``;
+        } else {
+            super.afterRender(contexts);
+            this.unsetContext(contexts, CONTEXT_SVG_CANVAS);
+            const imageWidth  = tw + (this.props.x || 0);
+            const imageHeight = th + (this.props.y || 0);
+            return renderSvgCanvas(this.props, canvas, imageWidth, imageHeight);
+        }
     }
-
 
 
     // total width (quiet + data + start + stop + cd)

@@ -18,12 +18,18 @@ import { ShapeBaseProps,
          shapePropsDefault,
          Shape,
          AmbientProps,
+         ImagingShapeBasePropsMixin,
+         renderSvgCanvas,
+         toImgTag,
+         toElementStyle,
+         toDataUrl,
+         toSvg,
          CONTEXT_SVG_CANVAS,
          CONTEXT_SVG_PATH }   from './tags/Shape';
 
 
 
-export interface SvgProps extends ShapeBaseProps {
+export interface SvgProps extends ShapeBaseProps, ImagingShapeBasePropsMixin {
     width: number;
     height: number;
     unit?: string;
@@ -69,6 +75,26 @@ export class Svg extends RedAgate.RedAgatePhantomComponent<SvgProps> {
         }
     }
 
+    public toImgTag(): string {
+        return toImgTag(this);
+    }
+
+    public toElementStyle(): string {
+        return toElementStyle(this);
+    }
+
+    public toDataUrl(): string {
+        return toDataUrl(this);
+    }
+
+    public toSvg(): string {
+        return toSvg(this);
+    }
+
+    public toRendered(): string {
+        return RedAgate.renderAsHtml_noDefer(this);
+    }
+
     public beforeRender(contexts: Map<string, any>) {
         this.setContext(contexts, CONTEXT_SVG_CANVAS,
             this.template === null ? new SvgCanvas() : SvgCanvas.fromTemplate(this.template)
@@ -77,17 +103,7 @@ export class Svg extends RedAgate.RedAgatePhantomComponent<SvgProps> {
 
     public render(contexts: Map<string, any>, children: string) {
         const canvas: SvgCanvas = this.getContext(contexts, CONTEXT_SVG_CANVAS);
-        if (this.props.dataUrl) {
-            return (
-                `<img style="width:${
-                    this.props.width}${this.props.unit};height:${
-                    this.props.height}${this.props.unit};" src="${
-                    canvas.toDataUrl(new Rect2D(0, 0, this.props.width, this.props.height), this.props.unit, 120)}" ${
-                    RedAgate.htmlAttributesRenderer(this.props, new Set(['unit', 'width', 'height'])).attrs}"></img>`
-            );
-        } else {
-            return canvas.render(new Rect2D(0, 0, this.props.width, this.props.height), this.props.unit);
-        }
+        return renderSvgCanvas(this.props, canvas, this.props.width, this.props.height);
     }
 
     public afterRender(contexts: Map<string, any>) {
