@@ -102,11 +102,17 @@ export class BarcodeBase<T extends BarcodeBaseProps> extends Shape<T> {
         return RedAgate.renderAsHtml_noDefer(this);
     }
 
+    public beforeRender(contexts: Map<string, any>) {
+        // DO NOT call super!
+    }
+
     public render(contexts: Map<string, any>, children: string) {
         let canvas: SvgCanvas = this.getContext(contexts, CONTEXT_SVG_CANVAS);
         const contextHasCanvas = Boolean(canvas);
         if (!contextHasCanvas) {
             canvas = new SvgCanvas();
+            this.setContext(contexts, CONTEXT_SVG_CANVAS, canvas);
+            super.beforeRender(contexts);
         }
 
         let data = this.props.data || "";
@@ -181,10 +187,16 @@ export class BarcodeBase<T extends BarcodeBaseProps> extends Shape<T> {
         if (contextHasCanvas) {
             return ``;
         } else {
+            super.afterRender(contexts);
+            this.unsetContext(contexts, CONTEXT_SVG_CANVAS);
             const imageWidth  = tw + (this.props.x || 0);
             const imageHeight = th + (this.props.y || 0);
             return renderSvgCanvas(this.props, canvas, imageWidth, imageHeight);
         }
+    }
+
+    public afterRender(contexts: Map<string, any>) {
+        // DO NOT call super!
     }
 
 

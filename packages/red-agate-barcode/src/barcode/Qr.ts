@@ -109,11 +109,17 @@ export class Qr extends Shape<QrProps> {
         return RedAgate.renderAsHtml_noDefer(this);
     }
 
+    public beforeRender(contexts: Map<string, any>) {
+        // DO NOT call super!
+    }
+
     public render(contexts: Map<string, any>, children: string) {
         let canvas: SvgCanvas = this.getContext(contexts, CONTEXT_SVG_CANVAS);
         const contextHasCanvas = Boolean(canvas);
         if (!contextHasCanvas) {
             canvas = new SvgCanvas();
+            this.setContext(contexts, CONTEXT_SVG_CANVAS, canvas);
+            super.beforeRender(contexts);
         }
 
         const data = this.props.data || "";
@@ -125,11 +131,17 @@ export class Qr extends Shape<QrProps> {
         if (contextHasCanvas) {
             return ``;
         } else {
+            super.afterRender(contexts);
+            this.unsetContext(contexts, CONTEXT_SVG_CANVAS);
             const total = bitmap.width * (this.props.cellSize as number) + (this.props.margin as number) * 2;
             const imageWidth  = total + (this.props.x || 0);
             const imageHeight = total + (this.props.y || 0);
             return renderSvgCanvas(this.props, canvas, imageWidth, imageHeight);
         }
+    }
+
+    public afterRender(contexts: Map<string, any>) {
+        // DO NOT call super!
     }
 
 
