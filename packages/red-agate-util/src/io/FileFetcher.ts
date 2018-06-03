@@ -57,13 +57,12 @@ export class FileFetcher {
 
                     // TODO: set method and options
                     http.get(uri, (res: any) => {
-                        res.setEncoding("binary");
+                        // DO NOT CALL "res.setEncoding('binary' or null)" to receive chunks as Buffer !
                         if (res.statusCode === 200) {
                             const contentType = res.headers["content-type"];
-                            const data: any[] = [];
-                            res.on("data", (chunk: any) => {
-                                // TODO: Buffer encoding "binary" is deprecated.
-                                data.push(new Buffer(chunk, "binary"));
+                            const data: Buffer[] = [];
+                            res.on("data", (chunk: Buffer) => {
+                                data.push(chunk);
                             });
                             res.on("end", () => {
                                 resolve({contentType, data: Buffer.concat(data)});

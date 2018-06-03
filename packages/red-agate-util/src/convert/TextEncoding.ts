@@ -64,8 +64,8 @@ export class TextEncoding {
         TextEncoding.isTextEncoder = (typeof TextEncoder !== "undefined");
 
         if (TextEncoding.isNode) {
-            TextEncoding.__encodeToUtf8 = (str: string) => new Buffer(str, "utf8");
-            TextEncoding.__decodeUtf8 = (buf: ArrayLike<number>) => new Buffer(Array.isArray(buf) ? buf : Array.from(buf)).toString("utf8");
+            TextEncoding.__encodeToUtf8 = (str: string) => Buffer.from(str, "utf8");
+            TextEncoding.__decodeUtf8 = (buf: ArrayLike<number>) => Buffer.from(Array.isArray(buf) ? buf : Array.from(buf)).toString("utf8");
         } else if (TextEncoding.isTextEncoder) {
             TextEncoding.utf8Encoder = new TextEncoder("utf8");
             TextEncoding.__encodeToUtf8 = (str: string) => TextEncoding.utf8Encoder.encode(str);
