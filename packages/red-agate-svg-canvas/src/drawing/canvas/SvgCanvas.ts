@@ -1199,7 +1199,7 @@ export class SvgCanvas implements VectorCanvas2D {
 
     public stroke(): void {
         this.content +=
-            `<g ${this.getStrokeAttrs()} fill="none" ${this.getFilterAttrs()} ` +
+            `<g ${this.getStrokeAttrs()}fill="none"${this.getFilterAttrs()}` +
             (this.clipPath.length > 0 ? `clip-path="${this.clipPath}" ` : "") +
             `>\n<path d="${WordWrap.loose(this.subpath.join(" "))}" />\n</g>\n`;
         this.subpath = [];
@@ -1208,7 +1208,7 @@ export class SvgCanvas implements VectorCanvas2D {
     }
     public strokeRect(x: number, y: number, w: number, h: number): void {
         this.content +=
-            `<g ${this.getStrokeAttrs()} fill="none" ${this.getFilterAttrs()} ` +
+            `<g ${this.getStrokeAttrs()}fill="none"${this.getFilterAttrs()}` +
             (this.clipPath.length > 0 ? `clip-path="${this.clipPath}" ` : "") +
             `>\n<rect x="${x}" y="${y}" width="${w}" height="${h}" ` +
             `transform="matrix(${this.ctm.toString()})" ` +
@@ -1217,7 +1217,7 @@ export class SvgCanvas implements VectorCanvas2D {
     public strokeText(text: string, x: number, y: number, maxWidthOrExtraAttrs?: number | SvgTextAttributes): void {
         const path = this.getTextPath(maxWidthOrExtraAttrs);
         this.content +=
-            `<g ${this.getStrokeAttrs()} fill="none" ${this.getFilterAttrs()} ` +
+            `<g ${this.getStrokeAttrs()}fill="none"${this.getFilterAttrs()}` +
             (this.clipPath.length > 0 ? `clip-path="${this.clipPath}" ` : "") +
             `>\n<text` +
             `${this.getTextAttributes(maxWidthOrExtraAttrs)} transform="matrix(${this.ctm.toString()})" ` +
@@ -1231,7 +1231,7 @@ export class SvgCanvas implements VectorCanvas2D {
      */
     public fill(fillRule: string = "nonzero"): void {
         this.content +=
-            `<g stroke="none" ${this.getFillAttrs(fillRule)} ${this.getFilterAttrs()} ` +
+            `<g stroke="none" ${this.getFillAttrs(fillRule)}${this.getFilterAttrs()}` +
             (this.clipPath.length > 0 ? `clip-path="${this.clipPath}" ` : "") +
             `>\n<path d="${WordWrap.loose(this.subpath.join(" "))}" />\n</g>\n`;
         this.subpath = [];
@@ -1240,7 +1240,7 @@ export class SvgCanvas implements VectorCanvas2D {
     }
     public fillRect(x: number, y: number, w: number, h: number): void {
         this.content +=
-            `<g stroke="none" ${this.getFillAttrs("nonzero")} ${this.getFilterAttrs()} ` +
+            `<g stroke="none" ${this.getFillAttrs("nonzero")}${this.getFilterAttrs()}` +
             (this.clipPath.length > 0 ? `clip-path="${this.clipPath}" ` : "") +
             `>\n<rect x="${x}" y="${y}" width="${w}" height="${h}" ` +
             `transform="matrix(${this.ctm.toString()})" ` +
@@ -1249,7 +1249,7 @@ export class SvgCanvas implements VectorCanvas2D {
     public fillText(text: string, x: number, y: number, maxWidthOrExtraAttrs?: number | SvgTextAttributes): void {
         const path = this.getTextPath(maxWidthOrExtraAttrs);
         this.content +=
-            `<g stroke="none" ${this.getFillAttrs("nonzero")} ${this.getFilterAttrs()} ` +
+            `<g stroke="none" ${this.getFillAttrs("nonzero")}${this.getFilterAttrs()}` +
             (this.clipPath.length > 0 ? `clip-path="${this.clipPath}" ` : "") +
             `>\n<text` +
             `${this.getTextAttributes(maxWidthOrExtraAttrs)} transform="matrix(${this.ctm.toString()})" ` +
@@ -1263,7 +1263,7 @@ export class SvgCanvas implements VectorCanvas2D {
      */
     public fillStroke(fillRule: string = "nonzero"): void {
         this.content +=
-            `<g ${this.getFillAttrs(fillRule)} ${this.getStrokeAttrs()} ${this.getFilterAttrs()} ` +
+            `<g ${this.getFillAttrs(fillRule)}${this.getStrokeAttrs()}${this.getFilterAttrs()}` +
             (this.clipPath.length > 0 ? `clip-path="${this.clipPath}" ` : "") +
             `>\n<path d="${WordWrap.loose(this.subpath.join(" "))}" />\n</g>\n`;
         this.subpath = [];
@@ -1272,7 +1272,7 @@ export class SvgCanvas implements VectorCanvas2D {
     }
     public fillStrokeRect(x: number, y: number, w: number, h: number): void {
         this.content +=
-            `<g ${this.getFillAttrs("nonzero")} ${this.getStrokeAttrs()} ${this.getFilterAttrs()} ` +
+            `<g ${this.getFillAttrs("nonzero")}${this.getStrokeAttrs()}${this.getFilterAttrs()}` +
             (this.clipPath.length > 0 ? `clip-path="${this.clipPath}" ` : "") +
             `>\n<rect x="${x}" y="${y}" width="${w}" height="${h}" ` +
             `transform="matrix(${this.ctm.toString()})" ` +
@@ -1281,7 +1281,7 @@ export class SvgCanvas implements VectorCanvas2D {
     public fillStrokeText(text: string, x: number, y: number, maxWidthOrExtraAttrs?: number | SvgTextAttributes): void {
         const path = this.getTextPath(maxWidthOrExtraAttrs);
         this.content +=
-            `<g ${this.getFillAttrs("nonzero")} ${this.getStrokeAttrs()} ${this.getFilterAttrs()} ` +
+            `<g ${this.getFillAttrs("nonzero")}${this.getStrokeAttrs()}${this.getFilterAttrs()}` +
             (this.clipPath.length > 0 ? `clip-path="${this.clipPath}" ` : "") +
             `>\n<text` +
             `${this.getTextAttributes(maxWidthOrExtraAttrs)} transform="matrix(${this.ctm.toString()})" ` +

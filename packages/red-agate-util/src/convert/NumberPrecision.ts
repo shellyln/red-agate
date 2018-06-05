@@ -10,7 +10,13 @@
 export class NumberPrecision {
     public static decimalPlaces(n: number): (v: number) => number {
         return (v: number) => {
-            return Number(v.toFixed(6));
+            return Number(v.toFixed(n));
+        }
+    }
+
+    public static precision(n: number): (v: number) => number {
+        return (v: number) => {
+            return Number(v.toPrecision(n));
         }
     }
 }

@@ -4,6 +4,12 @@
 
 
 
+import { NumberPrecision } from "red-agate-util/modules/convert/NumberPrecision";
+
+
+const dp = NumberPrecision.decimalPlaces(6);
+
+
 export class Point2D {
     constructor(public x: number, public y: number) {
     }
@@ -131,13 +137,13 @@ export class TransferMatrix2D {
         // [1 ]   [  0   0  1]   [1]
         if (typeof x_or_p === "object")
             return new Point2D(
-                this.m11 * x_or_p.x + this.m21 * x_or_p.y + this.dx,
-                this.m12 * x_or_p.x + this.m22 * x_or_p.y + this.dy
+                dp(this.m11 * x_or_p.x + this.m21 * x_or_p.y + this.dx),
+                dp(this.m12 * x_or_p.x + this.m22 * x_or_p.y + this.dy)
                 );
         else
             return [
-                this.m11 * x_or_p + this.m21 * (y as number) + this.dx,
-                this.m12 * x_or_p + this.m22 * (y as number) + this.dy
+                dp(this.m11 * x_or_p + this.m21 * (y as number) + this.dx),
+                dp(this.m12 * x_or_p + this.m22 * (y as number) + this.dy)
                 ];
     }
 
