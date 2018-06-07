@@ -1,4 +1,5 @@
 
+/** @jsx RedAgate.createElement */
 import * as RedAgate from 'red-agate/modules/red-agate';
 import { ForEach,
          Template, 

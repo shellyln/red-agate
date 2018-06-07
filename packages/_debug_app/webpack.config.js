@@ -30,7 +30,7 @@ module.exports = function (env) {
 return [{
         entry: (env && env.env === 'test') ? void 0 : {
             app: [
-                path.resolve(__dirname, 'src/app.tsx')
+                path.resolve(__dirname, 'src/app.ts')
             ],
             spec: [
                 path.resolve(__dirname, 'src/_spec/index.ts')

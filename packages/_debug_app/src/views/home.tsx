@@ -1,4 +1,5 @@
 
+/** @jsx RedAgate.createElement */
 import * as RedAgate    from 'red-agate/modules/red-agate';
 import { Html5 }        from 'red-agate/modules/red-agate/html';
 import { Svg }          from 'red-agate/modules/red-agate/svg';
