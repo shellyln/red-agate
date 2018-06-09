@@ -39,7 +39,7 @@
         // "traceResolution": true,
         "types": ["node", "jasmine"],
         "jsx": "react",
-        "jsxFactory": "RedAgate.createElement"
+        "jsxFactory": "FooBar.dom"
     },
     "exclude": [
         "bin",

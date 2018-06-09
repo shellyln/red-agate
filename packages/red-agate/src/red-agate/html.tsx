@@ -4,6 +4,7 @@
 
 
 
+/** @jsx RedAgate.createElement */
 import * as RedAgate from './red-agate';
 
 

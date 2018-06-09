@@ -36,7 +36,7 @@
         // "traceResolution": true,
         "types": ["node", "jasmine"],
         "jsx": "react",
-        "jsxFactory": "Rutile.createElement"
+        "jsxFactory": "FooBar.dom"
     },
     "include": [
         "src/_spec/**/*.spec.ts"
