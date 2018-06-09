@@ -48,7 +48,7 @@ export let barcodeTestHandler: AwsLambda = (event: any, context, callback) => Re
     <body class="A4">
         <ForEach items={query(event.details).groupEvery(40).select()}> { (items: any[]) =>
             <section class="sheet" style="position: relative; top: 0mm; left: 0mm;">
-                <Svg width={210 - 1} height={297 - 2} unit='mm' templateUrl='https://upload.wikimedia.org/wikipedia/commons/f/fd/Ghostscript_Tiger.svg'>
+                <Svg width={210 - 1} height={297 - 2} unit='mm' templateUrl='https://shellyln.github.io/assets/app/Ghostscript_Tiger.svg'>
                     <If condition={designerMode}>
                         <Rect x={0} y={0} width={210} height={297} lineWidth={0.5} stroke/>
                         <GridLine endX={210} endY={297} bleed={0} lineWidth={0.1}/>

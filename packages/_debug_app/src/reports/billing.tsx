@@ -97,7 +97,7 @@ export let billngReportHandler: AwsLambda = (event: BillingStatement, context, c
 
                     <div class="my-company-info">
                         <h1 class="value company-name"><img
-                            src="https://upload.wikimedia.org/wikipedia/commons/5/53/Emoticon_Smile_Face.svg"
+                            src="https://shellyln.github.io/assets/app/Emoticon_Smile_Face.svg"
                             style="width: 16mm; height: 16mm;"/>{event.me.name}</h1>
                         <div class="value addr1">{event.me.addr1}</div>
                         <div class="value addr2">{event.me.addr2}</div>
