@@ -89,25 +89,23 @@ export type ComponentFactory<P extends ComponentProps> =
 
 
 
-declare global {
-    namespace JSX {
-        interface IntrinsicElements {
-            [elemName: string]: any;
-        }
+export declare namespace JSX {
+    interface IntrinsicElements {
+        [elemName: string]: any;
+    }
 
-        interface ElementClass extends Component<any> {
-        }
+    interface ElementClass extends Component<any> {
+    }
 
-        interface Element extends RedAgateElement<any> {
-        }
+    interface Element extends RedAgateElement<any> {
+    }
 
-        interface ElementAttributesProperty {
-            props: any; // specify the property name to use
-        }
+    interface ElementAttributesProperty {
+        props: any; // specify the property name to use
+    }
 
-        interface ElementChildrenAttribute {
-            children: {};  // specify children name to use
-        }
+    interface ElementChildrenAttribute {
+        children: {};  // specify children name to use
     }
 }
 
