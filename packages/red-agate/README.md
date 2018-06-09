@@ -327,23 +327,23 @@ $ npm install puppeteer --save
 
 | tag | description |
 |-----|-------------|
-| [Repeat](https://github.com/shellyln/red-agate/blob/master/packages/red-agate/src/red-agate/taglib.tsx) | Loop N times. |
-| [ForEach](https://github.com/shellyln/red-agate/blob/master/packages/red-agate/src/red-agate/taglib.tsx) | Iterate an array. |
-| [If](https://github.com/shellyln/red-agate/blob/master/packages/red-agate/src/red-agate/taglib.tsx) | Conditional branch. |
-| [Do](https://github.com/shellyln/red-agate/blob/master/packages/red-agate/src/red-agate/taglib.tsx) | Call a lambda function when `createElement` . |
-| [Facet](https://github.com/shellyln/red-agate/blob/master/packages/red-agate/src/red-agate/taglib.tsx) | Grouping child elements.<br>Give a name to group. |
-| [Template](https://github.com/shellyln/red-agate/blob/master/packages/red-agate/src/red-agate/taglib.tsx) | Synonym for `Facet` . |
+| [Repeat](https://github.com/shellyln/red-agate/blob/master/packages/red-agate/src/red-agate/taglib.ts) | Loop N times. |
+| [ForEach](https://github.com/shellyln/red-agate/blob/master/packages/red-agate/src/red-agate/taglib.ts) | Iterate an array. |
+| [If](https://github.com/shellyln/red-agate/blob/master/packages/red-agate/src/red-agate/taglib.ts) | Conditional branch. |
+| [Do](https://github.com/shellyln/red-agate/blob/master/packages/red-agate/src/red-agate/taglib.ts) | Call a lambda function when `createElement` . |
+| [Facet](https://github.com/shellyln/red-agate/blob/master/packages/red-agate/src/red-agate/taglib.ts) | Grouping child elements.<br>Give a name to group. |
+| [Template](https://github.com/shellyln/red-agate/blob/master/packages/red-agate/src/red-agate/taglib.ts) | Synonym for `Facet` . |
 
 ### `red-agate/modules/red-agate/bundler`
 
 | tag | description |
 |-----|-------------|
-| [Asset](https://github.com/shellyln/red-agate/blob/master/packages/red-agate/src/red-agate/bundler.tsx) | Fetch a external resource.<br>Fetched resource is referred from other tags. |
-| [Image](https://github.com/shellyln/red-agate/blob/master/packages/red-agate/src/red-agate/bundler.tsx) | Fetch a external image resource. |
-| [Script](https://github.com/shellyln/red-agate/blob/master/packages/red-agate/src/red-agate/bundler.tsx) | Fetch a external script resource. |
-| [Style](https://github.com/shellyln/red-agate/blob/master/packages/red-agate/src/red-agate/bundler.tsx) | Fetch a external stylesheet resource. |
-| [Font](https://github.com/shellyln/red-agate/blob/master/packages/red-agate/src/red-agate/bundler.tsx) | Synonym for `Style` . |
-| [SingleFont](https://github.com/shellyln/red-agate/blob/master/packages/red-agate/src/red-agate/bundler.tsx) | Fetch a external single font-family font resource. |
+| [Asset](https://github.com/shellyln/red-agate/blob/master/packages/red-agate/src/red-agate/bundler.ts) | Fetch a external resource.<br>Fetched resource is referred from other tags. |
+| [Image](https://github.com/shellyln/red-agate/blob/master/packages/red-agate/src/red-agate/bundler.ts) | Fetch a external image resource. |
+| [Script](https://github.com/shellyln/red-agate/blob/master/packages/red-agate/src/red-agate/bundler.ts) | Fetch a external script resource. |
+| [Style](https://github.com/shellyln/red-agate/blob/master/packages/red-agate/src/red-agate/bundler.ts) | Fetch a external stylesheet resource. |
+| [Font](https://github.com/shellyln/red-agate/blob/master/packages/red-agate/src/red-agate/bundler.ts) | Synonym for `Style` . |
+| [SingleFont](https://github.com/shellyln/red-agate/blob/master/packages/red-agate/src/red-agate/bundler.ts) | Fetch a external single font-family font resource. |
 
 ### `red-agate/modules/red-agate/html`
 
@@ -386,7 +386,7 @@ $ npm install puppeteer --save
 
 | tag | description |
 |-----|-------------|
-| [PrinterMarksProps](https://github.com/shellyln/red-agate/blob/master/packages/red-agate/src/red-agate/printing.tsx) | Draw printer marks (crop mark, bleed mark, center mark, fold mark). |
+| [PrinterMarksProps](https://github.com/shellyln/red-agate/blob/master/packages/red-agate/src/red-agate/printing.ts) | Draw printer marks (crop mark, bleed mark, center mark, fold mark). |
 
 ### `red-agate-barcode/modules/barcode/(Code39|Code128|Ean|Itf|JapanPostal|Nw7|Qr)`
 
