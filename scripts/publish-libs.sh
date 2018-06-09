@@ -2,7 +2,7 @@
 set -eu
 trap 'echo Error at Line $LINENO "$@"' ERR
 
-packages="./red-agate-util ./red-agate-svg-canvas ./red-agate-math ./red-agate-barcode"
+packages="./red-agate-util ./red-agate-svg-canvas ./red-agate-math"
 
 cd ./packages
 

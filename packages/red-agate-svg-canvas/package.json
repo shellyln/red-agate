@@ -1,7 +1,7 @@
 {
   "name": "red-agate-svg-canvas",
   "private": false,
-  "version": "0.0.13",
+  "version": "0.1.0",
   "description": "red-agate svg canvas shared library.",
   "keywords": [
     "SVG",
@@ -19,7 +19,7 @@
   },
   "dependencies": {},
   "peerDependencies": {
-    "red-agate-util": "^0.0.13"
+    "red-agate-util": "^1.0.0"
   },
   "devDependencies": {
     "@types/jasmine": "^2.8.8",
