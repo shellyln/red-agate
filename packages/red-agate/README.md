@@ -53,7 +53,7 @@ RedAgate.renderAsHtml(<Hello name={'world'}/>)
 .catch(error => console.log(error))
 ```
 
-### defining element by using lambda:
+### Defining element by using lambda:
 ```tsx
 export interface IfProps extends RedAgate.ComponentProps {
     condition: boolean;
@@ -65,7 +65,7 @@ export const If = (props: IfProps) => {
 };
 ```
 
-### defining element by using component:
+### Defining element by using component:
 ```tsx
 export interface IfProps extends RedAgate.ComponentProps {
     condition: boolean;
@@ -84,7 +84,7 @@ export class If extends RedAgate.RedAgateComponent<IfProps> {
 }
 ```
 
-### defining SVG element by using component:
+### Defining SVG element by using component:
 ```tsx
 import { SvgCanvas }          from 'red-agate-svg-canvas/modules/drawing/canvas/SvgCanvas';
 import { Shape,
@@ -113,7 +113,7 @@ export class Rect extends Shape<RectProps> {
 }
 ```
 
-### example:
+### Complete example:
 ```tsx
 /** @jsx RedAgate.createElement */
 import * as RedAgate     from 'red-agate/modules/red-agate';
@@ -158,7 +158,7 @@ const Fba = (props: {leaf: FbaDetail}) =>
         </Group>
     </Template>;
 
-export let fbaA4ReportHandler = (event: PrintJob, context, callback) => RedAgate.renderOnAwsLambda(
+export const fbaA4ReportHandler = (event: PrintJob, context, callback) => RedAgate.renderOnAwsLambda(
 <Html5>
     <head>
         <title>FBA</title>
@@ -188,8 +188,16 @@ export let fbaA4ReportHandler = (event: PrintJob, context, callback) => RedAgate
         </ForEach>
     </body>
 </Html5>, callback);
+```
 
-fbaA4ReportHandler(data /* PrintJob */, {} as any, (error, result) => {
+```tsx
+const event = {
+    details: [{
+        // ...
+    }]
+};
+
+fbaA4ReportHandler(event /* PrintJob */, {} as any /* Context */, (error, result) => {
     if (error) {
         console.log(error);
     } else {
@@ -198,23 +206,23 @@ fbaA4ReportHandler(data /* PrintJob */, {} as any, (error, result) => {
 });
 ```
 
-### call from another process:
+### Call from another process:
 ```tsx
 /** @jsx RedAgate.createElement */
 import * as RedAgate     from 'red-agate/modules/red-agate';
 import { Html5 }         from 'red-agate/modules/red-agate/html';
+import { App }           from 'red-agate/modules/red-agate/app';
 
-export let billngReportHandler = (event: any, context, callback) => RedAgate.renderOnAwsLambda(
-<Html5></Html5>, callback);
+export const billngReportHandler = (event: any, context, callback) => RedAgate.renderOnAwsLambda(
+<Html5>billng</Html5>, callback);
 
-export let kanbanReportHandler = (event: any, context, callback) => RedAgate.renderOnAwsLambda(
-<Html5></Html5>, callback);
+export const kanbanReportHandler = (event: any, context, callback) => RedAgate.renderOnAwsLambda(
+<Html5>kanban</Html5>, callback);
 
-App
-.route('/', (evt, ctx, cb) => cb(null, 'Hello, Node!'))
-.route('/billing', billngReportHandler)
-.route('/kanban', kanbanReportHandler)
-.run({});
+App.route('/', (evt, ctx, cb) => cb(null, 'Hello, Node!'))
+   .route('/billing', billngReportHandler)
+   .route('/kanban', kanbanReportHandler)
+   .run({});
 ```
 
 ```python
@@ -224,7 +232,7 @@ import json
 import os
 import sys
 
-sys.path.append(os.path.dirname(os.path.abspath(__file__)) + '/../red-agate/')
+sys.path.append(os.path.dirname(os.path.abspath(__file__)) + '/node_modules/red-agate/')
 from redagate_lambda import call, LambdaInternalErrorException
 
 
@@ -403,10 +411,11 @@ $ npm install red-agate-barcode --save
 
 
 ## Configurations for building application
+If you want to use red-agate w/o jsx pragma comment (`/** @jsx RedAgate.createElement */`),  
 You should configure `tsconfig` or `.babelrc` for building JSX.  
-Prease see [here](https://www.typescriptlang.org/docs/handbook/jsx.html)
-or [here](https://babeljs.io/docs/plugins/transform-react-jsx/)
-or [examples](https://github.com/shellyln/red-agate-example).
+Prease see [typescript docs](https://www.typescriptlang.org/docs/handbook/jsx.html)
+, [babel docs](https://babeljs.io/docs/plugins/transform-react-jsx/)
+or [example](https://github.com/shellyln/red-agate-example).
 
 
 ## FAQ
@@ -430,7 +439,9 @@ or [examples](https://github.com/shellyln/red-agate-example).
 
 
 + Can I output rendered result as PDF, PNG, or other formats?  
-    + Please use [puppeteer](https://github.com/GoogleChrome/puppeteer) via [HtmlRenderer#toPdf](https://github.com/shellyln/red-agate/blob/master/packages/red-agate/src/red-agate/renderer.ts).
+    + Please use [puppeteer](https://github.com/GoogleChrome/puppeteer) via
+      [HtmlRenderer.toPdf()](https://github.com/shellyln/red-agate/blob/master/packages/red-agate/src/red-agate/renderer.ts) and
+      [HtmlRenderer.toImage()](https://github.com/shellyln/red-agate/blob/master/packages/red-agate/src/red-agate/renderer.ts).
     + Or you can convert from html to any formats using other libraries
       (e.g. [html-pdf (wrapper of PhantomJS)](https://github.com/marcbachmann/node-html-pdf), [wkhtmltopdf](https://wkhtmltopdf.org/)) .
 
