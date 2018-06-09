@@ -37,6 +37,7 @@ See [live demo](https://shellyln.github.io/red-agate/demo.html) and
 
 ### Hello, world:
 ```tsx
+/** @jsx RedAgate.createElement */
 import * as RedAgate from 'red-agate/modules/red-agate';
 
 interface HelloProps extends RedAgate.ComponentProps {
@@ -114,6 +115,7 @@ export class Rect extends Shape<RectProps> {
 
 ### example:
 ```tsx
+/** @jsx RedAgate.createElement */
 import * as RedAgate     from 'red-agate/modules/red-agate';
 import { ForEach,
          If,
@@ -198,6 +200,7 @@ fbaA4ReportHandler(data /* PrintJob */, {} as any, (error, result) => {
 
 ### call from another process:
 ```tsx
+/** @jsx RedAgate.createElement */
 import * as RedAgate     from 'red-agate/modules/red-agate';
 import { Html5 }         from 'red-agate/modules/red-agate/html';
 
@@ -270,7 +273,7 @@ Instead, you can also import the whole by simply specifying `red-agate*` as the 
 
 ## APIs
 
-### `import * as RedAgate from 'red-agate/modules/red-agate'`
+### `/** @jsx RedAgate.createElement */`<br/>`import * as RedAgate from 'red-agate/modules/red-agate'`
 
 | method | description |
 |--------|-------------|
@@ -298,6 +301,17 @@ Instead, you can also import the whole by simply specifying `red-agate*` as the 
 | `App.cli(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`options: string[]`<br>&nbsp;&nbsp;&nbsp;&nbsp;`handler: (`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`opts: Map<string, string>`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`) => void`<br>`): App` | Add CLI routing.<br>If `options[i]` starts with `?` it is a optional parameter.<br>If `options[i]` ends with `*` it is a wildcard. |
 | `App.route(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`name: string`<br>&nbsp;&nbsp;&nbsp;&nbsp;`lambda: AwsLambda`<br>`): App` | Add routing to lambda.<br>`name` parameter is used as routing path.<br>When request event is received call the lambda that `name` equals to `event.eventName`. |
 | `App.run(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`context: any`<br>&nbsp;&nbsp;&nbsp;&nbsp;`lambda?: AwsLambda`<br>`): App` | Run routing.<br>event is received from stdin as JSON and send response to stdout.<br>Exit process by calling `exit()` when response is ended.<br>If `lambda` is specified, ignore `route()` and call `lambda`. |
+
+### `import { HtmlRenderer } from 'red-agate/modules/red-agate/renderer'`
+
+```bash
+$ npm install puppeteer --save
+```
+
+| method | description |
+|--------|-------------|
+| `HtmlRenderer.toPdf(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`html: string,`<br>&nbsp;&nbsp;&nbsp;&nbsp;`navigateOptions: any,`<br>&nbsp;&nbsp;&nbsp;&nbsp;`pdfOptions: any`<br>`): Promise<Buffer>` | Render HTML into PDF using puppeteer.<br>See [puppeteer#page.goto](https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md#pagegotourl-options) about `navigateOptions`.<br>See [puppeteer#page.pdf](https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md#pagepdfoptions) about `pdfOptions`. |
+| `HtmlRenderer.toImage(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`html: string,`<br>&nbsp;&nbsp;&nbsp;&nbsp;`navigateOptions: any,`<br>&nbsp;&nbsp;&nbsp;&nbsp;`imageOptions: any`<br>`): Promise<Buffer>` | Render HTML into image using puppeteer.<br>See [puppeteer#page.goto](https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md#pagegotourl-options) about `navigateOptions`.<br>See [puppeteer#page.screenshot](https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md#pagescreenshotoptions) about `imageOptions`. |
 
 ## Standard Tag-Libs
 
@@ -416,8 +430,9 @@ or [examples](https://github.com/shellyln/red-agate-example).
 
 
 + Can I output rendered result as PDF, PNG, or other formats?  
-    + You can convert from html to any formats by using other libraries
-      (e.g. [puppeteer](https://github.com/GoogleChrome/puppeteer), [html-pdf (wrapper of PhantomJS)](https://github.com/marcbachmann/node-html-pdf), [wkhtmltopdf](https://wkhtmltopdf.org/)) .
+    + Please use [puppeteer](https://github.com/GoogleChrome/puppeteer) via [HtmlRenderer#toPdf](https://github.com/shellyln/red-agate/blob/master/packages/red-agate/src/red-agate/renderer.ts).
+    + Or you can convert from html to any formats using other libraries
+      (e.g. [html-pdf (wrapper of PhantomJS)](https://github.com/marcbachmann/node-html-pdf), [wkhtmltopdf](https://wkhtmltopdf.org/)) .
 
 
 ## License
