@@ -33,7 +33,7 @@
         // "traceResolution": true,
         "types": ["node", "jasmine"],
         "jsx": "react",
-        "jsxFactory": "FooBare.dom"
+        "jsxFactory": "FooBar.dom"
     },
     "include": [
         "src/_spec/**/*.spec.ts"
