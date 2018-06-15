@@ -43,49 +43,34 @@ export default function(express: any): any {
             }
         };
 
-        handler(data, {} as any, (error, html) => {
+        try {
+            switch (req.params.format) {
+            case 'pdf':
+                handler = HtmlRenderer.toPdfHandler(handler, {}, {
+                    width: '210mm',
+                    height: '297mm',
+                    printBackground: true,
+                });
+                res.set('Content-Disposition', `inline; filename="${"example.pdf"}"`);
+                res.set('Content-Type', 'application/pdf');
+                break;
+            case 'png':
+                handler = HtmlRenderer.toImageHandler(handler, {}, {});
+                res.set('Content-Disposition', `inline; filename="${"example.png"}"`);
+                res.set('Content-Type', 'image/png');
+                break;
+            }
+        } catch (err) {
+            sendError();
+        }
+
+        handler(data, {} as any, (error, result) => {
             if (error) {
                 sendError();
             } else {
                 try {
-                    switch (req.params.format) {
-                    case 'pdf':
-                        (async () => {
-                            try {
-                                const buffer = await HtmlRenderer.toPdf(html, {}, {
-                                    width: '210mm',
-                                    height: '297mm',
-                                    printBackground: true,
-                                });
-                                res.set('Content-Disposition', `inline; filename="${"example.pdf"}"`);
-                                res.set('Content-Type', 'application/pdf');
-                                res.send(buffer);
-                                sent = true;
-                            } catch (e) {
-                                sendError();
-                            }
-                        })();
-                        break;
-
-                    case 'png':
-                        (async () => {
-                            try {
-                                const buffer = await HtmlRenderer.toImage(html, {}, {});
-                                res.set('Content-Disposition', `inline; filename="${"example.pdf"}"`);
-                                res.set('Content-Type', 'image/png');
-                                res.send(buffer);
-                                sent = true;
-                            } catch (e) {
-                                sendError();
-                            }
-                        })();
-                        break;
-
-                    default:
-                        res.send(html);
-                        sent = true;
-                        break;
-                    }
+                    res.send(result);
+                    sent = true;
                 } catch (err) {
                     sendError();
                 }
