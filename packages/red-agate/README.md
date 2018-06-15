@@ -131,6 +131,8 @@ import { Font,
          Image,
          Style }         from 'red-agate/modules/red-agate/bundler';
 import { query }         from 'red-agate/modules/red-agate/data';
+import { Lambda }        from 'red-agate/modules/red-agate/app';
+import { HtmlRenderer }  from 'red-agate/modules/red-agate/renderer';
 
 interface FbaDetail {
     id: string;
@@ -158,7 +160,7 @@ const Fba = (props: {leaf: FbaDetail}) =>
         </Group>
     </Template>;
 
-export const fbaA4ReportHandler = (event: PrintJob, context, callback) => RedAgate.renderOnAwsLambda(
+export const fbaA4ReportHandler: Lambda = (event: PrintJob, context, callback) => RedAgate.renderOnAwsLambda(
 <Html5>
     <head>
         <title>FBA</title>
@@ -209,12 +211,14 @@ fbaA4ReportHandler(event /* PrintJob */, {} as any /* Context */, (error, result
 ### Render html into PDF:
 ```tsx
 /** @jsx RedAgate.createElement */
-import * as RedAgate from 'red-agate/modules/red-agate';
-import { Html5 }     from 'red-agate/modules/red-agate/html';
+import * as RedAgate    from 'red-agate/modules/red-agate';
+import { Html5 }        from 'red-agate/modules/red-agate/html';
+import { Lambda }       from 'red-agate/modules/red-agate/app';
+import { HtmlRenderer } from 'red-agate/modules/red-agate/renderer';
 
 interface PrintJob { /*  */ }
 
-export let reportHandler = (event: PrintJob, context, callback) => RedAgate.renderOnAwsLambda(
+export let reportHandler: Lambda = (event: PrintJob, context, callback) => RedAgate.renderOnAwsLambda(
 <Html5>
     hello, { event.name }!
 </Html5>, callback);
@@ -223,6 +227,14 @@ export let pdfHandler = HtmlRenderer.toPdfHandler(reportHandler, {}, {
     width: '210mm',
     height: '297mm',
     printBackground: true,
+});
+
+pdfHandler(event /* PrintJob */, {} as any /* Context */, (error, result) => {
+    if (error) {
+        console.log(error);
+    } else {
+        console.log(result);
+    }
 });
 ```
 
@@ -327,9 +339,14 @@ Instead, you can also import the whole by simply specifying `red-agate*` as the 
 | method | description |
 |--------|-------------|
 | `App.cli(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`options: string[]`<br>&nbsp;&nbsp;&nbsp;&nbsp;`handler: (`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`opts: Map<string, string>`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`) => void`<br>`): App` | Add CLI routing.<br>If `options[i]` starts with `?` it is a optional parameter.<br>If `options[i]` ends with `*` it is a wildcard. |
-| `App.route(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`name: string`<br>&nbsp;&nbsp;&nbsp;&nbsp;`lambda: AwsLambda`<br>`): App` | Add routing to lambda.<br>`name` parameter is used as routing path.<br>When request event is received call the lambda that `name` equals to `event.eventName`. |
-| `App.run(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`context: any`<br>&nbsp;&nbsp;&nbsp;&nbsp;`lambda?: AwsLambda`<br>`): App` | Run routing.<br>event is received from stdin as JSON and send response to stdout.<br>Exit process by calling `exit()` when response is ended.<br>If `lambda` is specified, ignore `route()` and call `lambda`. |
-| `pipe(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`handler1: AwsLambda,`<br>&nbsp;&nbsp;&nbsp;&nbsp;`handler2: AwsLambda`<br>`): AwsLambda` | Pipe 2 lambdas.<br>Return a composite function that piping 2 lambdas.<br>2nd lambda's `event` is 1st lambda's callback `result`. |
+| `App.route(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`name: string`<br>&nbsp;&nbsp;&nbsp;&nbsp;`lambda: Lambda`<br>`): App` | Add routing to lambda.<br>`name` parameter is used as routing path.<br>When request event is received call the lambda that `name` equals to `event.eventName`. |
+| `App.run(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`context: any`<br>&nbsp;&nbsp;&nbsp;&nbsp;`lambda?: Lambda`<br>`): App` | Run routing.<br>event is received from stdin as JSON and send response to stdout.<br>Exit process by calling `exit()` when response is ended.<br>If `lambda` is specified, ignore `route()` and call `lambda`. |
+
+### `import { Lambdas } from 'red-agate/modules/red-agate/app'`
+
+| method | description |
+|--------|-------------|
+| `Lambdas.pipe(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`handler1: Lambda,`<br>&nbsp;&nbsp;&nbsp;&nbsp;`handler2: Lambda`<br>`): Lambda` | Pipe 2 lambdas.<br>Return a composite function that piping 2 lambdas.<br>2nd lambda's `event` is 1st lambda's callback `result`. |
 
 ### `import { HtmlRenderer } from 'red-agate/modules/red-agate/renderer'`
 
@@ -341,6 +358,8 @@ $ npm install puppeteer --save
 |--------|-------------|
 | `HtmlRenderer.toPdf(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`html: string | Promise<string>,`<br>&nbsp;&nbsp;&nbsp;&nbsp;`navigateOptions: any,`<br>&nbsp;&nbsp;&nbsp;&nbsp;`pdfOptions: any`<br>`): Promise<Buffer>` | Render HTML into PDF using puppeteer.<br>See [puppeteer#page.goto](https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md#pagegotourl-options) about `navigateOptions`.<br>See [puppeteer#page.pdf](https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md#pagepdfoptions) about `pdfOptions`. |
 | `HtmlRenderer.toImage(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`html: string | Promise<string>,`<br>&nbsp;&nbsp;&nbsp;&nbsp;`navigateOptions: any,`<br>&nbsp;&nbsp;&nbsp;&nbsp;`imageOptions: any`<br>`): Promise<Buffer>` | Render HTML into image using puppeteer.<br>See [puppeteer#page.goto](https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md#pagegotourl-options) about `navigateOptions`.<br>See [puppeteer#page.screenshot](https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md#pagescreenshotoptions) about `imageOptions`. |
+| `HtmlRenderer.toPdfHandler(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`handler: Lambda,`<br>&nbsp;&nbsp;&nbsp;&nbsp;`navigateOptions: any,`<br>&nbsp;&nbsp;&nbsp;&nbsp;`pdfOptions: any`<br>`): Lambda` | Create composite function returning pdf as callback result. |
+| `HtmlRenderer.toImageHandler(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`handler: Lambda,`<br>&nbsp;&nbsp;&nbsp;&nbsp;`navigateOptions: any,`<br>&nbsp;&nbsp;&nbsp;&nbsp;`imageOptions: any`<br>`): Lambda` | Create composite function returning image as callback result. |
 
 ## Standard Tag-Libs
 
@@ -464,7 +483,7 @@ or [example](https://github.com/shellyln/red-agate-example).
       [HtmlRenderer.toPdf()](https://github.com/shellyln/red-agate/blob/master/packages/red-agate/src/red-agate/renderer.ts) and
       [HtmlRenderer.toImage()](https://github.com/shellyln/red-agate/blob/master/packages/red-agate/src/red-agate/renderer.ts).
     + Or you can convert from html to any formats using other libraries
-      (e.g. [html-pdf (wrapper of PhantomJS)](https://github.com/marcbachmann/node-html-pdf), [wkhtmltopdf](https://wkhtmltopdf.org/)) .
+      (e.g. ~~[html-pdf (wrapper of PhantomJS)](https://github.com/marcbachmann/node-html-pdf)~~, [wkhtmltopdf](https://wkhtmltopdf.org/)) .
 
 
 ## License
