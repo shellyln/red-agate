@@ -1,21 +1,21 @@
 
 /** @jsx RedAgate.createElement */
-import * as RedAgate       from 'red-agate/modules/red-agate';
+import * as RedAgate     from 'red-agate/modules/red-agate';
 import { ForEach,
          If,
-         Template }        from 'red-agate/modules/red-agate/taglib';
-import { Html5 }           from 'red-agate/modules/red-agate/html';
+         Template }      from 'red-agate/modules/red-agate/taglib';
+import { Html5 }         from 'red-agate/modules/red-agate/html';
 import { Svg,
          Group,
          Rect,
          Text,
          GridLine,
-         SvgImposition }   from 'red-agate/modules/red-agate/svg';
+         SvgImposition } from 'red-agate/modules/red-agate/svg';
 import { Font,
          Image,
-         Style }           from 'red-agate/modules/red-agate/bundler';
-import { query }           from 'red-agate/modules/red-agate/data';
-import { AwsLambda }       from 'red-agate/modules/red-agate/app';
+         Style }         from 'red-agate/modules/red-agate/bundler';
+import { query }         from 'red-agate/modules/red-agate/data';
+import { Lambda }        from 'red-agate/modules/red-agate/app';
 
 
 
@@ -54,7 +54,7 @@ const Fba = (props: {leaf: FbaDetail}) =>
 
 
 
-export let fbaA4ReportHandler: AwsLambda = (event: FbaPrintJob, context, callback) => RedAgate.renderOnAwsLambda(
+export let fbaA4ReportHandler: Lambda = (event: FbaPrintJob, context, callback) => RedAgate.renderOnAwsLambda(
 <Html5>
     <head>
         <title>FBA</title>
@@ -87,7 +87,7 @@ export let fbaA4ReportHandler: AwsLambda = (event: FbaPrintJob, context, callbac
 
 
 
-export let fbaBrDKReportHandler: AwsLambda = (event: FbaPrintJob, context, callback) => RedAgate.renderOnAwsLambda(
+export let fbaBrDKReportHandler: Lambda = (event: FbaPrintJob, context, callback) => RedAgate.renderOnAwsLambda(
 <Html5>
     <head>
         <title>FBA</title>

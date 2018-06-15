@@ -1,23 +1,23 @@
 
 /** @jsx RedAgate.createElement */
-import * as RedAgate       from 'red-agate/modules/red-agate';
+import * as RedAgate     from 'red-agate/modules/red-agate';
 import { ForEach,
          If,
-         Template }        from 'red-agate/modules/red-agate/taglib';
-import { Html5 }           from 'red-agate/modules/red-agate/html';
+         Template }      from 'red-agate/modules/red-agate/taglib';
+import { Html5 }         from 'red-agate/modules/red-agate/html';
 import { Svg,
          Group,
          Rect,
          Text,
          GridLine,
-         SvgImposition }   from 'red-agate/modules/red-agate/svg';
+         SvgImposition } from 'red-agate/modules/red-agate/svg';
 import { Asset,
          Font,
          Image,
          Script,
-         Style }           from 'red-agate/modules/red-agate/bundler';
-import { query }           from 'red-agate/modules/red-agate/data';
-import { AwsLambda }       from 'red-agate/modules/red-agate/app';
+         Style }         from 'red-agate/modules/red-agate/bundler';
+import { query }         from 'red-agate/modules/red-agate/data';
+import { Lambda }        from 'red-agate/modules/red-agate/app';
 
 
 
@@ -191,7 +191,7 @@ const Kanban = (props: {leaf: KanbanDetail}) =>
 
 
 
-export let kanbanReportHandler: AwsLambda = (event: KanbanPrintJob, context, callback) => RedAgate.renderOnAwsLambda(
+export let kanbanReportHandler: Lambda = (event: KanbanPrintJob, context, callback) => RedAgate.renderOnAwsLambda(
 <Html5>
     <Asset contextName="logo-asset" src="https://shellyln.github.io/assets/app/Emoticon_Smile_Face.svg"/>
     <Asset contextName="qr-asset" src="https://shellyln.github.io/assets/app/QR_code_for_mobile_English_Wikipedia.svg"/>

@@ -23,7 +23,7 @@ import { Font,
          Style }           from 'red-agate/modules/red-agate/bundler';
 import { SvgCanvas }       from 'red-agate-svg-canvas/modules/drawing/canvas/SvgCanvas';
 import { query }           from 'red-agate/modules/red-agate/data';
-import { AwsLambda }       from 'red-agate/modules/red-agate/app';
+import { Lambda }          from 'red-agate/modules/red-agate/app';
 
 
 
@@ -66,7 +66,7 @@ export interface BillingStatement {
 
 
 
-export let billngReportHandler: AwsLambda = (event: BillingStatement, context, callback) => RedAgate.renderOnAwsLambda(
+export let billngReportHandler: Lambda = (event: BillingStatement, context, callback) => RedAgate.renderOnAwsLambda(
 <Html5>
     <Do> { () => {
         event.detail.forEach(x => x.amount = x.qty * x.rate);

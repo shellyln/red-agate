@@ -1,41 +1,41 @@
 
 /** @jsx RedAgate.createElement */
-import * as RedAgate       from 'red-agate/modules/red-agate';
+import * as RedAgate     from 'red-agate/modules/red-agate';
 import { ForEach,
          If,
-         Template }        from 'red-agate/modules/red-agate/taglib';
-import { Html5 }           from 'red-agate/modules/red-agate/html';
+         Template }      from 'red-agate/modules/red-agate/taglib';
+import { Html5 }         from 'red-agate/modules/red-agate/html';
 import { Svg,
          Group,
          Rect,
          Text,
          GridLine,
-         SvgImposition }   from 'red-agate/modules/red-agate/svg';
+         SvgImposition } from 'red-agate/modules/red-agate/svg';
 import { Font,
          Image,
-         Style }           from 'red-agate/modules/red-agate/bundler';
-import { query }           from 'red-agate/modules/red-agate/data';
-import { Code39 }          from 'red-agate-barcode/modules/barcode/Code39';
-import { Code128 }         from 'red-agate-barcode/modules/barcode/Code128';
+         Style }         from 'red-agate/modules/red-agate/bundler';
+import { query }         from 'red-agate/modules/red-agate/data';
+import { Code39 }        from 'red-agate-barcode/modules/barcode/Code39';
+import { Code128 }       from 'red-agate-barcode/modules/barcode/Code128';
 import { Ean13,
          Ean8,
          Ean5,
          Ean2,
          UpcA,
-         UpcE }            from 'red-agate-barcode/modules/barcode/Ean';
-import { Itf }             from 'red-agate-barcode/modules/barcode/Itf';
-import { JapanPostal }     from 'red-agate-barcode/modules/barcode/JapanPostal';
-import { Nw7 }             from 'red-agate-barcode/modules/barcode/Nw7';
-import { Qr }              from 'red-agate-barcode/modules/barcode/Qr';
-import { AwsLambda }       from 'red-agate/modules/red-agate/app';
-import { PrinterMarks }    from 'red-agate/modules/red-agate/printing';
+         UpcE }          from 'red-agate-barcode/modules/barcode/Ean';
+import { Itf }           from 'red-agate-barcode/modules/barcode/Itf';
+import { JapanPostal }   from 'red-agate-barcode/modules/barcode/JapanPostal';
+import { Nw7 }           from 'red-agate-barcode/modules/barcode/Nw7';
+import { Qr }            from 'red-agate-barcode/modules/barcode/Qr';
+import { Lambda }        from 'red-agate/modules/red-agate/app';
+import { PrinterMarks }  from 'red-agate/modules/red-agate/printing';
 
 
 
 const designerMode = true;
 
 
-export let barcodeTestHandler: AwsLambda = (event: any, context, callback) => RedAgate.renderOnAwsLambda(
+export let barcodeTestHandler: Lambda = (event: any, context, callback) => RedAgate.renderOnAwsLambda(
 <Html5>
     <head>
         <title>barcode</title>
