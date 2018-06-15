@@ -36,12 +36,12 @@ export interface LambdaContext {
 }
 export type AwsLambdaContext = LambdaContext;
 
-export type Lambda<T=any, E=any, R=any> = (event: T, context: LambdaContext, callback: (error: E | null, result: R | null) => void) => void;
+export type Lambda<T=any, R=any, E=any> = (event: T, context: LambdaContext, callback: (error: E | null, result: R | null) => void) => void;
 export type AwsLambda = Lambda;
 
 
 export class Lambdas {
-    public static pipe<T1, E1, R1, E2, R2>(handler1: Lambda<T1, E1, R1>, handler2: Lambda<R1, E2, R2>): Lambda<T1, E1 | E2, R2> {
+    public static pipe<T1, R1, E1, R2, E2>(handler1: Lambda<T1, R1, E1>, handler2: Lambda<R1, R2, E2>): Lambda<T1, R2, E1 | E2> {
         return (event, context, callback) => {
             handler1(event, context, (error, evt2) => {
                 if (error) {

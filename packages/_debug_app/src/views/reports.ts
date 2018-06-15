@@ -6,14 +6,16 @@ import { default as billngData } from '../reports/billing.data';
 import { kanbanReportHandler }   from '../reports/kanban';
 import { default as kanbanData } from '../reports/kanban.data';
 import { fbaA4ReportHandler }    from '../reports/fba-a4';
+import { default as fbaA4Data }  from '../reports/fba-a4.data';
 import { barcodeTestHandler }    from '../reports/barcode-test';
+import { Lambda }                from 'red-agate/modules/red-agate/app';
 
 
 
 export default function(express: any): any {
     express
     .get('/:format/:name', (req: any, res: any) => {
-        let handler   = billngReportHandler;
+        let handler: Lambda = billngReportHandler;
         let data: any = billngData;
 
         switch (req.params.name) {
@@ -27,7 +29,7 @@ export default function(express: any): any {
             break;
         case 'fba-a4':
             handler = fbaA4ReportHandler;
-            data    = kanbanData;
+            data    = fbaA4Data;
             break;
         case 'barcode-test':
             handler = barcodeTestHandler;

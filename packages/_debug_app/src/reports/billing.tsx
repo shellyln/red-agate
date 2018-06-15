@@ -66,7 +66,7 @@ export interface BillingStatement {
 
 
 
-export let billngReportHandler: Lambda = (event: BillingStatement, context, callback) => RedAgate.renderOnAwsLambda(
+export let billngReportHandler: Lambda<BillingStatement> = (event, context, callback) => RedAgate.renderOnAwsLambda(
 <Html5>
     <Do> { () => {
         event.detail.forEach(x => x.amount = x.qty * x.rate);

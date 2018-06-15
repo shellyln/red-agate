@@ -8,6 +8,7 @@ import { default as billngData } from './reports/billing.data';
 import { kanbanReportHandler }   from './reports/kanban';
 import { default as kanbanData } from './reports/kanban.data';
 import { fbaA4ReportHandler }    from './reports/fba-a4';
+import { default as fbaA4Data }  from './reports/fba-a4.data';
 import { barcodeTestHandler }    from './reports/barcode-test';
 
 // tslint:disable-next-line:no-eval
@@ -31,7 +32,7 @@ App.cli(['?--foo', '--debug', '--handler=*'], (opts) => {
         break;
     case '/fba-a4':
         handler = fbaA4ReportHandler;
-        data    = kanbanData;
+        data    = fbaA4Data;
         break;
     case '/barcode-test':
         handler = barcodeTestHandler;
@@ -62,6 +63,6 @@ App.cli(['?--foo', '--debug', '--handler=*'], (opts) => {
 // .route('/fba-a4'      , fbaA4ReportHandler)
 .route('/billing'     , (evt, ctx, cb) => billngReportHandler(billngData, ctx, cb))
 .route('/kanban'      , (evt, ctx, cb) => kanbanReportHandler(kanbanData, ctx, cb))
-.route('/fba-a4'      , (evt, ctx, cb) =>  fbaA4ReportHandler(kanbanData, ctx, cb))
+.route('/fba-a4'      , (evt, ctx, cb) =>  fbaA4ReportHandler(fbaA4Data, ctx, cb))
 .route('/barcode-test', barcodeTestHandler)
 .run({});

@@ -191,7 +191,7 @@ const Kanban = (props: {leaf: KanbanDetail}) =>
 
 
 
-export let kanbanReportHandler: Lambda = (event: KanbanPrintJob, context, callback) => RedAgate.renderOnAwsLambda(
+export let kanbanReportHandler: Lambda<KanbanPrintJob> = (event, context, callback) => RedAgate.renderOnAwsLambda(
 <Html5>
     <Asset contextName="logo-asset" src="https://shellyln.github.io/assets/app/Emoticon_Smile_Face.svg"/>
     <Asset contextName="qr-asset" src="https://shellyln.github.io/assets/app/QR_code_for_mobile_English_Wikipedia.svg"/>

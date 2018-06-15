@@ -42,19 +42,19 @@ const Fba = (props: {leaf: FbaDetail}) =>
             <Text x={27} y={11.5}
                 textAlign="center"
                 font={`11.5px 'Libre Barcode 128 Text', cursive`} fill
-                text={`X00009377F`} />
+                text={props.leaf.id} />
             <Text x={4} y={18 + 3.5}
                 font={`3.5px ${font}`} fill
-                text={`How Deep Lies the Shadow`} />
+                text={props.leaf.name} />
             <Text x={4} y={22 + 3.5}
                 font={`3.5px ${font}`} fill
-                text={`New`} />
+                text={props.leaf.condition} />
         </Group>
     </Template>;
 
 
 
-export let fbaA4ReportHandler: Lambda = (event: FbaPrintJob, context, callback) => RedAgate.renderOnAwsLambda(
+export let fbaA4ReportHandler: Lambda<FbaPrintJob> = (event: FbaPrintJob, context, callback) => RedAgate.renderOnAwsLambda(
 <Html5>
     <head>
         <title>FBA</title>
@@ -87,7 +87,7 @@ export let fbaA4ReportHandler: Lambda = (event: FbaPrintJob, context, callback) 
 
 
 
-export let fbaBrDKReportHandler: Lambda = (event: FbaPrintJob, context, callback) => RedAgate.renderOnAwsLambda(
+export let fbaBrDKReportHandler: Lambda<FbaPrintJob> = (event, context, callback) => RedAgate.renderOnAwsLambda(
 <Html5>
     <head>
         <title>FBA</title>
