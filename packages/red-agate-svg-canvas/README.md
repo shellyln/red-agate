@@ -1,13 +1,13 @@
-# RedAgate's svg canvas shared library.
+# RedAgate's svg canvas library.
 #### HTML5 Canvas API implementation that rendering as SVG, w/o dependencies of browser DOM.
 
 
 
 [![npm](https://img.shields.io/npm/v/red-agate-svg-canvas.svg)](https://www.npmjs.com/package/red-agate-svg-canvas)
-[![GitHub release](https://img.shields.io/github/release/shellyln/red-agate-svg-canvas.svg)](https://github.com/shellyln/red-agate-svg-canvas/releases)
-[![Travis](https://img.shields.io/travis/shellyln/red-agate-svg-canvas/master.svg)](https://travis-ci.org/shellyln/red-agate-svg-canvas)
-[![GitHub forks](https://img.shields.io/github/forks/shellyln/red-agate-svg-canvas.svg?style=social&label=Fork)](https://github.com/shellyln/red-agate-svg-canvas/fork)
-[![GitHub stars](https://img.shields.io/github/stars/shellyln/red-agate-svg-canvas.svg?style=social&label=Star)](https://github.com/shellyln/red-agate-svg-canvas)
+[![GitHub release](https://img.shields.io/github/release/shellyln/red-agate.svg)](https://github.com/shellyln/red-agate/releases)
+[![Travis](https://img.shields.io/travis/shellyln/red-agate/master.svg)](https://travis-ci.org/shellyln/red-agate)
+[![GitHub forks](https://img.shields.io/github/forks/shellyln/red-agate.svg?style=social&label=Fork)](https://github.com/shellyln/red-agate/fork)
+[![GitHub stars](https://img.shields.io/github/stars/shellyln/red-agate.svg?style=social&label=Star)](https://github.com/shellyln/red-agate)
 
 
 [RedAgate Project Home](https://github.com/shellyln/red-agate)

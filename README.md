@@ -34,10 +34,10 @@ See main package's [README](https://github.com/shellyln/red-agate/tree/master/pa
 | package | description |
 |---------|-------------|
 | [red-agate](https://github.com/shellyln/red-agate/tree/master/packages/red-agate) | RedAgate's main package.<br>HTML/XML/SVG template engine using JSX, suitable for report output. |
-| [red-agate-util](https://github.com/shellyln/red-agate/tree/master/packages/red-agate-util) | Utilities shared library. |
-| [red-agate-svg-canvas](https://github.com/shellyln/red-agate/tree/master/packages/red-agate-svg-canvas) | HTML5 canvas compatible SVG Canvas shared library. |
-| [red-agate-math](https://github.com/shellyln/red-agate/tree/master/packages/red-agate-math) | Math (Finite field, Error correction (RS,BCH,CRC)) shared library. |
-| [red-agate-barcode](https://github.com/shellyln/red-agate/tree/master/packages/red-agate-barcode) | 1d/2d barcodes shared library. |
+| [red-agate-util](https://github.com/shellyln/red-agate/tree/master/packages/red-agate-util) | Utilities library. |
+| [red-agate-svg-canvas](https://github.com/shellyln/red-agate/tree/master/packages/red-agate-svg-canvas) | HTML5 canvas compatible SVG Canvas library. |
+| [red-agate-math](https://github.com/shellyln/red-agate/tree/master/packages/red-agate-math) | Math (Finite field, Error correction (RS,BCH,CRC)) library. |
+| [red-agate-barcode](https://github.com/shellyln/red-agate/tree/master/packages/red-agate-barcode) | 1d/2d barcodes library. |
 
 ## License
 [ISC](https://github.com/shellyln/red-agate/blob/master/LICENSE.md)  
