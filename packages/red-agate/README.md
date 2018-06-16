@@ -32,8 +32,8 @@ $ npm install red-agate --save
 
 ## Usage
 
-See [live demo](https://shellyln.github.io/red-agate/demo.html) and
-[examples](https://github.com/shellyln/red-agate-example).
+See [live demo on browser](https://shellyln.github.io/red-agate/demo.html) ([code](https://github.com/shellyln/red-agate-live-demo)) and
+[Node.js example](https://github.com/shellyln/red-agate/tree/master/packages/_debug_app).
 
 ### Hello, world:
 ```tsx
