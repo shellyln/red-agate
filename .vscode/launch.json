@@ -19,7 +19,7 @@
             "type": "node",
             "request": "launch",
             "name": "Launch Web Program",
-            "program": "${workspaceRoot}/packages/_debug_app/src/app.tsx",
+            "program": "${workspaceRoot}/packages/_debug_app/src/app.ts",
             "cwd": "${workspaceFolder}/packages/_debug_app",
             "args": [
                 "--express"

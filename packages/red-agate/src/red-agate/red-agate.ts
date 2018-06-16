@@ -259,7 +259,8 @@ export function createElement<P extends ComponentProps>(
             props,
             nodeId: null,
             children,
-            component: type.prototype.earlyConstruct && type.prototype.transform ?
+            // ES6 arrow function have no prototype.
+            component: type.prototype && type.prototype.earlyConstruct && type.prototype.transform ?
                 new type(props) :
                 null,
         };
@@ -316,7 +317,8 @@ function constructComponent(el: RedAgateElement<any>, transformContext: Transfor
     }
     if (el.component === null || el.component === void 0) {
         if (typeof el.type === 'function') {
-            el.component = el.type.prototype.transform ?
+            // ES6 arrow function have no prototype.
+            el.component = (el.type.prototype && el.type.prototype.transform) ?
                 new el.type(el.props) :
                 new RedAgateSimpleComponent(el.type as any, el.props);
         }
