@@ -1,7 +1,7 @@
 {
   "name": "red-agate-math",
   "private": false,
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "red-agate math library.",
   "keywords": [
     "finite field",
@@ -19,11 +19,11 @@
   "types": "./bin/index.d.ts",
   "typings": "./bin/index.d.ts",
   "engines": {
-    "node": "9.x"
+    "node": ">=8.0"
   },
   "dependencies": {},
   "peerDependencies": {
-    "red-agate-util": "^0.1.1"
+    "red-agate-util": "^0.1.2"
   },
   "devDependencies": {
     "@types/jasmine": "^2.8.8",
