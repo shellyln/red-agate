@@ -1,0 +1,17 @@
+language: node_js
+node_js:
+  - "8"
+  - "9"
+
+#branches:
+#  only:
+#    - master
+
+sudo: false
+
+before_script:
+  - bash scripts/install.sh
+  - bash scripts/ci-install.sh
+  - bash scripts/build.sh
+  - bash scripts/lint.sh
+  - bash scripts/test.sh
