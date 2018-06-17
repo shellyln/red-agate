@@ -22,6 +22,9 @@ You can start easily because we are using JSX and semantics similar to React.
 * Html5 Canvas API is available in the sub tree of the Svg component.
 
 * Running on both server side (Node.js) and modern browsers (Chrome, Firefox, Safari, Edge).
+
+
+![RedAgate](https://shellyln.github.io/assets/image/redagate-logo.svg)
 ----
 
 ## Install
