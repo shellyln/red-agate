@@ -294,6 +294,37 @@ if __name__ == '__main__':
     app.run(debug=True, port=port)
 ```
 
+### Mix react elements:
+```tsx
+/** @jsx react.createElement */
+import * as react from 'react';
+
+interface ReactHelloProps {
+    name: string;
+}
+
+export const ReactHello: React.SFC<ReactHelloProps> = (props) => {
+    return <span>Hello, {props.name}!</span>;
+};
+```
+
+```tsx
+/** @jsx RedAgate.createElement */
+import * as RedAgate          from 'red-agate/modules/red-agate';
+import { Html5 }              from 'red-agate/modules/red-agate/html';
+
+import { ReactHost }          from 'red-agate-react-host/modules/react-host';
+import { ReactHello }         from './hello';
+import { createElement as $ } from 'react';
+
+RedAgate.renderAsHtml(
+<Html5>
+    <ReactHost element={$(ReactHello, {name: '😎React😎'})} />
+</Html5>)
+.then(html => console.log(html))
+.catch(error => console.log(error))
+```
+
 We provide ES6 module files under `red-agate*/modules/*` path.  
 You can get the benefits of tree shaking when using webpack.  
 Instead, you can also import the whole by simply specifying `red-agate*` as the import path.
@@ -449,6 +480,17 @@ $ npm install red-agate-barcode --save
 | [Nw7](https://github.com/shellyln/red-agate/blob/master/packages/red-agate-barcode/src/barcode/Nw7.ts) | Draw a NW7 (Codabar) barcode. |
 | [Qr](https://github.com/shellyln/red-agate/blob/master/packages/red-agate-barcode/src/barcode/Qr.ts) | Draw a QR Code (model 2) barcode. |
 
+### `red-agate-react-host/modules/react-host`
+
+```bash
+$ npm install react --save
+$ npm install react-dom --save
+$ npm install red-agate-react-host --save
+```
+
+| tag | description |
+|-----|-------------|
+| [ReactHost](https://github.com/shellyln/red-agate/blob/master/packages/red-agate-react-host/src/react-host.ts) | Host a react element and render as static markup. |
 
 ## Configurations for building application
 If you want to use red-agate w/o jsx pragma comment (`/** @jsx RedAgate.createElement */`),  
