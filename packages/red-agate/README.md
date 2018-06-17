@@ -304,7 +304,7 @@ interface ReactHelloProps {
 }
 
 export const ReactHello: React.SFC<ReactHelloProps> = (props) => {
-    return <span>Hello, {props.name}!</span>;
+    return (<span>Hello, {props.name}!</span>);
 };
 ```
 
