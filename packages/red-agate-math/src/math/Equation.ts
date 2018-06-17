@@ -140,10 +140,10 @@ export class Equation<T, V> {
             else return fn(matrix.slice(offsetY), n);
         }
 
-        const mat: T[] = [];
+        const matr: T[] = [];
         for (let i = 0; i < n; i++) {
-            mat.push(this.ring.slice(matrix[offsetY + i], offsetX, offsetX + n));
+            matr.push(this.ring.slice(matrix[offsetY + i], offsetX, offsetX + n));
         }
-        return fn(mat, n);
+        return fn(matr, n);
     }
 }

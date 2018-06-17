@@ -29,7 +29,7 @@ export class Repeat<S> extends RedAgate.RedAgateComponent<RepeatProps<S>> {
                 (this.props.children as any[]).find(x => typeof x === 'function') :
                 this.props.children) as any;
         const a: RedAgate.RedAgateNode[] = [];
-        const scope = Object.assign({}, this.props.scope || ({} as S));
+        const scope = Object.assign({}, this.props.scope || {});
         for (let i = 0; i < this.props.times; i++) {
             a.push(repeater(i, scope));
         }
@@ -59,7 +59,7 @@ export class ForEach<T, S> extends RedAgate.RedAgateComponent<ForEachProps<T, S>
                 (this.props.children as any[]).find(x => typeof x === 'function') :
                 this.props.children) as any;
         const a: RedAgate.RedAgateNode[] = [];
-        const scope = Object.assign({}, this.props.scope || ({} as S));
+        const scope = Object.assign({}, this.props.scope || {});
         for (let i = 0; i < this.props.items.length; i++) {
             a.push(repeater(this.props.items[i], i, this.props.items, scope));
         }

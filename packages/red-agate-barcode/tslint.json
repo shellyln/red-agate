@@ -12,7 +12,7 @@
         "ordered-imports": false,
         "import-spacing": false,
         "max-classes-per-file": false,
-        "max-line-length": 240,
+        "max-line-length": [true, 240],
         "prefer-object-spread": false,
         "no-empty": false,
         "curly": false,

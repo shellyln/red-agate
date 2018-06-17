@@ -89,6 +89,7 @@ export type ComponentFactory<P extends ComponentProps> =
 
 
 
+// tslint:disable-next-line
 export declare namespace JSX {
     interface IntrinsicElements {
         [elemName: string]: any;

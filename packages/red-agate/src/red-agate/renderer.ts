@@ -40,9 +40,9 @@ export class HtmlRenderer {
 
     public static async toPdf(html: string | Promise<string>, navigateOptions: any, pdfOptions: any): Promise<Buffer> {
         if (typeof html === 'string') {
-            return await HtmlRenderer._toPdf(html, navigateOptions, pdfOptions);
+            return HtmlRenderer._toPdf(html, navigateOptions, pdfOptions);
         } else {
-            return await HtmlRenderer._toPdf(await html, navigateOptions, pdfOptions);
+            return HtmlRenderer._toPdf(await html, navigateOptions, pdfOptions);
         }
     }
 
@@ -85,9 +85,9 @@ export class HtmlRenderer {
 
     public static async toImage(html: string | Promise<string>, navigateOptions: any, imageOptions: any): Promise<Buffer> {
         if (typeof html === 'string') {
-            return await HtmlRenderer._toImage(html, navigateOptions, imageOptions);
+            return HtmlRenderer._toImage(html, navigateOptions, imageOptions);
         } else {
-            return await HtmlRenderer._toImage(await html, navigateOptions, imageOptions);
+            return HtmlRenderer._toImage(await html, navigateOptions, imageOptions);
         }
     }
 

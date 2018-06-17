@@ -36,7 +36,7 @@ export interface LambdaContext {
 }
 export type AwsLambdaContext = LambdaContext;
 
-export type Lambda<T=any, R=any, E=any> = (event: T, context: LambdaContext, callback: (error: E | null, result: R | null) => void) => void;
+export type Lambda<T= any, R= any, E= any> = (event: T, context: LambdaContext, callback: (error: E | null, result: R | null) => void) => void;
 export type AwsLambda = Lambda;
 
 
@@ -72,7 +72,7 @@ export class App {
                 op = op.substring(1);
                 isOptional = true;
             }
-            for (let arg of process.argv.slice(2)) {
+            for (const arg of process.argv.slice(2)) {
                 if (op.endsWith('*')) {
                     if (arg.startsWith(op.substring(0, op.length - 1))) {
                         matched = true;
