@@ -1,5 +1,5 @@
 # RedAgate
-#### HTML | XML | SVG template engine using JSX, suitable for report output.
+#### Static HTML | XML | SVG renderer using JSX, suitable for report output.
 
 RedAgate is static HTML | XML | SVG renderer.  
 You can start easily because we are using JSX and semantics similar to React.
@@ -33,7 +33,7 @@ See main package's [README](https://github.com/shellyln/red-agate/tree/master/pa
 
 | package | description |
 |---------|-------------|
-| [red-agate](https://github.com/shellyln/red-agate/tree/master/packages/red-agate) | RedAgate's main package.<br>HTML/XML/SVG template engine using JSX, suitable for report output. |
+| [red-agate](https://github.com/shellyln/red-agate/tree/master/packages/red-agate) | RedAgate's main package.<br>Static HTML/XML/SVG renderer using JSX, suitable for report output. |
 | [red-agate-util](https://github.com/shellyln/red-agate/tree/master/packages/red-agate-util) | Utilities library. |
 | [red-agate-svg-canvas](https://github.com/shellyln/red-agate/tree/master/packages/red-agate-svg-canvas) | HTML5 canvas compatible SVG Canvas library. |
 | [red-agate-math](https://github.com/shellyln/red-agate/tree/master/packages/red-agate-math) | Math (Finite field, Error correction (RS,BCH,CRC)) library. |

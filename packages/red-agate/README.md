@@ -1,5 +1,5 @@
 # RedAgate
-#### HTML | XML | SVG template engine using JSX, suitable for report output.
+#### Static HTML | XML | SVG renderer using JSX, suitable for report output.
 
 RedAgate is static HTML | XML | SVG renderer.  
 You can start easily because we are using JSX and semantics similar to React.
@@ -48,7 +48,7 @@ const Hello = (props: HelloProps) => {
     return (<div>Hello, {props.name}!</div>);
 };
 
-RedAgate.renderAsHtml(<Hello name={'world'}/>)
+RedAgate.renderAsHtml(<Hello name={'😈RedAgate😈'}/>)
 .then(html => console.log(html))
 .catch(error => console.log(error))
 ```
@@ -218,12 +218,12 @@ import { HtmlRenderer } from 'red-agate/modules/red-agate/renderer';
 
 interface PrintJob { /*  */ }
 
-export let reportHandler: Lambda = (event: PrintJob, context, callback) => RedAgate.renderOnAwsLambda(
+export const reportHandler: Lambda = (event: PrintJob, context, callback) => RedAgate.renderOnAwsLambda(
 <Html5>
     hello, { event.name }!
 </Html5>, callback);
 
-export let pdfHandler = HtmlRenderer.toPdfHandler(reportHandler, {}, {
+export const pdfHandler = HtmlRenderer.toPdfHandler(reportHandler, {}, {
     width: '210mm',
     height: '297mm',
     printBackground: true,
@@ -503,7 +503,7 @@ or [example](https://github.com/shellyln/red-agate-example).
 ## FAQ
 
 * Can I receive element events (e.g. onclick) ?  
-    * No. RedAgate is template engine. Please use React, Vue, Riot, Angular, knockout, ...
+    * No. RedAgate is static renderer. Please use React, Vue, Riot, Angular, knockout, ...
 
 
 
