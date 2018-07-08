@@ -1,0 +1,16 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch Console Program",
+            "program": "${workspaceRoot}/src/app.tsx",
+            "args": [
+            ],
+            "outFiles": [
+                "${workspaceRoot}/dist/app.js"
+            ]
+        }
+    ]
+}
