@@ -4,8 +4,20 @@ import { TextEncoding }    from 'red-agate-util/modules/convert/TextEncoding';
 import { Lambda, Lambdas } from './app';
 
 
+let isNode = false;
+if (typeof process === "object") {
+    if (typeof process.versions === "object") {
+        if (typeof process.versions.node !== "undefined") {
+            if (typeof (process as any).type !== "undefined" && (process as any).type === "renderer") {
+                // electron renderer process
+            } else {
+                isNode = true;
+            }
+        }
+    }
+}
 // tslint:disable-next-line:no-eval
-const requireDynamic = eval("require");
+const requireDynamic = isNode ? eval("require") : void 0;
 
 
 
