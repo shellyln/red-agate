@@ -24,10 +24,10 @@ return [{
         output: (env && env.env === 'test') ? void 0 : {
             library: 'RedAgate',
 
-            libraryTarget: 'var',
+            libraryTarget: 'umd',
             filename: process.env.NODE_ENV === 'production' ? '[name].min.js' : '[name].js',
             path: path.resolve(__dirname, 'dist'),
-            devtoolModuleFilenameTemplate: void 0, //process.env.NODE_ENV === 'production' ? '[resource-path]' : void 0
+            devtoolModuleFilenameTemplate: void 0,
         },
         target: "web",
 
@@ -97,45 +97,6 @@ return [{
                     }
                 },
                 exclude: /node_modules[\/\\](?!red-agate).*$/
-            }, {
-                test: /\.html?(\?.+)?$/,
-                use: {
-                    loader: 'html-loader',
-                    options: {
-                        minimize: true,
-                        removeAttributeQuotes: false,
-                        caseSensitive: true,
-                        customAttrSurround: [
-                            [/#/, /(?:)/],
-                            [/\*/, /(?:)/],
-                            [/\[?\(?/, /(?:)/]
-                        ],
-                        customAttrAssign: [/\)?\]?=/]
-                    }
-                }
-            }, {
-                test: /\.(css|scss)$/,
-                use: [
-                    'to-string-loader',
-                    'css-loader',
-                    // {
-                    //     loader: 'postcss-loader',
-                    //     options: {
-                    //         plugins: () => [
-                    //             require('postcss-custom-properties')(),
-                    //             require('postcss-nested')(),
-                    //             require('autoprefixer')({ browsers: ['last 2 versions'] })
-                    //         ]
-                    //     }
-                    // },
-                    // 'sass-loader'
-                ]
-            }, {
-                test: /\.(jpg|jpeg|png|ttf|otf|eot|svg|woff2?)(\?.+)?$/,
-                loader: 'url-loader',
-                options: {
-                    limit: 10000
-                }
             }]
         },
         plugins: plugins,
