@@ -260,9 +260,9 @@ export class BarcodeBase<T extends BarcodeBaseProps> extends Shape<T> {
                     case "5": case "6": case "7": case "8": case "9":
                         // "0" is character gap
                         {
-                            const w = bw[Number.parseInt(c)];
+                            const w = bw[Number.parseInt(c, 10)];
                             if (bar) {
-                                const ss = (heightData === void 0) ? vseg[0] : vseg[Number.parseInt(heightData[i])];
+                                const ss = (heightData === void 0) ? vseg[0] : vseg[Number.parseInt(heightData[i], 10)];
                                 for (const seg of ss) {
                                     canvas.rect(rx + dx, ry + seg.offset, w, seg.height);
                                 }
@@ -305,7 +305,7 @@ export class BarcodeBase<T extends BarcodeBaseProps> extends Shape<T> {
                     case "1": case "2": case "3": case "4":
                     case "5": case "6": case "7": case "8": case "9":
                         {
-                            const ss = vseg[Number.parseInt(c)];
+                            const ss = vseg[Number.parseInt(c, 10)];
                             for (const seg of ss) {
                                 canvas.rect(rx + dx, ry + seg.offset, w, seg.height);
                             }

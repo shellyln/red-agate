@@ -63,9 +63,9 @@ export class Itf extends BarcodeBase<ItfProps> {
         for (let i = 0; i < data.length; i++) {
             // most right -> odd
             if ((i + 1) % 2) {
-                odd  = (odd  + Number.parseInt(data[data.length - 1 - i])) % 10;
+                odd  = (odd  + Number.parseInt(data[data.length - 1 - i], 10)) % 10;
             } else {
-                even = (even + Number.parseInt(data[data.length - 1 - i])) % 10;
+                even = (even + Number.parseInt(data[data.length - 1 - i], 10)) % 10;
             }
         }
         return String((10 - ((odd * 3 + even) % 10)) % 10);
@@ -84,7 +84,7 @@ export class Itf extends BarcodeBase<ItfProps> {
             throw new Error("bad data length");
         }
         for (let i = 0; i < labelText.length; i += 2) {
-            const c = Number.parseInt(labelText.slice(i, i + 2));
+            const c = Number.parseInt(labelText.slice(i, i + 2), 10);
             d += String.fromCharCode(c);
         }
         return {data: d, labelText, startChar: "\x64", stopChar: "\x65"};

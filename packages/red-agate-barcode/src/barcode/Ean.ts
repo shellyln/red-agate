@@ -110,13 +110,13 @@ export class EanBase extends BarcodeBase<EanProps> {
     protected calcEan5Checksum(data: string): number {
         let s = 0;
         for (let i = 0; i < data.length; i++) {
-            s = (s + Number.parseInt(data[i]) * (i % 2 ? 3 : 9)) % 10;
+            s = (s + Number.parseInt(data[i], 10) * (i % 2 ? 3 : 9)) % 10;
         }
         return s;
     }
 
     protected calcEan2Checksum(data: string): number {
-        return Number.parseInt(data) % 4;
+        return Number.parseInt(data, 10) % 4;
     }
 
     protected encodeData(data: string):
@@ -213,21 +213,21 @@ export class EanBase extends BarcodeBase<EanProps> {
                 text = data.slice(0, 12);
                 d += "\x40";
                 hd += "1";
-                const z = this.charactersMap.get(String.fromCharCode(0x30 + Number.parseInt(data[0])));
+                const z = this.charactersMap.get(String.fromCharCode(0x30 + Number.parseInt(data[0], 10)));
                 if (z === void 0) {
                     throw new Error("EAN: character is out of range.");
                 }
                 const eo = z.pattern;
                 for (let i = 1; i < 7; i++) {
-                    const p = Number.parseInt(eo[i - 1]);
-                    d += String.fromCharCode(p * 0x10 + Number.parseInt(data[i]));
+                    const p = Number.parseInt(eo[i - 1], 10);
+                    d += String.fromCharCode(p * 0x10 + Number.parseInt(data[i], 10));
                     if (this.eanTypes === "upc-a" && i === 1) hd += "1";
                     else                                      hd += "0";
                 }
                 d += "\x50";
                 hd += "1";
                 for (let i = 7; i < 12; i++) {
-                    d += String.fromCharCode(0x20 + Number.parseInt(data[i]));
+                    d += String.fromCharCode(0x20 + Number.parseInt(data[i], 10));
                     hd += "0";
                 }
                 const cd = this.calcEanMod10W3Checksum(text);
@@ -246,13 +246,13 @@ export class EanBase extends BarcodeBase<EanProps> {
                 d += "\x40";
                 hd += "1";
                 for (let i = 0; i < 4; i++) {
-                    d += String.fromCharCode(0x10 + Number.parseInt(data[i]));
+                    d += String.fromCharCode(0x10 + Number.parseInt(data[i], 10));
                     hd += "0";
                 }
                 d += "\x50";
                 hd += "1";
                 for (let i = 4; i < 7; i++) {
-                    d += String.fromCharCode(0x20 + Number.parseInt(data[i]));
+                    d += String.fromCharCode(0x20 + Number.parseInt(data[i], 10));
                     hd += "0";
                 }
                 const cd = this.calcEanMod10W3Checksum(text);
@@ -270,14 +270,14 @@ export class EanBase extends BarcodeBase<EanProps> {
                 d += "\x92";
                 hd += "1";
                 const z = this.charactersMap.get(String.fromCharCode(
-                    (data[0] === "0" ? 0xa0 : 0xb0) + Number.parseInt(data[7])));
+                    (data[0] === "0" ? 0xa0 : 0xb0) + Number.parseInt(data[7], 10)));
                 if (z === void 0) {
                     throw new Error("EAN: character is out of range.");
                 }
                 const eo = z.pattern;
                 for (let i = 1; i < 7; i++) {
-                    const p = Number.parseInt(eo[i - 1]);
-                    d += String.fromCharCode(p * 0x10 + Number.parseInt(data[i]));
+                    const p = Number.parseInt(eo[i - 1], 10);
+                    d += String.fromCharCode(p * 0x10 + Number.parseInt(data[i], 10));
                     hd += "0";
                 }
                 d += "\x93";
@@ -294,9 +294,9 @@ export class EanBase extends BarcodeBase<EanProps> {
                 }
                 const eo = z.pattern;
                 for (let i = 0; i < 5; i++) {
-                    const p = Number.parseInt(eo[i]);
+                    const p = Number.parseInt(eo[i], 10);
                     if (i > 0) d += "\x91";
-                    d += String.fromCharCode(p * 0x10 + Number.parseInt(data[i]));
+                    d += String.fromCharCode(p * 0x10 + Number.parseInt(data[i], 10));
                 }
             }
             break;
@@ -310,9 +310,9 @@ export class EanBase extends BarcodeBase<EanProps> {
                 }
                 const eo = z.pattern;
                 for (let i = 0; i < 2; i++) {
-                    const p = Number.parseInt(eo[i]);
+                    const p = Number.parseInt(eo[i], 10);
                     if (i > 0) d += "\x91";
-                    d += String.fromCharCode(p * 0x10 + Number.parseInt(data[i]));
+                    d += String.fromCharCode(p * 0x10 + Number.parseInt(data[i], 10));
                 }
             }
             break;
