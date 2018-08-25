@@ -154,7 +154,7 @@ export class FileFetcher {
                 xhr.send(
                     config !== void 0 && config !== null &&
                         config.data !== void 0 && config.data !== null
-                        ? config.data : null
+                        ? config.data : void 0
                     );
             } catch (e) {
                 Logger.log("FileFetcher#fetchLocation_xhr:" + e);

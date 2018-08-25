@@ -6,6 +6,10 @@ import { Logger } from "./Logger";
 declare var Java: any;
 
 
+
+export type BinaryType = Buffer | Uint8Array;
+
+
 export class FileSaver {
     private static isNashorn: boolean;
     private static isNode: boolean;
@@ -117,7 +121,7 @@ export class FileSaver {
         return promise;
     }
 
-    private static saveBinaryAs_html5(pathOrFileName: string, data: ArrayLike<number>): Promise<boolean> {
+    private static saveBinaryAs_html5(pathOrFileName: string, data: BinaryType): Promise<boolean> {
         const promise = new Promise<boolean>((resolve, reject) => {
             try {
                 const blob = new Blob([data], {type: "application/octet-binary"});
@@ -167,7 +171,7 @@ export class FileSaver {
         }
     }
 
-    public static saveBinaryAs(pathOrFileName: string, data: ArrayLike<number>): Promise<boolean> {
+    public static saveBinaryAs(pathOrFileName: string, data: BinaryType): Promise<boolean> {
         if (FileSaver.isNashorn) {
             // TODO: not impl.
             throw new Error("FileSaver#saveBinaryAs: Nashorn handler is not impl.");
