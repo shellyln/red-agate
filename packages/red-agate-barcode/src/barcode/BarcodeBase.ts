@@ -282,6 +282,7 @@ export class BarcodeBase<T extends BarcodeBaseProps> extends Shape<T> {
             rx += dx;
         }
         canvas.fill();
+        canvas.beginPath();
     }
 
     protected renderHeightModulatedBarData(
@@ -320,6 +321,7 @@ export class BarcodeBase<T extends BarcodeBaseProps> extends Shape<T> {
             rx += dx;
         }
         canvas.fill();
+        canvas.beginPath();
     }
 
     protected renderAdditional(canvas: SvgCanvas, tw: number, th: number, data: string, text: string) {

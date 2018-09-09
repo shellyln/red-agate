@@ -139,6 +139,9 @@ export abstract class Shape<T extends ShapeProps> extends RedAgate.RedAgatePhant
         }
         else if (this.props.fill)   canvas.fill();
         else if (this.props.stroke) canvas.stroke();
+        if (this.props.fill || this.props.stroke) {
+            canvas.beginPath();
+        }
     }
 
     public beforeRender(contexts: Map<string, any>) {

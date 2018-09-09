@@ -1202,9 +1202,6 @@ export class SvgCanvas implements VectorCanvas2D {
             `<g ${this.getStrokeAttrs()}fill="none"${this.getFilterAttrs()}` +
             (this.clipPath.length > 0 ? `clip-path="${this.clipPath}" ` : "") +
             `>\n<path d="${WordWrap.loose(this.subpath.join(" "))}" />\n</g>\n`;
-        this.subpath = [];
-        this.currentPoint = null;
-        this.currentPointOnCtm = null;
     }
     public strokeRect(x: number, y: number, w: number, h: number): void {
         this.content +=
@@ -1234,9 +1231,6 @@ export class SvgCanvas implements VectorCanvas2D {
             `<g stroke="none" ${this.getFillAttrs(fillRule)}${this.getFilterAttrs()}` +
             (this.clipPath.length > 0 ? `clip-path="${this.clipPath}" ` : "") +
             `>\n<path d="${WordWrap.loose(this.subpath.join(" "))}" />\n</g>\n`;
-        this.subpath = [];
-        this.currentPoint = null;
-        this.currentPointOnCtm = null;
     }
     public fillRect(x: number, y: number, w: number, h: number): void {
         this.content +=
@@ -1266,9 +1260,6 @@ export class SvgCanvas implements VectorCanvas2D {
             `<g ${this.getFillAttrs(fillRule)}${this.getStrokeAttrs()}${this.getFilterAttrs()}` +
             (this.clipPath.length > 0 ? `clip-path="${this.clipPath}" ` : "") +
             `>\n<path d="${WordWrap.loose(this.subpath.join(" "))}" />\n</g>\n`;
-        this.subpath = [];
-        this.currentPoint = null;
-        this.currentPointOnCtm = null;
     }
     public fillStrokeRect(x: number, y: number, w: number, h: number): void {
         this.content +=
@@ -1306,9 +1297,6 @@ export class SvgCanvas implements VectorCanvas2D {
             `<path d="${WordWrap.loose(this.subpath.join(" "))}" /></clipPath>`;
         this.assets.push(a);
         this.clipPath = `url(#clip-${this.idCount})`;
-        this.subpath = [];
-        this.currentPoint = null;
-        this.currentPointOnCtm = null;
     }
 
     public registerImage(imageData: HTMLImageElement | HTMLCanvasElement | SvgCanvasImageData, id?: string): string {

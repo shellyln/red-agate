@@ -17,9 +17,9 @@
   },
   "dependencies": {},
   "peerDependencies": {
-    "red-agate": "^0.2.3",
+    "red-agate": "^0.2.4",
     "red-agate-math": "^0.2.0",
-    "red-agate-svg-canvas": "^0.2.3",
+    "red-agate-svg-canvas": "^0.2.4",
     "red-agate-util": "^0.2.0",
     "react": "^16.4.2",
     "react-dom": "^16.4.2"

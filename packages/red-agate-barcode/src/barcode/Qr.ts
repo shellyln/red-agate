@@ -811,5 +811,6 @@ export class Qr extends Shape<QrProps> {
         }
 
         canvas.fill();
+        canvas.beginPath();
     }
 }
