@@ -709,9 +709,9 @@ export class SvgCanvas implements VectorCanvas2D {
         const entired = Math.abs(endAngle - startAngle) >= (2 * Math.PI);
 
         if (Math.abs(startAngle) > (2 * Math.PI)) startAngle = startAngle % (2 * Math.PI);
-        if (startAngle < 0)                       startAngle = (2 * Math.PI) - startAngle;
+        if (startAngle < 0)                       startAngle = (2 * Math.PI) + startAngle;
         if (Math.abs(endAngle)   > (2 * Math.PI)) endAngle   = endAngle   % (2 * Math.PI);
-        if (endAngle   < 0)                       endAngle   = (2 * Math.PI) - endAngle  ;
+        if (endAngle   < 0)                       endAngle   = (2 * Math.PI) + endAngle  ;
 
         if (entired) {
             endAngle = startAngle + (2 * Math.PI);
@@ -1420,5 +1420,42 @@ export class SvgCanvas implements VectorCanvas2D {
     }
     public endGroup(): void {
         this.content += "</g>";
+    }
+
+    public measureText(text: string): { width: number; } {
+        const re = this.font.match(/(\d+(?:.\d+))(px|pt|in|mm|em|rem|%)/);
+        let scale = 1;
+        let size = 12;
+        if (re) {
+            // 96px === 1in (not 72px === 1in)
+            // 72pt === 1in
+            //  1mm === 1/25.4in
+            switch (re[2]) {
+            case "pt": // pt -> px
+                scale = 96 / 72;
+                break;
+            case "in": // in -> px
+                scale = 96;
+                break;
+            case "mm": // mm -> px
+                scale = 96 * (1 / 25.4);
+                break;
+            case "em": case "rem":
+                scale = 12;
+                break;
+            case "%":
+                scale = 1 / 100;
+                break;
+            }
+            size = Number.parseFloat(re[1]);
+        }
+        return { width: scale * size * text.length };
+    }
+
+    public clearRect(x: number, y: number, w: number, h: number): void {
+        this.save();
+        this.fillStyle = 'white';
+        this.fillRect(x, y, w, h);
+        this.restore();
     }
 }

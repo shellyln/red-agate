@@ -78,4 +78,7 @@ export interface VectorCanvas2D {
     drawImage(imageData: HTMLImageElement | HTMLCanvasElement,
               offsetX: number, offsetY: number, width?: number, height?: number,
               canvasOffsetX?: number, canvasOffsetY?: number, canvasImageWidth?: number, canvasImageHeight?: number): void;
+
+    measureText(text: string): { width: number; };
+    clearRect(x: number, y: number, w: number, h: number): void;
 }

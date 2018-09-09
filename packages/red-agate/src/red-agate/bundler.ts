@@ -379,7 +379,7 @@ export class Style extends RedAgate.RedAgatePhantomComponent<StyleProps> {
                         const indexes: number[] = [];
                         for (let i = 0; i < fragments.length; i++) {
                             const m = reReplace.exec(fragments[i]);
-                            if (m) {
+                            if (m && !(m[1]).startsWith('data:')) {
                                 promises.push(
                                     FileFetcher.fetchLocation(Uri.join(this.props.src, m[1]))
                                     .then((fmntResult) => {
