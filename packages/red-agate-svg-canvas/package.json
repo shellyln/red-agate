@@ -1,7 +1,7 @@
 {
   "name": "red-agate-svg-canvas",
   "private": false,
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "red-agate svg canvas library.",
   "keywords": [
     "SVG",

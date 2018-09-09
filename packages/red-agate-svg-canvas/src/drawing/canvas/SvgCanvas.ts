@@ -705,7 +705,7 @@ export class SvgCanvas implements VectorCanvas2D {
      * anticlockwise=false: x y startAngle endAngle arcn
      * center: (x,y)
      */
-    public arc(x: number, y: number, radius: number, startAngle: number, endAngle: number, anticlockwise: boolean = true): void {
+    public arc(x: number, y: number, radius: number, startAngle: number, endAngle: number, anticlockwise: boolean = false): void {
         const entired = Math.abs(endAngle - startAngle) >= (2 * Math.PI);
 
         if (Math.abs(startAngle) > (2 * Math.PI)) startAngle = startAngle % (2 * Math.PI);
