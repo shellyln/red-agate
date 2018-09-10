@@ -10,9 +10,16 @@ import { default as fbaA4Data }  from '../reports/fba-a4.data';
 import { barcodeTestHandler }    from '../reports/barcode-test';
 import { Lambda }                from 'red-agate/modules/red-agate/app';
 
+// tslint:disable-next-line:no-eval
+const requireDynamic = eval("require");
+
 
 
 export default function(express: any): any {
+    const os = requireDynamic('os');
+    const path = requireDynamic('path');
+    const tmpFile = `${os.tmpdir()}${path.sep}ra-tmp-*.html`;
+
     express
     .get('/:format/:name', (req: any, res: any) => {
         let handler: Lambda = billngReportHandler;
@@ -52,12 +59,12 @@ export default function(express: any): any {
                     width: '210mm',
                     height: '297mm',
                     printBackground: true,
-                });
+                }, tmpFile);
                 res.set('Content-Disposition', `inline; filename="${"example.pdf"}"`);
                 res.set('Content-Type', 'application/pdf');
                 break;
             case 'png':
-                handler = HtmlRenderer.toImageHandler(handler, {}, {});
+                handler = HtmlRenderer.toImageHandler(handler, {}, {}, tmpFile);
                 res.set('Content-Disposition', `inline; filename="${"example.png"}"`);
                 res.set('Content-Type', 'image/png');
                 break;
