@@ -1,7 +1,7 @@
 {
   "name": "red-agate-lib-dist",
   "private": true,
-  "version": "0.2.5",
+  "version": "0.2.6",
   "description": "red-agate debug environment",
   "keywords": [],
   "main": "./dist/app.js",
@@ -17,11 +17,11 @@
     "puppeteer": "^1.7.0"
   },
   "peerDependencies": {
-    "red-agate": "^0.2.5",
-    "red-agate-barcode": "^0.2.5",
+    "red-agate": "^0.2.6",
+    "red-agate-barcode": "^0.2.6",
     "red-agate-math": "^0.2.0",
-    "red-agate-react-host": "^0.2.5",
-    "red-agate-svg-canvas": "^0.2.5",
+    "red-agate-react-host": "^0.2.6",
+    "red-agate-svg-canvas": "^0.2.6",
     "red-agate-util": "^0.2.0"
   },
   "devDependencies": {

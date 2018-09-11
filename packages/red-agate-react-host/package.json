@@ -1,7 +1,7 @@
 {
   "name": "red-agate-react-host",
   "private": false,
-  "version": "0.2.5",
+  "version": "0.2.6",
   "description": "Using react componetns from RedAgate.",
   "keywords": [
     "RedAgate",
@@ -17,9 +17,9 @@
   },
   "dependencies": {},
   "peerDependencies": {
-    "red-agate": "^0.2.5",
+    "red-agate": "^0.2.6",
     "red-agate-math": "^0.2.0",
-    "red-agate-svg-canvas": "^0.2.5",
+    "red-agate-svg-canvas": "^0.2.6",
     "red-agate-util": "^0.2.0",
     "react": "^16.4.2",
     "react-dom": "^16.4.2"

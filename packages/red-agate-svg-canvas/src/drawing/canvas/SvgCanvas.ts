@@ -1410,8 +1410,17 @@ export class SvgCanvas implements VectorCanvas2D {
         this.content += "</g>";
     }
 
+
+    // tslint:disable-next-line:variable-name
+    private _fontHeightRatio = 1.25;
+    public get fontHeightRatio(): number {
+        return this._fontHeightRatio;
+    }
+    public set fontHeightRatio(value: number) {
+        this._fontHeightRatio = value;
+    }
     public measureText(text: string): { width: number; } {
-        const re = this.font.match(/(\d+(?:.\d+))(px|pt|in|mm|em|rem|%)/);
+        const re = this.font.match(/(\d+(?:.\d+)?)(px|pt|in|mm|em|rem|%)/);
         let scale = 1;
         let size = 12;
         if (re) {
@@ -1437,7 +1446,10 @@ export class SvgCanvas implements VectorCanvas2D {
             }
             size = Number.parseFloat(re[1]);
         }
-        return { width: scale * size * text.length };
+        return { width: Math.round(scale * size * Array.from(text
+            .replace(/[\u200B-\u200D\uFEFF\u200E\u200F]/g, '')
+            .normalize('NFKC')).length / this.fontHeightRatio)
+        };
     }
 
     public clearRect(x: number, y: number, w: number, h: number): void {
