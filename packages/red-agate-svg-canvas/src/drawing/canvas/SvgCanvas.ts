@@ -76,11 +76,16 @@ export class SvgCanvasImageData {
 }
 
 
-export class SvgCanvas2DLinerGradient implements VectorCanvas2DGradient, SvgCanvas2DAsset {
+export abstract class SvgCanvas2DGradient {
+}
+
+
+export class SvgCanvas2DLinerGradient extends SvgCanvas2DGradient implements VectorCanvas2DGradient, SvgCanvas2DAsset {
     private content: string;
     constructor(
         private id: string,
         private x0: number, private y0: number, private x1: number, private y1: number) {
+        super();
         this.content = `<linearGradient id="${id}" gradientUnits="userSpaceOnUse" x1="${x0}" y1="${y0}" x2="${x1}" y2="${y1}" >\n`;
     }
     public addColorStop(offset: number, color: string, opacity: number = 1): void {
@@ -95,13 +100,14 @@ export class SvgCanvas2DLinerGradient implements VectorCanvas2DGradient, SvgCanv
 }
 
 
-export class SvgCanvas2DRadialGradient implements VectorCanvas2DGradient, SvgCanvas2DAsset {
+export class SvgCanvas2DRadialGradient extends SvgCanvas2DGradient implements VectorCanvas2DGradient, SvgCanvas2DAsset {
     private content: string;
     /** fr is ignored. fr is always 0. */
     constructor(
         private id: string,
         private cx: number, private cy: number, private r: number,
         private fx: number, private fy: number) {
+        super();
         this.content = `<radialGradient id="${id}" gradientUnits="userSpaceOnUse" cx="${cx}" cy="${cy}" r="${r}" fx="${fx}" fy="${fy}" >\n`;
     }
     public addColorStop(offset: number, color: string, opacity: number = 1): void {
