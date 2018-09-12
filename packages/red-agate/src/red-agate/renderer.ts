@@ -24,7 +24,8 @@ const requireDynamic = isNode ? eval("require") : void 0;
 export class HtmlRenderer {
     private static async writeToTempFile(html: string, tmpPath: string) {
         const path = requireDynamic('path');
-        const fs = requireDynamic('fs');
+        const fs   = requireDynamic('fs');
+        const util = requireDynamic('util');
 
         for (let i = 0; i < 3; i++) {
             let tmp = tmpPath;
@@ -35,10 +36,10 @@ export class HtmlRenderer {
             let url = '';
             const tmpFullPath = path.resolve(tmp);
 
-            const fd = await fs.promises.open(tmpFullPath, 'ax');
+            const fd = await util.promisify(fs.open)(tmpFullPath, 'ax');
 
             try {
-                await fs.promises.writeFile(fd, html, 'utf8');
+                await util.promisify(fs.writeFile)(fd, html, 'utf8');
                 let p = encodeURI(tmpFullPath.replace(/\\/g, '/'));
                 if (! p.startsWith('/')) {
                     // Windows absolute paths except UNC paths.
@@ -46,7 +47,7 @@ export class HtmlRenderer {
                 }
                 url = 'file://' + p;
             } finally {
-                await fd.close();
+                await util.promisify(fs.close)(fd);
             }
 
             return { tmpFullPath, url };
@@ -90,8 +91,9 @@ export class HtmlRenderer {
             } catch (e) {}
             try {
                 if (tmpPath && tmpFullPath) {
-                    const fs = requireDynamic('fs');
-                    await fs.promises.unlink(tmpFullPath);
+                    const fs   = requireDynamic('fs');
+                    const util = requireDynamic('util');
+                    await util.promisify(fs.unlink)(tmpFullPath);
                 }
             } catch (e) {}
         }
@@ -151,8 +153,9 @@ export class HtmlRenderer {
             } catch (e) {}
             try {
                 if (tmpPath && tmpFullPath) {
-                    const fs = requireDynamic('fs');
-                    await fs.promises.unlink(tmpFullPath);
+                    const fs   = requireDynamic('fs');
+                    const util = requireDynamic('util');
+                    await util.promisify(fs.unlink)(tmpFullPath);
                 }
             } catch (e) {}
         }
