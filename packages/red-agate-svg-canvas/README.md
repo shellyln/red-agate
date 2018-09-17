@@ -43,6 +43,11 @@ console.log(svgString);
 ```
 
 
+## Use with the [Chart.js](https://www.chartjs.org/)
+
+See [this](https://github.com/shellyln/chart.js-node-ssr-example) example.
+
+
 ## License
 [ISC](https://github.com/shellyln/red-agate-util/blob/master/LICENSE.md)  
 Copyright (c) 2017, Shellyl_N and Authors.
