@@ -48,6 +48,12 @@ console.log(svgString);
 See [this](https://github.com/shellyln/chart.js-node-ssr-example) example.
 
 
+## Notes
+
+To import this from your code, you need to use `babel` + `webpack`.  
+(We have used the `import` statements for doing the [tree-shaking](https://webpack.js.org/guides/tree-shaking/). The `import` statements in the `.js` not the `.mjs` files cannot import from the vanilla node.js.)
+
+
 ## License
 [ISC](https://github.com/shellyln/red-agate-util/blob/master/LICENSE.md)  
 Copyright (c) 2017, Shellyl_N and Authors.
