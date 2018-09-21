@@ -22,6 +22,17 @@ const requireDynamic = isNode ? eval("require") : void 0;
 
 
 export class HtmlRenderer {
+    // tslint:disable-next-line:variable-name
+    private static _launchOptions: any = void 0;
+
+    public static get launchOptions(): any {
+        return HtmlRenderer._launchOptions;
+    }
+
+    public static set launchOptions(opts: any) {
+        HtmlRenderer._launchOptions = opts;
+    }
+
     private static async writeToTempFile(html: string, tmpPath: string) {
         const path = requireDynamic('path');
         const fs   = requireDynamic('fs');
@@ -70,7 +81,7 @@ export class HtmlRenderer {
                 url = 'data:text/html;base64,' + Base64.encode(TextEncoding.encodeToUtf8(html));
             }
 
-            browser = await puppeteer.launch();
+            browser = await puppeteer.launch(HtmlRenderer._launchOptions);
             const page = await browser.newPage();
             await page.goto(
                 url,
@@ -131,7 +142,7 @@ export class HtmlRenderer {
                 url = 'data:text/html;base64,' + Base64.encode(TextEncoding.encodeToUtf8(html));
             }
 
-            browser = await puppeteer.launch();
+            browser = await puppeteer.launch(HtmlRenderer._launchOptions);
             const page = await browser.newPage();
             await page.goto(
                 url,
