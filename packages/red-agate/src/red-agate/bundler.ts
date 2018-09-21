@@ -6,7 +6,6 @@
 
 import * as RedAgate         from './red-agate';
 import { ShapeProps,
-         shapePropsDefault,
          Shape,
          CONTEXT_SVG_CANVAS,
          CONTEXT_ASSET_ }    from './tags/Shape';

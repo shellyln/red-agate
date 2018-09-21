@@ -1,3 +1,8 @@
+// Copyright (c) 2017, Shellyl_N and Authors
+// license: ISC
+// https://github.com/shellyln
+
+
 
 import { Base64 }          from 'red-agate-util/modules/convert/Base64';
 import { TextEncoding }    from 'red-agate-util/modules/convert/TextEncoding';

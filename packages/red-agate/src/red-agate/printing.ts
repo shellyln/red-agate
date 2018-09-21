@@ -4,22 +4,11 @@
 
 
 
-import * as RedAgate          from './red-agate';
-import { SvgCanvas,
-         SvgTextAttributes,
-         TextAlignValue,
-         TextBaselineValue }  from 'red-agate-svg-canvas/modules/drawing/canvas/SvgCanvas';
-import { Rect2D }             from 'red-agate-svg-canvas/modules/drawing/canvas/TransferMatrix2D';
-import { TextEncoding }       from 'red-agate-util/modules/convert/TextEncoding';
-import { FileFetcher }        from 'red-agate-util/modules/io/FileFetcher';
-import { Logger }             from 'red-agate-util/modules/io/Logger';
-import { ShapeBaseProps,
-         ShapeProps,
+import { SvgCanvas }          from 'red-agate-svg-canvas/modules/drawing/canvas/SvgCanvas';
+import { ShapeProps,
          shapePropsDefault,
          Shape,
-         AmbientProps,
-         CONTEXT_SVG_CANVAS,
-         CONTEXT_SVG_PATH }   from './tags/Shape';
+         CONTEXT_SVG_CANVAS } from './tags/Shape';
 
 
 
