@@ -21,13 +21,13 @@
     "red-agate-math": "^0.2.0",
     "red-agate-svg-canvas": "^0.2.7",
     "red-agate-util": "^0.2.0",
-    "react": "^16.4.2",
-    "react-dom": "^16.4.2"
+    "react": "^16.5.2",
+    "react-dom": "^16.5.2"
   },
   "devDependencies": {
     "@types/jasmine": "^2.8.8",
-    "@types/node": "^10.9.2",
-    "@types/react": "^16.4.11",
+    "@types/node": "^10.10.1",
+    "@types/react": "^16.4.14",
     "@types/react-dom": "^16.0.7",
     "babel-cli": "^6.26.0",
     "babel-loader": "^7.1.5",
@@ -42,10 +42,10 @@
     "rimraf": "^2.6.2",
     "shx": "^0.3.2",
     "source-map-loader": "^0.2.4",
-    "ts-loader": "^4.5.0",
+    "ts-loader": "^5.1.1",
     "tslint": "^5.11.0",
-    "typescript": "^3.0.1",
-    "webpack": "^4.17.1",
+    "typescript": "^3.0.3",
+    "webpack": "^4.19.1",
     "webpack-cli": "^3.1.0"
   },
   "scripts": {
