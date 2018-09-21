@@ -11,7 +11,7 @@ from redagate_lambda import call, LambdaInternalErrorException
 
 
 if __name__ == '__main__':
-    from flask import Flask, abort
+    from flask import Flask, abort, Response
     app = Flask(__name__)
 
     @app.errorhandler(LambdaInternalErrorException)
@@ -24,6 +24,13 @@ if __name__ == '__main__':
             event = json.loads(f.read())
             event['eventName'] = '/'
             return call(command=["node", "dist/app.js"], event=event)
+
+    @app.route('/pdf')
+    def run_pdf_report():
+        with open('./src/reports/barcode.data.json') as f:
+            event = json.loads(f.read())
+            event['eventName'] = '/pdf'
+            return Response(response=call(command=["node", "dist/app.js"], event=event), mimetype="application/pdf")
 
     @app.route('/billing')
     def run_billing_report():

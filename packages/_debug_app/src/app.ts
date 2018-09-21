@@ -1,6 +1,7 @@
 
 import * as RedAgate             from 'red-agate/modules/red-agate';
 import { App }                   from 'red-agate/modules/red-agate/app';
+import { HtmlRenderer }          from 'red-agate/modules/red-agate/renderer';
 import { default as express }    from './express';
 import { billngReportHandler,
          BillingStatement }      from './reports/billing';
@@ -22,6 +23,10 @@ let data: any = kanbanData;
 
 App.cli(['?--foo', '--debug', '--handler=*'], (opts) => {
     switch (opts.get('--handler=*')) {
+    case '/pdf':
+        handler = HtmlRenderer.toPdfHandler(billngReportHandler, {}, {});
+        data    = billngData;
+        break;
     case '/billing':
         handler = billngReportHandler;
         data    = billngData;
@@ -61,6 +66,7 @@ App.cli(['?--foo', '--debug', '--handler=*'], (opts) => {
 // .route('/billing'     , billngReportHandler)
 // .route('/kanban'      , kanbanReportHandler)
 // .route('/fba-a4'      , fbaA4ReportHandler)
+.route('/pdf'         , (evt, ctx, cb) => HtmlRenderer.toPdfHandler(billngReportHandler, {}, {})(billngData, ctx, cb))
 .route('/billing'     , (evt, ctx, cb) => billngReportHandler(billngData, ctx, cb))
 .route('/kanban'      , (evt, ctx, cb) => kanbanReportHandler(kanbanData, ctx, cb))
 .route('/fba-a4'      , (evt, ctx, cb) =>  fbaA4ReportHandler(fbaA4Data, ctx, cb))
