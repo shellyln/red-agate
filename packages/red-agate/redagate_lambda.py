@@ -14,7 +14,7 @@ def call(command=None, event=None, timeout=None):
     event_ = event
     if not isinstance(event_, str):
         event_ = json.dumps(event_, separators=(',', ':'))
-    with subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE) as proc:
+    with subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL) as proc:
         proc.stdin.write(event_.encode('UTF-8'))
         try:
             proc_status = -1
