@@ -1,7 +1,7 @@
 {
   "name": "red-agate",
   "private": false,
-  "version": "0.2.8",
+  "version": "0.2.11",
   "description": "Static HTML|XML|SVG renderer using JSX, suitable for report output.",
   "keywords": [
     "svg",
@@ -26,9 +26,9 @@
     "node": ">=8.0"
   },
   "dependencies": {
-    "red-agate-math": "^0.2.0",
-    "red-agate-svg-canvas": "^0.2.7",
-    "red-agate-util": "^0.2.0"
+    "red-agate-math": "^0.2.11",
+    "red-agate-svg-canvas": "^0.2.11",
+    "red-agate-util": "^0.2.11"
   },
   "peerDependencies": {
     "puppeteer": "^1.8.0"
