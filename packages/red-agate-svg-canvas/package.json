@@ -1,7 +1,7 @@
 {
   "name": "red-agate-svg-canvas",
   "private": false,
-  "version": "0.2.11",
+  "version": "0.2.12",
   "description": "red-agate svg canvas library.",
   "keywords": [
     "SVG",
@@ -19,7 +19,7 @@
   },
   "dependencies": {},
   "peerDependencies": {
-    "red-agate-util": "^0.2.11"
+    "red-agate-util": "^0.2.12"
   },
   "devDependencies": {
     "@babel/cli": "^7.1.2",
