@@ -1,7 +1,7 @@
 {
   "name": "red-agate-math",
   "private": false,
-  "version": "0.2.12",
+  "version": "0.2.13",
   "description": "red-agate math library.",
   "keywords": [
     "finite field",
