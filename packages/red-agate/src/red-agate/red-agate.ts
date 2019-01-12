@@ -71,6 +71,7 @@ export interface ComponentProps {
 }
 
 export interface ComponentClass<P extends ComponentProps> {
+    // tslint:disable-next-line:callable-types
     new (props?: P): Component<P>;
 }
 
