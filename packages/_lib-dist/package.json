@@ -1,7 +1,7 @@
 {
   "name": "red-agate-lib-dist",
   "private": true,
-  "version": "0.2.14",
+  "version": "0.2.15",
   "description": "red-agate debug environment",
   "keywords": [],
   "main": "./dist/app.js",
@@ -14,12 +14,12 @@
   },
   "dependencies": {},
   "peerDependencies": {
-    "red-agate": "^0.2.14",
-    "red-agate-barcode": "^0.2.14",
-    "red-agate-math": "^0.2.14",
-    "red-agate-react-host": "^0.2.14",
-    "red-agate-svg-canvas": "^0.2.14",
-    "red-agate-util": "^0.2.14"
+    "red-agate": "^0.2.15",
+    "red-agate-barcode": "^0.2.15",
+    "red-agate-math": "^0.2.15",
+    "red-agate-react-host": "^0.2.15",
+    "red-agate-svg-canvas": "^0.2.15",
+    "red-agate-util": "^0.2.15"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",
@@ -55,12 +55,12 @@
     "clean:esm": "rimraf ./modules",
     "clean:declarations": "rimraf ./declarations",
     "clean:dist": "rimraf ./dist",
-    "build": "run-s build:dev",
+    "build": "run-s build:dev build:prod",
     "build:dev": "webpack-cli --mode=development --config webpack.config.js",
     "build:prod": "cross-env NODE_ENV=production webpack-cli --mode=production --config webpack.config.js",
     "build:esm": "tsc --outDir modules --declaration --declarationDir ./declarations",
     "lint": "tslint ./src/**/*.ts -t verbose",
-    "test": "jasmine",
+    "test": "echo \"no tests are available.\"",
     "watch": "run-p watch:webpack watch:web",
     "watch:web": "run-s start:web",
     "watch:webpack": "webpack --config webpack.config.js --watch --env.watch"
