@@ -801,12 +801,13 @@ export class Qr extends Shape<QrProps> {
 
     protected drawBitmap(canvas: SvgCanvas, bitmap: Bitmap) {
         // bitmap's coodinate origin is right-bottom.
+        const c = this.props.cellSize as number;
         const nx = bitmap.width,
               ny = bitmap.height;
 
         for (let i = 0; i < nx; i++) {
             for (let j = 0; j < ny; j++) {
-                if (bitmap.get(i, j)) canvas.rect(nx - 1 - i, ny - 1 - j, 1, 1);
+                if (bitmap.get(i, j)) canvas.rect((nx - 1 - i) * c, (ny - 1 - j) * c, c, c);
             }
         }
 

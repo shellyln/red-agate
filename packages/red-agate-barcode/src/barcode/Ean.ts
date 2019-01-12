@@ -445,11 +445,15 @@ export class Ean13 extends EanBase {
     }
 }
 
+export const Gtin13 = Ean13;
+
 export class Ean8 extends EanBase {
     protected get eanTypes(): EanTypesEnum {
         return "ean-8";
     }
 }
+
+export const Gtin8 = Ean8;
 
 export class Ean5 extends EanBase {
     protected get eanTypes(): EanTypesEnum {

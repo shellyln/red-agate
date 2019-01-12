@@ -56,7 +56,7 @@ export let barcodeTestHandler: Lambda = (event: any, context, callback) => RedAg
 
                     <PrinterMarks x={15} y={20} width={100} height={130} hFold={[10, 20, 30]} vFold={[25, 15, 5]} centerMarks={true} bleedMarks={true} />
 
-                    <Qr x={15} y={5}
+                    <Qr x={15} y={5} cellSize={0.8}
                         data="Hello" />
                     <Code39 x={15} y={40}
                         data="HELLO"
