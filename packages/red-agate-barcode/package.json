@@ -1,7 +1,7 @@
 {
   "name": "red-agate-barcode",
   "private": false,
-  "version": "0.2.14",
+  "version": "0.2.15",
   "description": "red-agate barcode tag library.",
   "keywords": [
     "QR Code",
@@ -24,10 +24,10 @@
   },
   "dependencies": {},
   "peerDependencies": {
-    "red-agate": "^0.2.14",
-    "red-agate-math": "^0.2.14",
-    "red-agate-svg-canvas": "^0.2.14",
-    "red-agate-util": "^0.2.14"
+    "red-agate": "^0.2.15",
+    "red-agate-math": "^0.2.15",
+    "red-agate-svg-canvas": "^0.2.15",
+    "red-agate-util": "^0.2.15"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",
