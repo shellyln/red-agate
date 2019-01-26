@@ -75,5 +75,9 @@
     "url": "https://github.com/shellyln/red-agate.git"
   },
   "author": "shellyln",
+  "homepage": "https://shellyln.github.io/",
+  "bugs": {
+    "url": "https://github.com/shellyln/red-agate/issues"
+  },
   "license": "ISC"
 }
