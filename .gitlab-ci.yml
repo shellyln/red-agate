@@ -26,3 +26,14 @@ test:node:8:
   image: node:8
   script:
     - bash scripts/build.sh
+
+publish:artifacts:
+  stage: deploy
+#  only:
+#    - tags
+#    - triggers
+  script:
+    - bash scripts/build.sh
+  artifacts:
+    paths:
+      - packages/_lib-dist/dist/
