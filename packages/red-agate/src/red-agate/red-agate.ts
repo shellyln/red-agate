@@ -396,11 +396,20 @@ export function htmlAttributesRenderer(props: any, omitKeys?: Set<string>, white
     let children = '';
 
     const formatArrayProp = (prop: string | string[]) => {
-        return Array.isArray(prop) ?
-            prop.map((x) => Escape.html(x.toString()))
+        if (Array.isArray(prop)) {
+            return (prop.map((x) => Escape.html(x.toString()))
                 .filter(x => x !== null && x !== void 0)
-                .join(' ') :
-            Escape.html(prop.toString());
+                .join(' '));
+        } else {
+            if (prop === null || prop === void 0) {
+                return '';
+            } else switch (typeof prop) {
+                case 'function': case 'object': case 'symbol':
+                    return '';
+                default:
+                    return String(prop);
+            }
+        }
     };
 
     for (const key of Object.getOwnPropertyNames(props)) {
