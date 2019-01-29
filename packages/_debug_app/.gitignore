@@ -63,7 +63,7 @@ build/Release
 /__pycache__/
 
 # Python virtual environment
-venv
+/venv/
 
 # Python environment files
 .env
