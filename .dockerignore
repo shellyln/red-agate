@@ -1,0 +1,7 @@
+
+.git
+.vscode
+.gitlab-ci.yml
+.travis.yml
+Dockerfile
+README.md
