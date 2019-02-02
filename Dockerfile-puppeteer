@@ -63,4 +63,4 @@ ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome-unstable
 WORKDIR /home/pptruser/app
 EXPOSE 3000
 ENTRYPOINT [ "dumb-init", "--" ]
-CMD [ "node", "dist/app.js", "--express" ]
+CMD [ "node", "dist/app.js", "--express-docker" ]
