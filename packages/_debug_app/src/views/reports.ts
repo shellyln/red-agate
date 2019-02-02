@@ -20,6 +20,16 @@ export default function(express: any): any {
     const path = requireDynamic('path');
     const tmpFile = `${os.tmpdir()}${path.sep}ra-tmp-*.html`;
 
+    /*
+    // for Docker container environment
+    HtmlRenderer.launchOptions = {
+        executablePath: '/usr/bin/google-chrome-unstable',
+        args: [
+            '--no-sandbox', '--disable-web-security', '--user-data-dir=/app/user-data'
+        ]
+    };
+    */
+
     express
     .get('/:format/:name', (req: any, res: any) => {
         let handler: Lambda = billngReportHandler;

@@ -1,24 +1,32 @@
 FROM node:10
 
-COPY . /app
-WORKDIR /app
-RUN bash ./scripts/ci-install.sh && \
-    bash ./scripts/build.sh && \
-    rm -rf ./packages/red-agate-util && \
-    rm -rf ./packages/red-agate-math && \
-    rm -rf ./packages/red-agate-svg-canvas && \
-    rm -rf ./packages/red-agate && \
-    rm -rf ./packages/red-agate-barcode && \
-    rm -rf ./packages/red-agate-react-host && \
-    rm -rf ./packages/_lib-dist && \
-    cd ./packages/_debug_app && \
-    rm -rf ./node_modules && \
-    npm uninstall puppeteer && \
-    npm ci --production && \
-    cd ../.. && \
-    npm cache clean --force && \
-    rm -rf /tmp/*
 
-WORKDIR /app/packages/_debug_app
+
+# Build and deploy the app.
+COPY . /build
+WORKDIR /build
+RUN bash ./scripts/ci-install.sh \
+    && bash ./scripts/build.sh \
+    && mv ./packages/_debug_app /app \
+    && cd /app \
+    && rm -rf ./node_modules \
+    && npm uninstall puppeteer \
+    && npm ci --production \
+    && rm -rf /build \
+    && npm cache clean --force \
+    && rm -rf /tmp/*
+
+
+
+# Add user.
+RUN groupadd -r appuser \
+    && useradd -r -g appuser appuser \
+    && chown -R appuser:appuser /app
+
+# Run everything after as non-privileged user.
+USER appuser
+
+WORKDIR /app
 EXPOSE 3000
-ENTRYPOINT [ "node", "dist/app.js", "--express" ]
+ENTRYPOINT [ "node" ]
+CMD [ "dist/app.js", "--express" ]
