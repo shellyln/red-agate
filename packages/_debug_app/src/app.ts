@@ -60,7 +60,10 @@ App.cli(['?--foo', '--debug', '--handler=*'], (opts) => {
     });
 })
 .cli(['--express'], (opts) => {
-    express();
+    express(false);
+})
+.cli(['--express-docker'], (opts) => {
+    express(true);
 })
 .route('/'            , (evt, ctx, cb) => cb(null, 'Hello, Node!'))
 // .route('/billing'     , billngReportHandler)

@@ -7,11 +7,11 @@ const requireDynamic = eval("require");
 
 
 
-export default function() {
+export default function(isDocker: boolean) {
     const express = requireDynamic('express')();
 
     home(express);
-    reports(express);
+    reports(express, isDocker);
 
     express.listen(process.env.PORT || 3000, () => {
         console.log('start');
