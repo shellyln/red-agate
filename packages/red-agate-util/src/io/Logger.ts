@@ -2,6 +2,8 @@
 // license: ISC
 // https://github.com/shellyln
 
+import { default as isNode } from '../runtime/is-node';
+
 
 
 export enum LoggerLogLevel {
@@ -25,27 +27,13 @@ export enum LoggerLogLevel {
 
 
 export class Logger {
-    private static isNode: boolean;
     private static con: Console;
     public static logLevel: LoggerLogLevel;
 
     /** static constructor */
     // tslint:disable-next-line:variable-name
     private static __ctor = (() => {
-        Logger.isNode = false;
-        if (typeof process === "object") {
-            if (typeof process.versions === "object") {
-                if (typeof process.versions.node !== "undefined") {
-                    if (typeof (process as any).type !== "undefined" && (process as any).type === "renderer") {
-                        // electron renderer process
-                    } else {
-                        Logger.isNode = true;
-                    }
-                }
-            }
-        }
-
-        if (Logger.isNode) {
+        if (isNode) {
             Logger.con = new console.Console(process.stderr);
 
             if (process.env.NODE_ENV) {

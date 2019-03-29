@@ -2,8 +2,9 @@
 // license: ISC
 // https://github.com/shellyln
 
-import { Logger } from "./Logger";
-declare var Java: any;
+import { Logger }                    from "./Logger";
+import { default as isNode }         from '../runtime/is-node';
+import { default as requireDynamic } from '../runtime/require-dynamic';
 
 
 export interface FileFetcherConfig {
@@ -21,29 +22,6 @@ export interface FileFetcherConfig {
  * @static
  */
 export class FileFetcher {
-    private static isNashorn: boolean;
-    private static isNode: boolean;
-
-    /** static constructor */
-    // tslint:disable-next-line:variable-name
-    private static __ctor = (() => {
-        FileFetcher.isNashorn = false;
-        FileFetcher.isNode = false;
-        if (typeof Java !== "undefined" && Java && typeof Java.type === "function") {
-            FileFetcher.isNashorn = true;
-        } else if (typeof process === "object") {
-            if (typeof process.versions === "object") {
-                if (typeof process.versions.node !== "undefined") {
-                    if (typeof (process as any).type !== "undefined" && (process as any).type === "renderer") {
-                        // electron renderer process
-                    } else {
-                        FileFetcher.isNode = true;
-                    }
-                }
-            }
-        }
-    })();
-
     private static fetchLocation_node(uri: string, config?: FileFetcherConfig): Promise<{contentType: string | null, data: ArrayLike<number>}> {
         const promise: Promise<{contentType: string | null, data: ArrayLike<number>}> =
             new Promise<{contentType: string | null, data: ArrayLike<number>}>((resolve, reject) => {
@@ -52,8 +30,8 @@ export class FileFetcher {
                 const uriLower = uri.toLowerCase();
                 if (uriLower.startsWith("http:") || uriLower.startsWith("https:")) {
                     // HTTP or HTTPS
-                    const http = require(uriLower.startsWith("http:") ? "http" : "https");
-                    const url = require("url");
+                    const http = requireDynamic(uriLower.startsWith("http:") ? "http" : "https");
+                    const url = requireDynamic("url");
 
                     // TODO: set method and options
                     http.get(uri, (res: any) => {
@@ -83,7 +61,7 @@ export class FileFetcher {
                     reject(uri);
                 } else {
                     // File
-                    const fs = require("fs");
+                    const fs = requireDynamic("fs");
                     let path = uri;
                     if (process.platform === "win32") {
                         path = path.replace(/^file:\/+([A-Za-z])\//i, "$1:/");
@@ -171,10 +149,7 @@ export class FileFetcher {
      * @return       Promise of fetching file.
      */
     public static fetchLocation(uri: string, config?: FileFetcherConfig): Promise<{contentType: string | null, data: ArrayLike<number>}> {
-        if (FileFetcher.isNashorn) {
-            // TODO: not impl.
-            throw new Error("FileFetcher#fetchLocation: Nashorn handler is not impl.");
-        } else if (FileFetcher.isNode) {
+        if (isNode) {
             return this.fetchLocation_node(uri, config);
         } else {
             return this.fetchLocation_xhr(uri, config);

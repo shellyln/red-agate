@@ -2,8 +2,9 @@
 // license: ISC
 // https://github.com/shellyln
 
-import { Logger } from "./Logger";
-declare var Java: any;
+import { Logger }                    from "./Logger";
+import { default as isNode }         from '../runtime/is-node';
+import { default as requireDynamic } from '../runtime/require-dynamic';
 
 
 
@@ -11,33 +12,10 @@ export type BinaryType = Buffer | Uint8Array;
 
 
 export class FileSaver {
-    private static isNashorn: boolean;
-    private static isNode: boolean;
-
-    /** static constructor */
-    // tslint:disable-next-line:variable-name
-    private static __ctor = (() => {
-        FileSaver.isNashorn = false;
-        FileSaver.isNode = false;
-        if (typeof Java !== "undefined" && Java && typeof Java.type === "function") {
-            FileSaver.isNashorn = true;
-        } else if (typeof process === "object") {
-            if (typeof process.versions === "object") {
-                if (typeof process.versions.node !== "undefined") {
-                    if (typeof (process as any).type !== "undefined" && (process as any).type === "renderer") {
-                        // electron renderer process
-                    } else {
-                        FileSaver.isNode = true;
-                    }
-                }
-            }
-        }
-    })();
-
     private static saveTextAs_node(pathOrFileName: string, text: string, encoding: string): Promise<boolean> {
         const promise = new Promise<boolean>((resolve, reject) => {
             try {
-                const fs = require("fs");
+                const fs = requireDynamic("fs");
                 fs.writeFile(
                     pathOrFileName, text,
                     encoding === "utf-8" || encoding === "UTF-8" ? "utf8" : encoding, (err: any) => {
@@ -103,7 +81,7 @@ export class FileSaver {
     private static saveBinaryAs_node(pathOrFileName: string, data: ArrayLike<number>): Promise<boolean> {
         const promise = new Promise<boolean>((resolve, reject) => {
             try {
-                const fs = require("fs");
+                const fs = requireDynamic("fs");
                 fs.writeFile(
                     pathOrFileName, data, (err: any) => {
                     if (err) {
@@ -161,10 +139,7 @@ export class FileSaver {
     }
 
     public static saveTextAs(pathOrFileName: string, text: string, encoding: string = "utf-8"): Promise<boolean> {
-        if (FileSaver.isNashorn) {
-            // TODO: not impl.
-            throw new Error("FileSaver#saveTextAs: Nashorn handler is not impl.");
-        } else if (FileSaver.isNode) {
+        if (isNode) {
             return this.saveTextAs_node(pathOrFileName, text, encoding);
         } else {
             return this.saveTextAs_html5(pathOrFileName, text, encoding);
@@ -172,10 +147,7 @@ export class FileSaver {
     }
 
     public static saveBinaryAs(pathOrFileName: string, data: BinaryType): Promise<boolean> {
-        if (FileSaver.isNashorn) {
-            // TODO: not impl.
-            throw new Error("FileSaver#saveBinaryAs: Nashorn handler is not impl.");
-        } else if (FileSaver.isNode) {
+        if (isNode) {
             return this.saveBinaryAs_node(pathOrFileName, data);
         } else {
             return this.saveBinaryAs_html5(pathOrFileName, data);
