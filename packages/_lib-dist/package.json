@@ -1,7 +1,7 @@
 {
   "name": "red-agate-lib-dist",
   "private": true,
-  "version": "0.2.16",
+  "version": "0.2.17",
   "description": "red-agate debug environment",
   "keywords": [],
   "main": "./dist/app.js",
@@ -14,12 +14,12 @@
   },
   "dependencies": {},
   "peerDependencies": {
-    "red-agate": "^0.2.16",
-    "red-agate-barcode": "^0.2.16",
-    "red-agate-math": "^0.2.16",
-    "red-agate-react-host": "^0.2.16",
-    "red-agate-svg-canvas": "^0.2.16",
-    "red-agate-util": "^0.2.16"
+    "red-agate": "^0.2.17",
+    "red-agate-barcode": "^0.2.17",
+    "red-agate-math": "^0.2.17",
+    "red-agate-react-host": "^0.2.17",
+    "red-agate-svg-canvas": "^0.2.17",
+    "red-agate-util": "^0.2.17"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",

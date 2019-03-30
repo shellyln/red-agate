@@ -13,6 +13,17 @@ import { Lambda, Lambdas }           from './app';
 
 export class HtmlRenderer {
     // tslint:disable-next-line:variable-name
+    private static _rendererPackageName = 'puppeteer';
+
+    public static get rendererPackageName(): string {
+        return HtmlRenderer._rendererPackageName;
+    }
+
+    public static set rendererPackageName(name: string) {
+        HtmlRenderer._rendererPackageName = name;
+    }
+
+    // tslint:disable-next-line:variable-name
     private static _launchOptions: any = void 0;
 
     public static get launchOptions(): any {
@@ -57,7 +68,7 @@ export class HtmlRenderer {
     }
 
     private static async _toPdf(html: string, navigateOptions: any, pdfOptions: any, tmpPath?: string): Promise<Buffer> {
-        const puppeteer = requireDynamic('puppeteer');
+        const puppeteer = requireDynamic(HtmlRenderer._rendererPackageName);
 
         let buffer: Buffer | null = null;
         let browser = null;
@@ -118,7 +129,7 @@ export class HtmlRenderer {
     }
 
     private static async _toImage(html: string, navigateOptions: any, imageOptions: any, tmpPath?: string): Promise<Buffer> {
-        const puppeteer = requireDynamic('puppeteer');
+        const puppeteer = requireDynamic(HtmlRenderer._rendererPackageName);
 
         let buffer: Buffer | null = null;
         let browser = null;
