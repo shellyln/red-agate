@@ -35,13 +35,13 @@ $ npm install red-agate --save
 ```
 
 
-## Notes
-
-To import this from your code, you need to use `babel` + `webpack` and import `red-agate-*/modules/*` paths.  
-(We have used the `import` statements for doing the [tree-shaking](https://webpack.js.org/guides/tree-shaking/).
-The `import` statements in the `.js` not the `.mjs` files cannot import from the vanilla node.js.)
-
-You can also import from the `.mjs` file on a node with the `--experimental-modules` option enabled.
+> Note
+>
+> To import this from your code, you need to use `babel` + `webpack` and import `red-agate-*/modules/*` paths.  
+> (We have used the `import` statements for doing the [tree-shaking](https://webpack.js.org/guides/tree-shaking/).
+> The `import` statements in the `.js` not the `.mjs` files cannot import from the vanilla node.js.)
+>
+> You can also import from the `.mjs` file on a node with the `--experimental-modules` option enabled.
 
 
 ## Usage
