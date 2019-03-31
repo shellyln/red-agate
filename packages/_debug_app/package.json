@@ -1,7 +1,7 @@
 {
   "name": "red-agate-debug-env",
   "private": true,
-  "version": "0.2.17",
+  "version": "0.2.18",
   "description": "red-agate debug environment",
   "keywords": [],
   "main": "./dist/app.js",
@@ -17,11 +17,11 @@
     "puppeteer": "^1.14.0"
   },
   "peerDependencies": {
-    "red-agate": "^0.2.17",
-    "red-agate-barcode": "^0.2.17",
-    "red-agate-math": "^0.2.17",
-    "red-agate-svg-canvas": "^0.2.17",
-    "red-agate-util": "^0.2.17"
+    "red-agate": "^0.2.18",
+    "red-agate-barcode": "^0.2.18",
+    "red-agate-math": "^0.2.18",
+    "red-agate-svg-canvas": "^0.2.18",
+    "red-agate-util": "^0.2.18"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",
