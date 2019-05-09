@@ -109,8 +109,7 @@ export class Base64 {
             else if (v === 0x2b)             v  = 0x3e;
             else if (v === 0x2f)             v  = 0x3f;
             else if (v === 0x3d) {
-                v = 0;
-                i = n;
+                break;
             } else {
                 s++;
                 continue;

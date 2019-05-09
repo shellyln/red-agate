@@ -1,6 +1,7 @@
 
 import { Escape }          from '../convert/Escape';
 import { TextEncoding }    from '../convert/TextEncoding';
+import { Base64 }    from '../convert/Base64';
 import { NumberPrecision } from '../convert/NumberPrecision';
 
 
@@ -13,6 +14,33 @@ describe("Escape", function() {
 describe("TextEncoding", function() {
     it("TextEncoding", function() {
         expect(TextEncoding.decodeUtf8(TextEncoding.encodeToUtf8("12345ABCabc!@#\u3042\u3044\u3046"))).toEqual("12345ABCabc!@#\u3042\u3044\u3046");
+    });
+});
+
+describe("Base64", function() {
+    it("Base64", function() {
+        expect(TextEncoding.decodeUtf8(Base64.decode(Base64.encode(TextEncoding.encodeToUtf8("12345ABCabc!@#\u3042\u3044\u3046"))))).toEqual("12345ABCabc!@#\u3042\u3044\u3046");
+    });
+    it("Base64 0", function() {
+        expect(TextEncoding.decodeUtf8(Base64.decode(Base64.encode(TextEncoding.encodeToUtf8(""))))).toEqual("");
+    });
+    it("Base64 1", function() {
+        expect(TextEncoding.decodeUtf8(Base64.decode(Base64.encode(TextEncoding.encodeToUtf8("1"))))).toEqual("1");
+    });
+    it("Base64 2", function() {
+        expect(TextEncoding.decodeUtf8(Base64.decode(Base64.encode(TextEncoding.encodeToUtf8("12"))))).toEqual("12");
+    });
+    it("Base64 3", function() {
+        expect(TextEncoding.decodeUtf8(Base64.decode(Base64.encode(TextEncoding.encodeToUtf8("123"))))).toEqual("123");
+    });
+    it("Base64 4", function() {
+        expect(TextEncoding.decodeUtf8(Base64.decode(Base64.encode(TextEncoding.encodeToUtf8("1234"))))).toEqual("1234");
+    });
+    it("Base64 5", function() {
+        expect(TextEncoding.decodeUtf8(Base64.decode(Base64.encode(TextEncoding.encodeToUtf8("12345"))))).toEqual("12345");
+    });
+    it("Base64 6", function() {
+        expect(TextEncoding.decodeUtf8(Base64.decode(Base64.encode(TextEncoding.encodeToUtf8("123456"))))).toEqual("123456");
     });
 });
 
