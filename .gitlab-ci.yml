@@ -1,4 +1,4 @@
-image: node:11
+image: node:12
 
 before_script:
   - bash scripts/ci-install.sh
@@ -11,7 +11,13 @@ test:lint:
   script:
     - bash scripts/lint.sh
 
+# LTS
+test:node:12:
+  script:
+    - bash scripts/build.sh
+
 test:node:11:
+  image: node:11
   script:
     - bash scripts/build.sh
 
