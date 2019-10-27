@@ -15,10 +15,11 @@ jobs:
     - name: Use Node.js ${{ matrix.node_version }}
       uses: actions/setup-node@v1
       with:
-        version: ${{ matrix.node_version }}
+        node-version: ${{ matrix.node_version }}
     
     - name: npm install, build and test
       run: |
+        npm install -g npm
         bash scripts/ci-install.sh
         bash scripts/build.sh
         bash scripts/lint.sh
