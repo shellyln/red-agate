@@ -31,19 +31,19 @@
     "red-agate-util": "^0.2.19"
   },
   "peerDependencies": {
-    "puppeteer-core": "^1.19.0",
-    "puppeteer": "^1.19.0"
+    "puppeteer-core": "^2.0.0",
+    "puppeteer": "^2.0.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.5.5",
-    "@babel/core": "^7.5.5",
-    "@babel/preset-env": "^7.5.5",
-    "@types/jasmine": "^3.4.0",
-    "@types/node": "^12.7.2",
+    "@babel/cli": "^7.6.4",
+    "@babel/core": "^7.6.4",
+    "@babel/preset-env": "^7.6.3",
+    "@types/jasmine": "^3.4.4",
+    "@types/node": "^12.11.7",
     "babel-loader": "^8.0.6",
     "cpx": "^1.5.0",
-    "cross-env": "^5.2.0",
-    "jasmine": "^3.4.0",
+    "cross-env": "^6.0.3",
+    "jasmine": "^3.5.0",
     "jasmine-spec-reporter": "^4.2.1",
     "mkdirp": "^0.5.1",
     "npm-run-all": "^4.1.5",
@@ -51,11 +51,11 @@
     "rimraf": "^3.0.0",
     "shx": "^0.3.2",
     "source-map-loader": "^0.2.4",
-    "ts-loader": "^6.0.4",
-    "tslint": "^5.18.0",
-    "typescript": "^3.5.3",
-    "webpack": "^4.39.2",
-    "webpack-cli": "^3.3.6"
+    "ts-loader": "^6.2.1",
+    "tslint": "^5.20.0",
+    "typescript": "^3.6.4",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.9"
   },
   "scripts": {
     "clean": "run-s clean:cjs clean:esm clean:spec",
@@ -70,7 +70,8 @@
     "build:spec2": "tsc -p tsconfig.spec.json --module commonjs --target es2015 --outDir bin.test",
     "lint": "tslint ./src/**/*.ts -t verbose",
     "test": "jasmine",
-    "prepublishOnly": "run-s clean build test"
+    "prepublishOnly": "run-s clean build test",
+    "ncu": "ncu -u"
   },
   "repository": {
     "type": "git",
