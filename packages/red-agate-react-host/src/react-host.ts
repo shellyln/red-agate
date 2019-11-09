@@ -1,7 +1,11 @@
 
 import * as RedAgate from 'red-agate/modules/red-agate';
+
 import * as React from 'react';
-import * as ReactDOMServer from 'react-dom/server';
+
+// NOTE: hack bad .d.ts definition for ESM.
+import * as ReactDOMServer_ from 'react-dom/server';
+export const ReactDOMServer: typeof ReactDOMServer_ = (ReactDOMServer_ as any).default || ReactDOMServer_;
 
 
 
