@@ -10,7 +10,10 @@ import { Svg,
          Rect,
          Text,
          GridLine,
-         SvgImposition } from 'red-agate/modules/red-agate/svg';
+         SvgImposition,
+         Line,
+         Path,
+         Polygon }       from 'red-agate/modules/red-agate/svg';
 import { Font,
          Image,
          Style }         from 'red-agate/modules/red-agate/bundler';
@@ -81,6 +84,15 @@ export let barcodeTestHandler: Lambda = (event: any, context, callback) => RedAg
                     <JapanPostal x={15} y={190}
                         data="1234567"
                         elementWidth={0.33 * 2} height={0.66 * 6} quietHeight={0} />
+
+                    {/*
+                    <Group x={100} y={100}>
+                        <Path close stroke>
+                            <Polygon points={[5, 5, 15, 5, 15, 15]} />
+                            <Line move points={[25, 25, 35, 25, 35, 35]} />
+                        </Path>
+                    </Group>
+                    */}
                 </Svg>
             </section> }
         </ForEach>

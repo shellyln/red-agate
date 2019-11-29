@@ -383,6 +383,7 @@ export class Path extends Shape<PathProps> {
     }
 
     public beforeRender(contexts: Map<string, any>) {
+        super.beforeRender(contexts);
         this.setContext(contexts, CONTEXT_SVG_PATH, true);
     }
 
@@ -392,6 +393,18 @@ export class Path extends Shape<PathProps> {
 
     public afterRender(contexts: Map<string, any>) {
         this.unsetContext(contexts, CONTEXT_SVG_PATH);
+        const canvas: SvgCanvas = this.getContext(contexts, CONTEXT_SVG_CANVAS);
+        if (canvas) {
+            if (this.props.close) {
+                canvas.closePath();
+            }
+            if (this.props.clip) {
+                canvas.clip();
+            } else {
+                this.fillStrokePaths(canvas);
+                this.restoreGraphicState(canvas);
+            }
+        }
     }
 }
 
