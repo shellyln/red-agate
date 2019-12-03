@@ -8,7 +8,7 @@ cd ./packages
 
 for p in $packages; do
     cd $p
-    npm run clean && npm run build && npm test
+    npm run clean && npm run build && npm test && npm run lint
     cd ..
 done
 
