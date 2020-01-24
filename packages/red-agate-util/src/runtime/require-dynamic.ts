@@ -6,7 +6,7 @@
 import { default as isNode }   from './is-node';
 
 // @ts-ignore TS7016 Could not find a declaration file
-import * as requireDynamicGen_ from './require-cjs';
+import * as requireDynamicGen_ from './commonjs/require-cjs';
 const requireDynamicGen = (requireDynamicGen_ as any).default || requireDynamicGen_;
 
 // tslint:disable-next-line:no-eval
