@@ -1,7 +1,7 @@
-# RedAgate's svg canvas library.
+# RedAgate's SVG Canvas library.
 #### HTML5 Canvas API implementation that rendering as SVG, w/o dependencies of browser DOM.
 
-
+<img src="https://shellyln.github.io/assets/image/svg-canvas-logo.svg" alt="SVG Canvas" style="width: 220px;">
 
 [![npm](https://img.shields.io/npm/v/red-agate-svg-canvas.svg)](https://www.npmjs.com/package/red-agate-svg-canvas)
 [![GitHub release](https://img.shields.io/github/release/shellyln/red-agate.svg)](https://github.com/shellyln/red-agate/releases)
