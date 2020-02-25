@@ -1027,7 +1027,8 @@ export class SvgCanvas implements VectorCanvas2D {
         return "";
     }
 
-    private getMultilineTextHeight(c: SvgTextAttributes) {
+    protected getMultilineTextHeight(c: SvgTextAttributes) {
+        // NOTE: Inherited classes can adjust the value of `lineHeight` (adjust argument and call super).
         if ((c.multiline) &&
             typeof this.font === 'string' &&
             (c.lineHeight === void 0 || c.lineHeight === null)) {
