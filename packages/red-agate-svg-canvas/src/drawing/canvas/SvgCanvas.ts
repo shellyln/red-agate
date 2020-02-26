@@ -1027,7 +1027,8 @@ export class SvgCanvas implements VectorCanvas2D {
         return "";
     }
 
-    private getMultilineTextHeight(c: SvgTextAttributes) {
+    protected getMultilineTextHeight(c: SvgTextAttributes) {
+        // NOTE: Inherited classes can adjust the value of `lineHeight` (adjust argument and call super).
         if ((c.multiline) &&
             typeof this.font === 'string' &&
             (c.lineHeight === void 0 || c.lineHeight === null)) {
@@ -1101,7 +1102,21 @@ export class SvgCanvas implements VectorCanvas2D {
         return c;
     }
 
-    private getTextAttributes(maxWidthOrExtraAttrs: number | SvgTextAttributes | null | undefined): string {
+    /**
+     * @returns CSS font properties styles for Text tag.
+     */
+    protected getTextFontStyles() {
+        // NOTE: issue #1: CairoSVG, Inkscape, and some libraries can't understand `font` shorthand style property.
+        //                 (Inkscape (v0.92.4) may understand partly)
+        //       Inherited classes can split `font` property to `font-family`, `font-weight`, `font-size`, ...
+        return `font:${Escape.xml(this.font)};`;
+    }
+
+    protected getTextAttributes(maxWidthOrExtraAttrs: number | SvgTextAttributes | null | undefined): string {
+        // NOTE: Firefox and Inkscape will render text justified if `textLength` is set.
+        //       Chromium and Safari don't justify in this case.
+        //       This is due to the  difference of `SVG: <text textLength>` and `Canvas: fillText(,,,maxWidth)`.
+        //       Inherited classes can adjust the value of `textLength` (adjust argument and call super).
         let textAlign: TextAlignValue;
         switch (this.textAlign) {
         case "left":
@@ -1131,7 +1146,7 @@ export class SvgCanvas implements VectorCanvas2D {
             break;
         }
 
-        let a = ` style="font:${Escape.xml(this.font)};" text-anchor="${textAlign}" dominant-baseline="${textBaseline}"`;
+        let a = ` style="${this.getTextFontStyles()}" text-anchor="${textAlign}" dominant-baseline="${textBaseline}"`;
 
         if (maxWidthOrExtraAttrs === void 0 || maxWidthOrExtraAttrs === null) {
             return a;

@@ -57,6 +57,47 @@ console.log(svgString);
 See [this](https://github.com/shellyln/chart.js-node-ssr-example) example.
 
 
+
+## Patch font rendering output for your target apps/libs' incompatibilities
+
+```typescript
+import { SvgCanvas } from 'red-agate-svg-canvas/modules/drawing/canvas';
+
+class MySvgCanvas extends SvgCanvas {
+    protected getMultilineTextHeight(c: SvgTextAttributes) {
+        // NOTE: * Inherited classes can adjust the value of
+        //         `lineHeight` (adjust argument and call super).
+        return super.getMultilineTextHeight(c);
+    }
+    protected getTextFontStyles() {
+        // NOTE: * issue #1: CairoSVG, Inkscape, and some libraries can't
+        //         understand `font` shorthand style property.
+        //                 (Inkscape (v0.92.4) may understand partly)
+        //       * Inherited classes can split `font` property to
+        //         `font-family`, `font-weight`, `font-size`, ...
+        //       * `bramstein/css-font-parser` may useful.
+        return super.getTextFontStyles();
+    }
+    protected getTextAttributes(
+            maxWidthOrExtraAttrs: number | SvgTextAttributes | null | undefined): string {
+        // NOTE: * Firefox and Inkscape will render text justified
+        //         if `textLength` is set.
+        //       * Chromium and Safari don't justify in this case.
+        //       * This is due to the  difference of
+        //         `SVG: <text textLength>` and `Canvas: fillText(,,,maxWidth)`.
+        //       * Inherited classes can adjust the value of
+        //         `textLength` (adjust argument and call super).
+        // See: https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/textLength
+        //      https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/fillText
+        return super.getTextAttributes(maxWidthOrExtraAttrs);
+    }
+}
+```
+
+
+See also:
+* Issue [#1](https://github.com/shellyln/red-agate/issues/1)
+
 ## License
 [ISC](https://github.com/shellyln/red-agate-util/blob/master/LICENSE.md)  
 Copyright (c) 2017, Shellyl_N and Authors.
