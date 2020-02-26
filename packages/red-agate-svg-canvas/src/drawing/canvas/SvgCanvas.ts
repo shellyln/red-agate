@@ -1115,6 +1115,7 @@ export class SvgCanvas implements VectorCanvas2D {
     protected getTextAttributes(maxWidthOrExtraAttrs: number | SvgTextAttributes | null | undefined): string {
         // NOTE: Firefox and Inkscape will render text justified if `textLength` is set.
         //       Chromium and Safari don't justify in this case.
+        //       This is due to the  difference of `SVG: <text textLength>` and `Canvas: fillText(,,,maxWidth)`.
         //       Inherited classes can adjust the value of `textLength` (adjust argument and call super).
         let textAlign: TextAlignValue;
         switch (this.textAlign) {
