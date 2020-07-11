@@ -149,7 +149,7 @@ export class HtmlRenderer {
                 url,
                 Object.assign({ waitUntil: 'load' }, navigateOptions || {}),
             );
-            await page.emulateMedia('print');
+            await page.emulateMediaType('print');
             buffer = await page.screenshot(
                 Object.assign({
                     type: 'png',

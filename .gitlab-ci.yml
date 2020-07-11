@@ -11,6 +11,11 @@ test:lint:
   script:
     - bash scripts/lint.sh
 
+test:node:14:
+  image: node:14
+  script:
+    - bash scripts/build.sh
+
 test:node:13:
   image: node:13
   script:

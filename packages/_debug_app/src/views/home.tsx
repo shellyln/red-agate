@@ -651,8 +651,8 @@ export default function(express: any): any {
 
     .get('/qr/:out/:ver/:ec/:enc/:data', (req: any, res: any) => {
         let ver: number | "auto" = "auto";
-        if (Number.isFinite(Number.parseInt(req.params.ver))) {
-            const v = Number.parseInt(req.params.ver);
+        if (Number.isFinite(Number.parseInt(req.params.ver, 10))) {
+            const v = Number.parseInt(req.params.ver, 10);
             if (0 < v && v < 41) {
                 ver = v;
             }

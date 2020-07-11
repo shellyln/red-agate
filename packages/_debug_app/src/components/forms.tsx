@@ -2,19 +2,24 @@
 /** @jsx RedAgate.createElement */
 import * as RedAgate from 'red-agate/modules/red-agate';
 import { ForEach,
-         Template, 
+         Template,
          If }        from 'red-agate/modules/red-agate/taglib';
 
 
 
 export function propsExcept<T>(props: T, ...x: string[]) {
-    let p = Object.assign({}, props);
+    const p = Object.assign({}, props);
+    // tslint:disable-next-line:no-string-literal
     delete p['id'];
+    // tslint:disable-next-line:no-string-literal
     delete p['ref'];
+    // tslint:disable-next-line:no-string-literal
     delete p['refs'];
+    // tslint:disable-next-line:no-string-literal
     delete p['__nodeId'];
+    // tslint:disable-next-line:no-string-literal
     delete p['children'];
-    for (let n of x) {
+    for (const n of x) {
         delete p[n];
     }
     return p;
@@ -29,10 +34,10 @@ export interface FormProps extends RedAgate.ComponentProps {
 
 export class Form extends RedAgate.RedAgateComponent<FormProps> {
     public transform() {
-        let props = propsExcept(this.props, 'setState');
+        const props = propsExcept(this.props, 'setState');
         return (
             <Template>
-                <form name={props.name} {...props}>{this.props.children}</form>
+                <form {...props}>{this.props.children}</form>
                 <If condition={Boolean(this.props.setState)}>
                     <script dangerouslySetInnerHTML={{ __html:
 `(function() {
@@ -117,9 +122,9 @@ export interface SelectProps extends RedAgate.ComponentProps {
 
 export class Select extends RedAgate.RedAgateComponent<SelectProps> {
     public transform() {
-        let props = propsExcept(this.props, 'options', 'selected');
+        const props = propsExcept(this.props, 'options', 'selected');
         return (
-            <select name={props.name} {...props}>
+            <select {...props}>
                 <ForEach items={this.props.options}> { (o, i) =>
                     <option value={o[0]} selected={o[0] === this.props.selected}>{o[1]}</option> }
                 </ForEach>
@@ -137,9 +142,9 @@ export interface InputProps extends RedAgate.ComponentProps {
 
 export class Input extends RedAgate.RedAgateComponent<InputProps> {
     public transform() {
-        let props = propsExcept(this.props);
+        const props = propsExcept(this.props);
         return (
-            <input name={props.name} {...props}/>
+            <input {...props}/>
         );
     }
 }
@@ -152,9 +157,9 @@ export interface TextAreaProps extends RedAgate.ComponentProps {
 
 export class TextArea extends RedAgate.RedAgateComponent<TextAreaProps> {
     public transform() {
-        let props = propsExcept(this.props);
+        const props = propsExcept(this.props);
         return (
-            <textarea name={props.name} {...props}>{this.props.children}</textarea>
+            <textarea {...props}>{this.props.children}</textarea>
         );
     }
 }
