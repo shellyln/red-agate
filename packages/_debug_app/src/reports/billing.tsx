@@ -25,6 +25,10 @@ import { SvgCanvas }       from 'red-agate-svg-canvas/modules/drawing/canvas/Svg
 import { query }           from 'red-agate/modules/red-agate/data';
 import { Lambda }          from 'red-agate/modules/red-agate/app';
 
+// tslint:disable-next-line: no-var-requires variable-name
+const billingStyleCss_ = require('./billing.style.css');
+const billingStyleCss = billingStyleCss_.default ?? billingStyleCss_;
+
 
 
 export interface CompanyInfo {
@@ -82,7 +86,7 @@ export let billngReportHandler: Lambda<BillingStatement> = (event, context, call
         <title>Billing statement</title>
         <Style src="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css"/>
         <Style src="https://cdnjs.cloudflare.com/ajax/libs/paper-css/0.3.0/paper.css"/>
-        <style dangerouslySetInnerHTML={{ __html: require('./billing.style.css') }}/>
+        <style dangerouslySetInnerHTML={{ __html: billingStyleCss }}/>
     </head>
 
     <body class="A4">

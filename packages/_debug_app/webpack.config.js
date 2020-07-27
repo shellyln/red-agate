@@ -122,8 +122,9 @@ return [{
             }, {
                 test: /\.(css|scss)$/,
                 use: [
-                    'to-string-loader',
-                    'css-loader',
+                    // 'to-string-loader',
+                    // 'css-loader',
+                    'raw-loader',
                     // {
                     //     loader: 'postcss-loader',
                     //     options: {
