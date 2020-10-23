@@ -12,14 +12,14 @@ return [{
             ]
         },
         node: {
-            fs: false,
-            console: false,
-            process: false,
+            // fs: false,
+            // console: false,
+            // process: false,
             global: false,
             __filename: false,
             __dirname: false,
-            Buffer: false,
-            setImmediate: false,
+            // Buffer: false,
+            // setImmediate: false,
         },
         output: (env && env.env === 'test') ? void 0 : {
             library: 'RedAgate',
@@ -88,6 +88,11 @@ return [{
                 test: /\.jsx?$/,
                 use: ['babel-loader'],
                 exclude: /node_modules[\/\\](?!red-agate).*$/
+            }, {
+                test: /\.m?js/,
+                resolve: {
+                    fullySpecified: false,
+                },
             }, {
                 enforce: 'pre',
                 test: /\.[tj]sx?$/,

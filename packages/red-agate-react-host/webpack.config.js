@@ -39,6 +39,11 @@ module.exports = function (env) {
                 use: ['babel-loader'],
                 exclude: /node_modules[\/\\](?!red-agate).*$/
             }, {
+                test: /\.m?js/,
+                resolve: {
+                    fullySpecified: false,
+                },
+            }, {
                 enforce: 'pre',
                 test: /\.[tj]sx?$/,
                 use: {
