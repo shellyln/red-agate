@@ -1,7 +1,7 @@
 {
   "name": "red-agate-util",
   "private": false,
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "red-agate utilities library.",
   "keywords": [],
   "main": "./bin/index.js",
