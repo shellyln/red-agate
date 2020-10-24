@@ -11,13 +11,14 @@ test:lint:
   script:
     - bash scripts/lint.sh
 
-test:node:14:
-  image: node:14
+test:node:15:
+  image: node:15
   script:
     - bash scripts/build.sh
 
-test:node:13:
-  image: node:13
+# LTS
+test:node:14:
+  image: node:14
   script:
     - bash scripts/build.sh
 
@@ -29,12 +30,6 @@ test:node:12:
 # LTS
 test:node:10:
   image: node:10
-  script:
-    - bash scripts/build.sh
-
-# LTS
-test:node:8:
-  image: node:8
   script:
     - bash scripts/build.sh
 
