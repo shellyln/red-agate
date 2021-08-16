@@ -45,6 +45,7 @@ export interface VectorCanvas2D {
     rotate(angle: number): void;
     transform(m11: number, m12: number, m21: number, m22: number, dx: number, dy: number): void;
     setTransform(m11: number, m12: number, m21: number, m22: number, dx: number, dy: number): void;
+    resetTransform(): void;
 
     beginPath(): void;
     closePath(): void;

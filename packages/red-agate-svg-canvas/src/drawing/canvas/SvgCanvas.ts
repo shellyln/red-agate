@@ -638,6 +638,10 @@ export class SvgCanvas implements VectorCanvas2D {
         this.currentPointOnCtm = null;
         this.ctm = new TransferMatrix2D(m11, m12, m21, m22, dx, dy);
     }
+    public resetTransform(): void {
+        this.currentPointOnCtm = null;
+        this.ctm = new TransferMatrix2D();
+    }
 
     /** postscript newpath */
     public beginPath(): void {
